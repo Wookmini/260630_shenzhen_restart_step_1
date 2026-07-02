@@ -77,15 +77,42 @@ def run_ocr(image_bytes: bytes, filename: str = "") -> dict:
     if img is None:
         return {"error": "이미지를 디코딩할 수 없습니다. (지원되지 않는 형식)", "raw_text": ""}
 
-    # 해상도가 너무 큰 경우에만 다운스케일링 (RapidOCR도 너무 크면 메모리를 많이 사용함)
-    h, w = img.shape[:2]
-    if max(h, w) > 2500:
+    # === [OCR 전처리(Preprocessing) 파이프라인] ===
+    # 1. Grayscale 변환
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # 2. 적응형 히스토그램 평활화 (CLAHE) - 명암 대비 극대화
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    enhanced = clahe.apply(gray)
+    
+    # 3. 노이즈 제거 (Denoising)
+    # fastNlMeansDenoising는 속도가 느릴 수 있으므로 가벼운 Gaussian Blur 후 Sharpening 적용
+    blur = cv2.GaussianBlur(enhanced, (3, 3), 0)
+    
+    # 4. 해상도 조정 및 샤프닝
+    h, w = blur.shape[:2]
+    
+    # 너무 작으면 업스케일 (글씨가 깨지는 현상 방지)
+    if max(h, w) < 1500:
+        scale = 1500 / max(h, w)
+        blur = cv2.resize(blur, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_CUBIC)
+    # 너무 크면 다운스케일 (메모리 부족 방지)
+    elif max(h, w) > 2500:
         scale = 2500 / max(h, w)
-        img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+        blur = cv2.resize(blur, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+        
+    # 샤프닝 커널 적용 (윤곽선 강조)
+    kernel = np.array([[0, -1, 0], 
+                       [-1, 5, -1], 
+                       [0, -1, 0]])
+    processed_img = cv2.filter2D(blur, -1, kernel)
+    
+    # RapidOCR은 3채널 컬러를 기대할 수 있으므로 다시 BGR로 변환
+    final_img = cv2.cvtColor(processed_img, cv2.COLOR_GRAY2BGR)
 
     # RapidOCR 실행
     try:
-        result, _ = ocr_engine(img)
+        result, _ = ocr_engine(final_img)
         raw_text = ""
         if result:
             # result 구조: [[[[x,y], [x,y], [x,y], [x,y]], text, confidence], ...]

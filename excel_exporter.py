@@ -6,11 +6,12 @@ import os
 import shutil
 import datetime
 import openpyxl
+from openpyxl.styles import PatternFill
 from typing import List, Dict, Any
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(
-    BASE_DIR, "26년_6월 심천지사 전도금 정산(데이터 양식 변경).xlsx"
+    BASE_DIR, "영수증 보관소", "2026-05", "정산내역_2026-05_v3양식.xlsx"
 )
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
@@ -20,7 +21,7 @@ def ensure_output_dir():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06") -> str:
+def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", output_path: str = None) -> str:
     """
     영수증 데이터 목록을 관리 양식 엑셀로 내보내기
 
@@ -51,12 +52,12 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06") 
         R열(18): 이체증빙(비고)
         S열(19): 지출증빙(비고)
     """
-    ensure_output_dir()
-
-    # 타임스탬프 포함 출력 파일명
-    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_filename = f"정산_export_{ts}.xlsx"
-    output_path = os.path.join(OUTPUT_DIR, output_filename)
+    if not output_path:
+        ensure_output_dir()
+        # 타임스탬프 포함 출력 파일명
+        ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_filename = f"정산_export_{ts}.xlsx"
+        output_path = os.path.join(OUTPUT_DIR, output_filename)
 
     if os.path.exists(TEMPLATE_PATH):
         # 템플릿 복사 후 데이터 삽입
@@ -87,37 +88,44 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06") 
     else:
         ws = wb.active
 
-    # 데이터 시작 행 결정 (기존 데이터 이후)
-    # 행 21부터 시작, 기존 데이터가 있으면 빈 행 찾기
+    # Clear existing data rows starting from row 21 to allow clean overwrite/regeneration
+    # We restrict the clearing loop to 1000 rows to prevent extreme lag from large ws.max_row (e.g. 490k rows)
+    max_clear_row = min(max(ws.max_row + 1, 500), 1000)
+    for r in range(21, max_clear_row):
+        for c in range(1, min(ws.max_column + 1, 35)):
+            cell = ws.cell(row=r, column=c)
+            if cell.value is not None or (cell.fill and cell.fill.fill_type is not None):
+                cell.value = None
+                cell.fill = openpyxl.styles.PatternFill(fill_type=None)
+
     start_row = 21
-    for r in range(21, ws.max_row + 1):
-        has_data = False
-        for c in [2, 5, 13]:  # 날짜, 내역, 출금CNY 열 확인
-            if ws.cell(row=r, column=c).value is not None:
-                has_data = True
-                break
-        if has_data:
-            start_row = r + 1
 
     # 영수증 데이터 삽입
     for idx, receipt in enumerate(receipts):
         r = start_row + idx
-        evidence_no = idx + 1
+        evidence_no = receipt.get("evidence_no", idx + 1)
 
-        # B열: 출금일자
+        # B열: 출금일자 (은행 이체증명서 기준 일괄 적용된 날짜)
+        withdrawal_date_val = receipt.get("withdrawal_date")
+        if withdrawal_date_val and isinstance(withdrawal_date_val, datetime.datetime):
+            withdrawal_date_val = withdrawal_date_val.strftime("%Y-%m-%d")
+        elif withdrawal_date_val and isinstance(withdrawal_date_val, str):
+            # 문자열이라도 yyyy-mm-dd 형태로 유지
+            if len(withdrawal_date_val) > 10:
+                withdrawal_date_val = withdrawal_date_val[:10]
+        ws.cell(row=r, column=2, value=withdrawal_date_val)
+
+        # C열: 증빙일자 (OCR 추출 원본 날짜)
         date_val = receipt.get("date")
-        if date_val and isinstance(date_val, str):
-            try:
-                date_val = datetime.datetime.strptime(date_val, "%Y-%m-%d")
-            except ValueError:
-                pass
-        ws.cell(row=r, column=2, value=date_val)
-
-        # C열: 증빙일자 (OCR 추출 날짜)
+        if date_val and isinstance(date_val, datetime.datetime):
+            date_val = date_val.strftime("%Y-%m-%d")
+        elif date_val and isinstance(date_val, str):
+            if len(date_val) > 10:
+                date_val = date_val[:10]
         ws.cell(row=r, column=3, value=date_val)
 
         # E열: 내역
-        ws.cell(row=r, column=5, value=receipt.get("description", ""))
+        desc_cell = ws.cell(row=r, column=5, value=receipt.get("description", ""))
 
         # F열: 담당자
         ws.cell(row=r, column=6, value=receipt.get("person", ""))
@@ -126,10 +134,32 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06") 
         ws.cell(row=r, column=7, value=evidence_no)
 
         # H열: 대계정
-        ws.cell(row=r, column=8, value=receipt.get("account_major", ""))
+        major_cell = ws.cell(row=r, column=8, value=receipt.get("account_major", ""))
 
         # I열: 소계정
-        ws.cell(row=r, column=9, value=receipt.get("account_minor", ""))
+        minor_cell = ws.cell(row=r, column=9, value=receipt.get("account_minor", ""))
+        
+        # 맵핑 실패(Unknown) 시 빨간색 배경 적용
+        if receipt.get("is_mapped") is False:
+            red_fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+            desc_cell.fill = red_fill
+            major_cell.fill = red_fill
+            minor_cell.fill = red_fill
+
+        # J열: 입금 CNY
+        deposit_cny = receipt.get("deposit_cny")
+        if deposit_cny is not None:
+            ws.cell(row=r, column=10, value=deposit_cny)
+
+        # K열: 입금 환산요율
+        deposit_rate = receipt.get("deposit_rate")
+        if deposit_rate is not None:
+            ws.cell(row=r, column=11, value=deposit_rate)
+
+        # L열: 입금 USD
+        deposit_usd = receipt.get("deposit_usd")
+        if deposit_usd is not None:
+            ws.cell(row=r, column=12, value=deposit_usd)
 
         # M열: 출금 CNY
         amount = receipt.get("amount")
@@ -142,14 +172,18 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06") 
         # O열: 출금 USD (= CNY / 환율)
         ws.cell(row=r, column=15, value=f"=M{r}/N{r}")
 
-        # P열: 잔액 CNY
-        if r == start_row:
-            ws.cell(row=r, column=16, value=f"=P{r-1}-M{r}")
-        else:
-            ws.cell(row=r, column=16, value=f"=P{r-1}-M{r}")
+        # P열: 잔액 CNY (입금 가산, 출금 차감)
+        ws.cell(row=r, column=16, value=f"=P{r-1}+J{r}-M{r}")
 
-        # Q열: 잔액 USD
-        ws.cell(row=r, column=17, value=f"=Q{r-1}-O{r}")
+        # Q열: 잔액 USD (입금 가산, 출금 차감)
+        ws.cell(row=r, column=17, value=f"=Q{r-1}+L{r}-O{r}")
+
+        # R열: 이체증빙(비고) - 검증 경고/일치 여부 기입
+        warning = receipt.get("validation_warning")
+        if warning:
+            warn_cell = ws.cell(row=r, column=18, value=warning)
+            if "불일치" in warning:
+                warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
 
     wb.save(output_path)
     return output_path

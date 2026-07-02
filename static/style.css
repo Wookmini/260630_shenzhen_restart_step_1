@@ -679,3 +679,80 @@ body {
 .export-stat:last-child { border-bottom: none; }
 .export-stat .label { color: var(--gray-500); }
 .export-stat .value { font-weight: 600; color: var(--gray-800); }
+
+/* === 월 선택 드롭다운 스타일 === */
+.month-select-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.month-select-container label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  white-space: nowrap;
+}
+
+.month-select-container select {
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-700);
+  outline: none;
+  cursor: pointer;
+}
+
+/* === 매핑 경고 스타일링 === */
+.warning-border {
+  border: 2px solid var(--error) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+  animation: pulse-red 2s infinite;
+}
+
+.unmapped-row {
+  background-color: rgba(239, 68, 68, 0.04) !important;
+  border-left: 4px solid var(--error);
+}
+
+.unmapped-row td {
+  color: #b91c1c !important;
+}
+
+.unmapped-thumb {
+  border-color: var(--error) !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15) !important;
+}
+
+.warning-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--error);
+  color: white;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.6rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.warning-text {
+  color: var(--error);
+  font-weight: 600;
+}
+
+@keyframes pulse-red {
+  0% { border-color: var(--error); }
+  50% { border-color: #fca5a5; }
+  100% { border-color: var(--error); }
+}
+

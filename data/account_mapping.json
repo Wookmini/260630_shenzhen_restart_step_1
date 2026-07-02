@@ -1,0 +1,302 @@
+[
+  {
+    "description": "사용일자",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "6월26일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "6월29일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "7월9일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "7월10일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "2월 23일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "3월 7일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "3월 10일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "3월 12일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "3월 13일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "3월 14일",
+    "major": "업무추진비",
+    "minor": null
+  },
+  {
+    "description": "기존 잔고",
+    "major": "(-)잡이익(50)",
+    "minor": null
+  },
+  {
+    "description": "송금 수수료",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "사무실 Rent 비용",
+    "major": "지급임차료",
+    "minor": "사무실"
+  },
+  {
+    "description": "이자",
+    "major": "(-)잡이익(50)",
+    "minor": null
+  },
+  {
+    "description": "주택 지원비",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "사무실 명판 제작 금액",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "4월 사무실 Rent비_3/10 송금",
+    "major": "지급임차료",
+    "minor": "사무실관리"
+  },
+  {
+    "description": "4월 사무실 Rent비_3/28 송금",
+    "major": "지급임차료",
+    "minor": "사무실관리"
+  },
+  {
+    "description": "3~4월 사무실 관리비 미납 금액",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "전화기",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "Hot Pot",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "A4용지 및 생수 등",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "냉장고",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "빈프로젝트 및 막 & 막 설치",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "회의실 Table",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "의자",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "모니터(3대)",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "Print기",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "작은 책장",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "4월 환율 차이",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "송금수수료",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "은행 수수료",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "주재원 대행 수수료",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "주재원 5대보험",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "주재원 수당",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "주재원 개인소득세",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "주재원 주택 수당",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "통신비",
+    "major": "통신비",
+    "minor": "기타"
+  },
+  {
+    "description": "사무실 Wifi비용(3월)",
+    "major": "통신비",
+    "minor": "기타"
+  },
+  {
+    "description": "사무실 Wifi비용(4월)",
+    "major": "통신비",
+    "minor": "기타"
+  },
+  {
+    "description": "사무실 물/전기/에어컨 비용(4월)",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "사무실 청소비(5월)_3월 환율",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "사무실 청소비(5월)_5월 환율",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "인터넷 Recruiting비용",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "사무실 비품",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "CSOT T2, T6 출입증 신청 비용",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "프린트 비용 및 프린트 설치 비용",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "택배비",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "업무추진비",
+    "major": "업무추진비",
+    "minor": "일반"
+  },
+  {
+    "description": "시내교통비",
+    "major": "여비교통비",
+    "minor": "해외"
+  },
+  {
+    "description": "업무추진비-csot coffee shop",
+    "major": "업무추진비",
+    "minor": "일반"
+  },
+  {
+    "description": "여비교통비",
+    "major": "여비교통비",
+    "minor": "해외"
+  },
+  {
+    "description": "지급임차료",
+    "major": "지급임차료",
+    "minor": "사무실임차료"
+  },
+  {
+    "description": "지급임차료",
+    "major": "지급임차료",
+    "minor": "차량임차료"
+  },
+  {
+    "description": "해외지사비",
+    "major": "해외지사비",
+    "minor": null
+  },
+  {
+    "description": "급여(incentive)",
+    "major": "급여(incentive)",
+    "minor": "성과급여조정"
+  },
+  {
+    "description": "(-)잡이익(50)",
+    "major": "(-)잡이익(50)",
+    "minor": "(-)잡이익"
+  },
+  {
+    "description": "지급임차료",
+    "major": "지급임차료",
+    "minor": "사무실관리"
+  },
+  {
+    "description": "잡이익",
+    "major": "(-)잡이익(50)",
+    "minor": null
+  }
+]

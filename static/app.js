@@ -1,10 +1,12 @@
 /**
  * SROT — 심천지사 영수증 OCR 변환 웹앱
- * 프론트엔드 인터랙션 로직
+ * 프론트엔드 인터랙션 로직 (Phase 2 - 월별 정산 대시보드)
  */
 
 // === 상태 관리 ===
 const state = {
+  months: [],
+  currentMonth: "",
   receipts: [],
   currentIndex: 0,
   accounts: [],
@@ -14,13 +16,12 @@ const state = {
 };
 
 // === 초기화 ===
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   initTabs();
-  initDropzone();
   initViewerControls();
   initFormActions();
-  loadMasterData();
-  loadReceipts();
+  await loadMasterData();
+  await initMonthSelector();
 });
 
 // === 탭 전환 ===
@@ -45,77 +46,46 @@ function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// === 드래그 & 드롭 업로드 ===
-function initDropzone() {
-  const dropzone = document.getElementById("dropzone");
-  const fileInput = document.getElementById("fileInput");
-
-  ["dragenter", "dragover"].forEach((evt) => {
-    dropzone.addEventListener(evt, (e) => {
-      e.preventDefault();
-      dropzone.classList.add("dragover");
-    });
-  });
-
-  ["dragleave", "drop"].forEach((evt) => {
-    dropzone.addEventListener(evt, (e) => {
-      e.preventDefault();
-      dropzone.classList.remove("dragover");
-    });
-  });
-
-  dropzone.addEventListener("drop", (e) => {
-    const files = e.dataTransfer.files;
-    if (files.length > 0) uploadFiles(files);
-  });
-
-  fileInput.addEventListener("change", (e) => {
-    if (e.target.files.length > 0) uploadFiles(e.target.files);
-  });
-}
-
-async function uploadFiles(files) {
-  const formData = new FormData();
-  const total = Math.min(files.length, 50);
-
-  for (let i = 0; i < total; i++) {
-    formData.append("files", files[i]);
-  }
-
-  // 프로그레스 표시
-  const progressBar = document.getElementById("uploadProgress");
-  const progressFill = document.getElementById("uploadProgressFill");
-  const statusEl = document.getElementById("uploadStatus");
-
-  progressBar.style.display = "block";
-  progressFill.style.width = "10%";
-  statusEl.textContent = `⏳ ${total}건 업로드 및 OCR 처리 중...`;
+// === 월 선택기 초기화 ===
+async function initMonthSelector() {
+  const selectEl = document.getElementById("monthSelect");
+  if (!selectEl) return;
 
   try {
-    progressFill.style.width = "30%";
+    const res = await fetch("/api/months");
+    state.months = await res.json();
+    
+    selectEl.innerHTML = "";
+    if (state.months.length === 0) {
+      selectEl.innerHTML = '<option value="">진행 중인 월 없음</option>';
+      state.currentMonth = "";
+      return;
+    }
 
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
-    progressFill.style.width = "80%";
+    state.months.forEach((m) => {
+      selectEl.innerHTML += `<option value="${m}">${m}</option>`;
+    });
 
-    if (!res.ok) throw new Error("업로드 실패");
+    // 기본값으로 최신 월 설정
+    state.currentMonth = state.months[0];
+    selectEl.value = state.currentMonth;
 
-    const data = await res.json();
-    progressFill.style.width = "100%";
-    statusEl.textContent = `✅ ${data.uploaded}건 업로드 및 OCR 처리 완료!`;
+    selectEl.addEventListener("change", async (e) => {
+      state.currentMonth = e.target.value;
+      state.currentIndex = 0;
+      await loadReceipts();
+      // 현재 탭 렌더링 갱신
+      const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+      if (activeTab === "review") renderReview();
+      if (activeTab === "table") renderTable();
+      if (activeTab === "export") renderExportPreview();
+    });
 
-    showToast(`${data.uploaded}건 영수증이 처리되었습니다.`, "success");
-
-    // 데이터 갱신
+    // 첫 월 데이터 로딩
     await loadReceipts();
-
-    setTimeout(() => {
-      progressBar.style.display = "none";
-      progressFill.style.width = "0%";
-    }, 2000);
-  } catch (err) {
-    statusEl.textContent = `❌ 오류: ${err.message}`;
-    showToast("업로드 중 오류가 발생했습니다.", "error");
-    progressBar.style.display = "none";
+  } catch (e) {
+    console.error("월 목록 로드 실패:", e);
+    showToast("월 목록을 불러오는 중 오류가 발생했습니다.", "error");
   }
 }
 
@@ -153,33 +123,61 @@ function populateDropdowns() {
   // 대계정 변경 시 소계정 연동
   majorSelect.addEventListener("change", () => {
     const selectedMajor = majorSelect.value;
-    const minorSelect = document.getElementById("editMinor");
-    minorSelect.innerHTML = '<option value="">— 선택 —</option>';
-    const minors = state.accounts
-      .filter((a) => a.major === selectedMajor && a.minor)
-      .map((a) => a.minor);
-    [...new Set(minors)].forEach((m) => {
-      minorSelect.innerHTML += `<option value="${m}">${m}</option>`;
-    });
+    updateMinorDropdown(selectedMajor);
   });
+}
+
+function updateMinorDropdown(majorVal, selectedMinor = "") {
+  const minorSelect = document.getElementById("editMinor");
+  minorSelect.innerHTML = '<option value="">— 선택 —</option>';
+  
+  if (!majorVal) return;
+
+  const minors = state.accounts
+    .filter((a) => a.major === majorVal && a.minor)
+    .map((a) => a.minor);
+    
+  [...new Set(minors)].forEach((m) => {
+    minorSelect.innerHTML += `<option value="${m}">${m}</option>`;
+  });
+
+  if (selectedMinor) {
+    minorSelect.value = selectedMinor;
+  }
+}
+
+// === 이미지 URL 헬퍼 ===
+function getReceiptImgUrl(r) {
+  if (!r || !r.file_path) return "";
+  const parts = r.file_path.split("/");
+  const filename = parts[parts.length - 1];
+  const person = r.person || "Unknown";
+  return `/api/months/${state.currentMonth}/images/${person}/${filename}`;
 }
 
 // === 영수증 데이터 로드 ===
 async function loadReceipts() {
+  if (!state.currentMonth) return;
+
   try {
-    const res = await fetch("/api/receipts");
+    const res = await fetch(`/api/months/${state.currentMonth}/receipts`);
     state.receipts = await res.json();
+    
+    // Sort receipts by evidence_no
+    state.receipts.sort((a, b) => (a.evidence_no || 999) - (b.evidence_no || 999));
+    
     updateStats();
     renderThumbnails();
     renderTable();
   } catch (e) {
     console.error("영수증 로드 실패:", e);
+    showToast("영수증 목록을 불러오는 중 오류가 발생했습니다.", "error");
   }
 }
 
 function updateStats() {
   const total = state.receipts.length;
-  const processed = state.receipts.filter((r) => r.amount != null).length;
+  const processed = state.receipts.filter((r) => r.amount != null && r.is_mapped !== false).length;
   const totalAmt = state.receipts.reduce((s, r) => s + (r.amount || 0), 0);
 
   document.getElementById("statTotal").textContent = `📄 총 ${total}건`;
@@ -193,6 +191,8 @@ function renderThumbnails() {
   const countEl = document.getElementById("thumbCount");
   const section = document.getElementById("thumbSection");
 
+  if (!grid || !countEl || !section) return;
+
   if (state.receipts.length === 0) {
     section.style.display = "none";
     return;
@@ -201,18 +201,24 @@ function renderThumbnails() {
   countEl.textContent = state.receipts.length;
 
   grid.innerHTML = state.receipts
-    .map(
-      (r, i) => `
-    <div class="thumb-card ${i === state.currentIndex ? "selected" : ""}" data-index="${i}" onclick="selectReceipt(${i})">
-      <img src="/api/preview/${r.id}" alt="${r.original_filename}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 80%22><rect fill=%22%23f1f5f9%22 width=%22100%22 height=%2280%22/><text x=%2250%22 y=%2245%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22 font-size=%2212%22>No Preview</text></svg>'">
-      <span class="thumb-badge">${r.type || "기타"}</span>
-      <div class="thumb-info">
-        <div class="name">${r.original_filename || "unnamed"}</div>
-        <div class="amount">${r.amount != null ? `¥${r.amount.toLocaleString()}` : "—"}</div>
-      </div>
-    </div>
-  `
-    )
+    .map((r, i) => {
+      const imgUrl = getReceiptImgUrl(r);
+      const isSelected = i === state.currentIndex;
+      const isUnmapped = r.is_mapped === false;
+      const warningClass = isUnmapped ? "unmapped-thumb" : "";
+      
+      return `
+        <div class="thumb-card ${isSelected ? "selected" : ""} ${warningClass}" data-index="${i}" onclick="selectReceipt(${i})">
+          <img src="${imgUrl}" alt="영수증 ${r.evidence_no}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 80%22><rect fill=%22%23f1f5f9%22 width=%22100%22 height=%2280%22/><text x=%2250%22 y=%2245%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22 font-size=%2210%22>No Preview</text></svg>'">
+          <span class="thumb-badge">${r.type || "기타"}</span>
+          ${isUnmapped ? '<span class="warning-badge">⚠️ 계정 확인 필요</span>' : ''}
+          <div class="thumb-info">
+            <div class="name">증빙 #${r.evidence_no} (${r.person || '미지정'})</div>
+            <div class="amount">${r.amount != null ? `¥${r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 })}` : "—"}</div>
+          </div>
+        </div>
+      `;
+    })
     .join("");
 }
 
@@ -232,19 +238,21 @@ function renderReview() {
   if (state.receipts.length === 0) {
     document.getElementById("navCounter").textContent = "0 / 0";
     document.getElementById("reviewImage").src = "";
+    document.getElementById("editForm").reset();
     return;
   }
 
   const r = state.receipts[state.currentIndex];
   document.getElementById("navCounter").textContent = `${state.currentIndex + 1} / ${state.receipts.length}`;
 
-  // 이미지
-  document.getElementById("reviewImage").src = `/api/preview/${r.id}`;
+  // 이미지 뷰어 갱신
+  const imgUrl = getReceiptImgUrl(r);
+  document.getElementById("reviewImage").src = imgUrl;
   state.imageZoom = 1;
   state.imageRotation = 0;
   applyImageTransform();
 
-  // 폼 채우기
+  // 폼 필드 채우기
   document.getElementById("editType").value = r.type || "기타";
   document.getElementById("editDate").value = r.date || "";
   document.getElementById("editAmount").value = r.amount != null ? r.amount : "";
@@ -253,20 +261,21 @@ function renderReview() {
   document.getElementById("editPerson").value = r.person || "";
   document.getElementById("editRawText").value = r.raw_text || "";
 
-  // 계정 드롭다운
-  if (r.account_major) {
-    document.getElementById("editMajor").value = r.account_major;
-    // 소계정 재구성
-    const minorSelect = document.getElementById("editMinor");
-    minorSelect.innerHTML = '<option value="">— 선택 —</option>';
-    const minors = state.accounts
-      .filter((a) => a.major === r.account_major && a.minor)
-      .map((a) => a.minor);
-    [...new Set(minors)].forEach((m) => {
-      minorSelect.innerHTML += `<option value="${m}">${m}</option>`;
-    });
-    if (r.account_minor) minorSelect.value = r.account_minor;
+  // 계정 매핑 경고 처리 (클래스 추가/제거)
+  const majorSelect = document.getElementById("editMajor");
+  const minorSelect = document.getElementById("editMinor");
+  
+  if (r.is_mapped === false) {
+    majorSelect.classList.add("warning-border");
+    minorSelect.classList.add("warning-border");
+  } else {
+    majorSelect.classList.remove("warning-border");
+    minorSelect.classList.remove("warning-border");
   }
+
+  // 대계정 및 소계정 세팅
+  majorSelect.value = r.account_major || "";
+  updateMinorDropdown(r.account_major || "", r.account_minor || "");
 }
 
 // === 이미지 뷰어 컨트롤 ===
@@ -292,7 +301,9 @@ function initViewerControls() {
 
 function applyImageTransform() {
   const img = document.getElementById("reviewImage");
-  img.style.transform = `scale(${state.imageZoom}) rotate(${state.imageRotation}deg)`;
+  if (img) {
+    img.style.transform = `scale(${state.imageZoom}) rotate(${state.imageRotation}deg)`;
+  }
 }
 
 // === 폼 저장/삭제/이전/다음 ===
@@ -319,15 +330,23 @@ async function saveCurrentReceipt() {
     account_minor: document.getElementById("editMinor").value || null,
   };
 
+  // 대계정 코드 매핑 자동 연동
+  if (update.account_major) {
+    const match = state.accounts.find((a) => a.major === update.account_major && (!update.account_minor || a.minor === update.account_minor));
+    if (match) {
+      update.account_code = match.code;
+    }
+  }
+
   try {
-    const res = await fetch(`/api/receipts/${r.id}`, {
+    const res = await fetch(`/api/months/${state.currentMonth}/receipts/${r.evidence_no}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(update),
     });
     if (!res.ok) throw new Error("저장 실패");
 
-    showToast("저장 완료!", "success");
+    showToast("영수증 정보 저장 완료 및 엑셀 정산서 동기화 완료!", "success");
     await loadReceipts();
     renderReview();
   } catch (e) {
@@ -339,13 +358,13 @@ async function deleteCurrentReceipt() {
   if (state.receipts.length === 0) return;
   const r = state.receipts[state.currentIndex];
 
-  if (!confirm(`"${r.original_filename}" 영수증을 삭제하시겠습니까?`)) return;
+  if (!confirm(`증빙번호 [${r.evidence_no}번] 영수증을 삭제하시겠습니까?\n삭제 시 이후 영수증들이 자동으로 당겨져 리네이밍(재정렬)됩니다.`)) return;
 
   try {
-    const res = await fetch(`/api/receipts/${r.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/months/${state.currentMonth}/receipts/${r.evidence_no}`, { method: "DELETE" });
     if (!res.ok) throw new Error("삭제 실패");
 
-    showToast("삭제 완료!", "info");
+    showToast("영수증 삭제 및 일련번호 리네이밍 완료!", "info");
     await loadReceipts();
     if (state.currentIndex >= state.receipts.length) {
       state.currentIndex = Math.max(0, state.receipts.length - 1);
@@ -371,9 +390,12 @@ function renderTable() {
   const empty = document.getElementById("tableEmpty");
   const totalEl = document.getElementById("totalAmount");
 
+  if (!tbody || !empty || !totalEl) return;
+
   if (state.receipts.length === 0) {
     tbody.innerHTML = "";
     empty.style.display = "block";
+    totalEl.textContent = "¥0.00";
     return;
   }
   empty.style.display = "none";
@@ -382,19 +404,22 @@ function renderTable() {
   tbody.innerHTML = state.receipts
     .map((r, i) => {
       total += r.amount || 0;
+      const isUnmapped = r.is_mapped === false;
+      const rowClass = isUnmapped ? "unmapped-row" : "";
+      
       return `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${r.date || "—"}</td>
-        <td>${r.description || "—"}</td>
-        <td>${r.person || "—"}</td>
-        <td>${r.account_major || "—"}</td>
-        <td>${r.account_minor || "—"}</td>
-        <td class="amount-cell">${r.amount != null ? `¥${r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 })}` : "—"}</td>
-        <td><span class="thumb-badge" style="position:static;">${r.type || "기타"}</span></td>
-        <td><button class="btn btn-secondary btn-sm" onclick="selectReceipt(${i})">편집</button></td>
-      </tr>
-    `;
+        <tr class="${rowClass}">
+          <td>${r.evidence_no}</td>
+          <td>${r.date || "—"}</td>
+          <td>${r.description || "—"}</td>
+          <td>${r.person || "—"}</td>
+          <td>${r.account_major || (isUnmapped ? '<span class="warning-text">⚠️ 확인 필요</span>' : "—")}</td>
+          <td>${r.account_minor || "—"}</td>
+          <td class="amount-cell">${r.amount != null ? `¥${r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 })}` : "—"}</td>
+          <td><span class="thumb-badge" style="position:static;">${r.type || "기타"}</span></td>
+          <td><button class="btn btn-secondary btn-sm" onclick="selectReceipt(${i})">편집</button></td>
+        </tr>
+      `;
     })
     .join("");
 
@@ -412,34 +437,33 @@ function renderExportPreview() {
   document.getElementById("exportPersons").textContent = `${persons.size}명`;
 }
 
-// === 엑셀 내보내기 ===
+// === 엑셀 내보내기 (다운로드) ===
 async function exportExcel() {
-  if (state.receipts.length === 0) {
+  if (!state.currentMonth || state.receipts.length === 0) {
     showToast("내보낼 영수증이 없습니다.", "warning");
     return;
   }
 
   const btn = document.getElementById("btnExport");
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> 생성 중...';
+  btn.innerHTML = '<span class="spinner"></span> 엑셀 준비 중...';
 
   try {
-    const res = await fetch("/api/export/excel", { method: "POST" });
-    if (!res.ok) throw new Error("엑셀 생성 실패");
+    const url = `/api/months/${state.currentMonth}/export`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("엑셀 정산서 조회 실패");
 
     const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+    const downloadUrl = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    const disposition = res.headers.get("Content-Disposition") || "";
-    const filenameMatch = disposition.match(/filename="?([^"]+)"?/);
-    a.download = filenameMatch ? filenameMatch[1] : "정산_export.xlsx";
-    a.href = url;
+    a.download = `정산내역_${state.currentMonth}.xlsx`;
+    a.href = downloadUrl;
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(downloadUrl);
 
-    showToast("엑셀 파일이 다운로드되었습니다!", "success");
+    showToast("최신 엑셀 정산서가 정상 다운로드되었습니다!", "success");
   } catch (e) {
-    showToast(`오류: ${e.message}`, "error");
+    showToast(`다운로드 오류: ${e.message}`, "error");
   } finally {
     btn.disabled = false;
     btn.innerHTML = "📥 관리 양식 엑셀 다운로드";
@@ -449,10 +473,11 @@ async function exportExcel() {
 // === 토스트 알림 ===
 function showToast(message, type = "info") {
   const container = document.getElementById("toastContainer");
+  if (!container) return;
   const icons = { success: "✅", error: "❌", info: "ℹ️", warning: "⚠️" };
   const toast = document.createElement("div");
   toast.className = `toast ${type}`;
   toast.innerHTML = `${icons[type] || ""} ${message}`;
   container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
+  setTimeout(() => toast.remove(), 4000);
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "增值税发票",
+    "date": "2026-04-23",
+    "amount": 72.06,
+    "currency": "CNY",
+    "seller": "上海心做贸易有限公司",
+    "description": "사무용품",
+    "account_major": "해외지사비",
+    "account_minor": "기타집기",
+    "account_code": "51321010",
+    "person": "권유석",
+    "evidence_no": 1,
+    "is_mapped": true,
+    "file_path": "영수증 보관소/2026-06/권유석/001.png"
+  },
+  {
+    "type": "增值税发票",
+    "date": "2026-04-23",
+    "amount": 72.06,
+    "currency": "CNY",
+    "seller": "上海心做贸易有限公司",
+    "description": "사무용품",
+    "account_major": "해외지사비",
+    "account_minor": "기타집기",
+    "account_code": "51321010",
+    "person": "홍길동",
+    "evidence_no": 2,
+    "is_mapped": true,
+    "file_path": "영수증 보관소/2026-06/홍길동/002.png"
+  }
+]
