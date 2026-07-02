@@ -9,6 +9,8 @@ from receipt_parser import parse_receipt
 from excel_exporter import export_to_excel
 from receipt_mapper import map_receipt_data
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 def clean_assignee_name(name: str) -> str:
     """이름 뒤에 붙은 직급(책임, 수석, 팀장 등)을 제거하고 순수 이름만 추출"""
     return re.sub(r'\s*(책임|수석|팀장|부장|과장|전문가|총감|총경리|사원|대리)\s*$', '', name).strip()
@@ -138,9 +140,17 @@ def main(month_str):
         
         # 엑셀 백데이터 기반 시맨틱 매핑(분류)
         raw_desc = parsed.get('description', '')
-        seller = parsed.get('seller', '')
-        raw_text = ocr_res.get('raw_text', '')
-        mapped = map_receipt_data(raw_desc, seller, raw_text)
+        if parsed.get('type') == '银行回单':
+            mapped = {
+                "is_mapped": True,
+                "major": "해외지사비",
+                "minor": None,
+                "standard_desc": raw_desc
+            }
+        else:
+            seller = parsed.get('seller', '')
+            raw_text = ocr_res.get('raw_text', '')
+            mapped = map_receipt_data(raw_desc, seller, raw_text)
         
         parsed['is_mapped'] = mapped['is_mapped']
         if mapped['is_mapped']:

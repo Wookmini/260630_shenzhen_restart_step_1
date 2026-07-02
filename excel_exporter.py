@@ -185,6 +185,14 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
             if "불일치" in warning:
                 warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
 
+        # S열: 지출증빙(비고) - 파표 세무코드 검증
+        if receipt.get("type") == "增值税发票":
+            if receipt.get("tax_code_valid"):
+                ws.cell(row=r, column=19, value="파표 회사코드 일치")
+            else:
+                tax_warn_cell = ws.cell(row=r, column=19, value="파표 회사코드 불일치/누락")
+                tax_warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+
     wb.save(output_path)
     return output_path
 

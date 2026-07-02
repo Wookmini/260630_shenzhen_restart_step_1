@@ -42,7 +42,20 @@ def clean_amount(amt_str: str) -> Optional[float]:
     """금액 문자열 정제"""
     if not amt_str:
         return None
+        
+    # OCR이 콤마를 온점으로 잘못 인식한 경우 복원 (예: 12.405.76 -> 12405.76)
+    if amt_str.count('.') >= 2:
+        parts = amt_str.rsplit('.', 1)
+        if len(parts[1]) == 2:
+            amt_str = parts[0].replace('.', '') + '.' + parts[1]
+
     cleaned = re.sub(r"[^\d.]", "", amt_str.replace(",", "").replace(" ", ""))
+    
+    # 여전히 소수점이 2개 이상인 경우 오류 방지 (가장 마지막 소수점만 살림)
+    if cleaned.count('.') > 1:
+        parts = cleaned.rsplit('.', 1)
+        cleaned = parts[0].replace('.', '') + '.' + parts[1]
+        
     try:
         return float(cleaned)
     except ValueError:
@@ -65,6 +78,7 @@ def parse_receipt(raw_text: str) -> dict:
         "account_minor": None,
         "account_code": None,
         "fee_amount": None,
+        "tax_code_valid": None,
     }
 
     if not raw_text or not raw_text.strip():
@@ -114,9 +128,9 @@ def _parse_vat_fapiao(text: str, result: dict):
     # 금액: 价税合计 소문자(小写)
     amt_patterns = [
         r"(?:小\s*写|价税合计).*?[¥￥][ \t]*([\d., ]+)",
-        r"(?:小\s*写|价税合计)[ \t]*.*?([\d,]+\.?\d*)",
+        r"(?:小\s*写|价税合计)[ \t]*.*?([\d.,]+\.?\d*)",
         r"合\s*计.*?[¥￥][ \t]*([\d., ]+)",
-        r"[¥￥][ \t]*([\d,]+\.\d{2})", # 단순히 ¥ 뒤의 금액
+        r"[¥￥][ \t]*([\d.,]+\.\d{2})", # 단순히 ¥ 뒤의 금액
     ]
     for pattern in amt_patterns:
         m_list = re.findall(pattern, text)
@@ -185,6 +199,10 @@ def _parse_vat_fapiao(text: str, result: dict):
         if desc_m:
             result["description"] = desc_m.group(1).strip()[:100]
 
+    # 세무코드 검증
+    target_code = "91440300MAELRTJ5XE"
+    result["tax_code_valid"] = (target_code in text)
+
 
 def _parse_train_ticket(text: str, result: dict):
     """火车票 파싱"""
@@ -235,15 +253,13 @@ def _parse_toll_receipt(text: str, result: dict):
 def _parse_bank_receipt(text: str, result: dict):
     """银行回单 파싱"""
     # 1. 거래 통화 및 거래액(amount) 추출
-    amt_matches = re.findall(r"(CNY|USD)\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+    amt_matches = re.findall(r"(CNY|USD)\s*([\d.,]+\.\d{2})", text, re.IGNORECASE)
     if amt_matches:
         parsed_amounts = []
         for curr, amt_str in amt_matches:
-            try:
-                val = float(amt_str.replace(',', ''))
+            val = clean_amount(amt_str)
+            if val is not None:
                 parsed_amounts.append((val, curr, amt_str))
-            except:
-                pass
         if parsed_amounts:
             # 거래액은 수수료보다 크므로 가장 큰 금액을 거래액으로 선택
             parsed_amounts.sort(key=lambda x: x[0], reverse=True)
@@ -299,7 +315,7 @@ def _parse_bank_receipt(text: str, result: dict):
 def _fallback_amount(text: str, result: dict):
     """폴백 금액 추출"""
     # 1. ¥ 또는 ￥ 가 있는 경우
-    m_list = re.findall(r"[¥￥]\s*([\d,]+\.?\d*)", text)
+    m_list = re.findall(r"[¥￥]\s*([\d.,]+\.?\d*)", text)
     if m_list:
         amounts = [clean_amount(m) for m in m_list if clean_amount(m) is not None]
         non_zero = [a for a in amounts if a > 0.0]
@@ -308,7 +324,7 @@ def _fallback_amount(text: str, result: dict):
             return
     
     # 2. % 뒤에 나타나는 금액 (VAT의 경우)
-    m2_list = re.findall(r"%\n*.*?([\d,]+\.\d{2})", text)
+    m2_list = re.findall(r"%\n*.*?([\d.,]+\.\d{2})", text)
     if m2_list:
         amounts = [clean_amount(m) for m in m2_list if clean_amount(m) is not None]
         non_zero = [a for a in amounts if a > 0.0]
@@ -317,7 +333,7 @@ def _fallback_amount(text: str, result: dict):
             return
         
     # 3. 문서 끝부분에 위치한 XX.XX 형태의 금액
-    m3 = re.findall(r"([\d,]+\.\d{2})", text)
+    m3 = re.findall(r"([\d.,]+\.\d{2})", text)
     if m3:
         amounts = [clean_amount(m) for m in m3 if clean_amount(m) is not None]
         non_zero = [a for a in amounts if a > 0.0]
