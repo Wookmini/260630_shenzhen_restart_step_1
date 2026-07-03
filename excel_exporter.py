@@ -11,7 +11,7 @@ from typing import List, Dict, Any
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_PATH = os.path.join(
-    BASE_DIR, "영수증 보관소", "2026-05", "정산내역_2026-05_v3양식.xlsx"
+    BASE_DIR, "영수증 보관소", "심천지사 전도금 정산 양식_YYYY-MM.xlsx"
 )
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
@@ -87,18 +87,19 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
         ws = wb[month_label]
     else:
         ws = wb.active
+        ws.title = month_label
 
     # Clear existing data rows starting from row 21 to allow clean overwrite/regeneration
     # We restrict the clearing loop to 1000 rows to prevent extreme lag from large ws.max_row (e.g. 490k rows)
     max_clear_row = min(max(ws.max_row + 1, 500), 1000)
-    for r in range(21, max_clear_row):
+    for r in range(22, max_clear_row):
         for c in range(1, min(ws.max_column + 1, 35)):
             cell = ws.cell(row=r, column=c)
             if cell.value is not None or (cell.fill and cell.fill.fill_type is not None):
                 cell.value = None
                 cell.fill = openpyxl.styles.PatternFill(fill_type=None)
 
-    start_row = 21
+    start_row = 22
 
     # 영수증 데이터 삽입
     for idx, receipt in enumerate(receipts):
@@ -123,6 +124,12 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
             if len(date_val) > 10:
                 date_val = date_val[:10]
         ws.cell(row=r, column=3, value=date_val)
+
+        # D열: 증빙번호 (파표일 경우에만)
+        if receipt.get("type") == "增值税发票":
+            ws.cell(row=r, column=4, value=receipt.get("receipt_number", ""))
+        else:
+            ws.cell(row=r, column=4, value="")
 
         # E열: 내역
         desc_cell = ws.cell(row=r, column=5, value=receipt.get("description", ""))
@@ -185,8 +192,11 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
             if "불일치" in warning:
                 warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
 
-        # S열: 지출증빙(비고) - 파표 세무코드 검증
-        if receipt.get("type") == "增值税发票":
+        # S열: 지출증빙(비고) - remark 필드 우선, 없으면 파표 코드 검증 결과 사용
+        remark_val = receipt.get("remark")
+        if remark_val:
+            ws.cell(row=r, column=19, value=remark_val)
+        elif receipt.get("type") == "增值税发票":
             if receipt.get("tax_code_valid"):
                 ws.cell(row=r, column=19, value="파표 회사코드 일치")
             else:

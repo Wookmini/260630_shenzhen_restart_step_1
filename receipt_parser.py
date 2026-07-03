@@ -79,6 +79,7 @@ def parse_receipt(raw_text: str) -> dict:
         "account_code": None,
         "fee_amount": None,
         "tax_code_valid": None,
+        "receipt_number": None,
     }
 
     if not raw_text or not raw_text.strip():
@@ -106,7 +107,32 @@ def parse_receipt(raw_text: str) -> dict:
         result["type"] = "加油票"
         _parse_fuel_receipt(raw_text, result)
 
-    # (D) 过路费 (톨비)
+    # (E) 银行回单 (은행)
+    elif any(kw in raw_text for kw in ["电子回单", "回单专用", "转账", "交易"]):
+        result["type"] = "银行回单"
+        _parse_bank_receipt(raw_text, result)
+        
+    # (F) 行程单 (항공권)
+    elif any(kw in raw_text for kw in ["行程单", "航空运输", "电子客票", "机票"]):
+        result["type"] = "行程单"
+        _fallback_date(raw_text, result)
+        _fallback_amount(raw_text, result)
+        result["description"] = "항공권"
+        
+    # (G) 餐饮票 (식대)
+    elif any(kw in raw_text for kw in ["餐饮", "菜单", "结账", "小票"]):
+        result["type"] = "餐饮票"
+        _fallback_date(raw_text, result)
+        _fallback_amount(raw_text, result)
+        result["description"] = "식대"
+        
+    # (H) 普通收据 (일반 영수증)
+    elif any(kw in raw_text for kw in ["收据", "收款单", "凭证"]):
+        result["type"] = "普通收据"
+        _fallback_date(raw_text, result)
+        _fallback_amount(raw_text, result)
+        
+    # (D) 过路费 (톨비 및 택시)
     elif any(kw in raw_text for kw in ["广东联合电子", "通行费", "过路费", "高速"]):
         result["type"] = "过路费"
         _parse_toll_receipt(raw_text, result)
@@ -142,9 +168,9 @@ def _parse_vat_fapiao(text: str, result: dict):
                 break
 
     # 한자 대문자 금액(价税合计 大写) 검증 및 소수점 인식 오류 보정
-    cn_str = extract_cn_amount_string(text)
-    if cn_str:
-        cn_val = parse_cn_amount(cn_str)
+    cn_m = re.search(r"(?:大\s*写|合\s*计|价税合计)[ \t]*[¥￥:]?[ \t]*([零壹贰叁肆伍陆柒捌玖貮两拾佰仟万亿圆元角分整]{2,})", text)
+    if cn_m:
+        cn_val = parse_cn_amount(cn_m.group(1))
         if cn_val > 0.0:
             if not result.get("amount"):
                 result["amount"] = cn_val
@@ -187,7 +213,7 @@ def _parse_vat_fapiao(text: str, result: dict):
 
     # 내역: 项目名称 (Project Name)
     # 중국 증치세 영수증의 항목명은 대체로 '*카테고리*품명' 형태를 띰 (예: *文具*得力纳米净橡皮擦)
-    item_pattern = r"\*([^\*]+)\*([^\n]+)"
+    item_pattern = r"\*([^\*\n]+)\*([^\n]+)"
     desc_matches = re.findall(item_pattern, text)
     if desc_matches:
         # 첫 번째 항목을 대표 내역으로 사용 (예: "文具 - 得力纳米净橡皮擦")
@@ -199,9 +225,24 @@ def _parse_vat_fapiao(text: str, result: dict):
         if desc_m:
             result["description"] = desc_m.group(1).strip()[:100]
 
+    # 화물라라(Lalamove) 등 화물운송 영수증 폴백
+    if not result.get("description"):
+        if "货拉拉" in text or "货物运输" in text:
+            result["description"] = "화물운송료 (货拉拉)"
+
     # 세무코드 검증
     target_code = "91440300MAELRTJ5XE"
     result["tax_code_valid"] = (target_code in text)
+
+    # 영수증 번호 (증빙번호)
+    num_m = re.search(r"(?:发票号码|号码|发票代码)\s*[:：]?\s*(\d{8,20})", text)
+    if num_m:
+        result["receipt_number"] = num_m.group(1)
+    else:
+        # 단독 20자리 숫자 (전전발표)
+        num20_m = re.search(r"\b(\d{20})\b", text)
+        if num20_m:
+            result["receipt_number"] = num20_m.group(1)
 
 
 def _parse_train_ticket(text: str, result: dict):
@@ -239,15 +280,38 @@ def _parse_fuel_receipt(text: str, result: dict):
 
 def _parse_toll_receipt(text: str, result: dict):
     """过路费 파싱"""
-    amt_list = re.findall(r"(?:金额|合计|通行费|收费).*?[¥￥]?\s*([\d.,]+)", text)
-    if amt_list:
-        amounts = [clean_amount(a) for a in amt_list if clean_amount(a) is not None]
-        non_zero = [a for a in amounts if a > 0.0]
-        if non_zero:
-            result["amount"] = max(non_zero)
+    # 디디추싱 위챗 결제 라인 근처 금액 추출 (가장 정확함)
+    wx_m = re.search(r"免密支付\n*([\d.,]+)元", text)
+    if wx_m:
+        result["amount"] = float(wx_m.group(1))
+    
+    if not result.get("amount"):
+        wx_m2 = re.search(r"([\d.,]+)元\n*支付时间", text)
+        if wx_m2:
+            result["amount"] = float(wx_m2.group(1))
+
+    if not result.get("amount"):
+        # 디디추싱 등에서 '总实付' 부근의 쪼개진 숫자(예: 543\n5元\n总实付) 처리
+        didi_m = re.search(r"(\d+)\n(\d+)[元]?\n总实付", text)
+        if didi_m:
+            result["amount"] = float(f"{didi_m.group(1)}.{didi_m.group(2)}")
+
+    if not result.get("amount"):
+        amt_list = re.findall(r"(?:金额|合计|通行费|收费|总实付).*?[¥￥]?\s*([\d.,]+)", text)
+        if amt_list:
+            amounts = [clean_amount(a) for a in amt_list if clean_amount(a) is not None]
+            non_zero = [a for a in amounts if a > 0.0]
+            if non_zero:
+                result["amount"] = max(non_zero)
 
     _fallback_date(text, result)
-    result["description"] = "톨비"
+    
+    # 택시인지 톨비인지 구분
+    if "叫车" in text or "滴滴" in text or "免密支付" in text or "出租车" in text:
+        result["description"] = "택시비"
+        result["type"] = "出租车票"
+    else:
+        result["description"] = "톨비"
 
 
 def _parse_bank_receipt(text: str, result: dict):
@@ -339,6 +403,15 @@ def _fallback_amount(text: str, result: dict):
         non_zero = [a for a in amounts if a > 0.0]
         if non_zero:
             result["amount"] = non_zero[-1]
+            return
+
+    # 4. 숫자 + 元 형태
+    m4 = re.findall(r"([\d.,]+)\s*元", text)
+    if m4:
+        amounts = [clean_amount(m) for m in m4 if clean_amount(m) is not None]
+        non_zero = [a for a in amounts if a > 0.0]
+        if non_zero:
+            result["amount"] = max(non_zero)
 
 
 def _fallback_date(text: str, result: dict):

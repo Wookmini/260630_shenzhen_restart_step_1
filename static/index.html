@@ -1,229 +1,292 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="심천지사 중국 영수증 OCR 변환 웹앱 - 영수증 사진을 업로드하면 자동으로 엑셀 데이터로 변환합니다.">
-    <title>SROT - 심천지사 영수증 OCR 변환</title>
-    <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DB GlobalChip 심천지사 전도금 정산 자동화 시스템">
+  <title>심천지사 전도금 정산 자동화 시스템</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <!-- 토스트 알림 컨테이너 -->
-    <div class="toast-container" id="toastContainer"></div>
 
-    <!-- 헤더 -->
-    <header class="app-header">
-        <div class="app-logo">
-            <div class="icon">🧾</div>
-            <div>
-                <h1>SROT</h1>
-                <span class="subtitle">심천지사 영수증 OCR 변환 시스템</span>
-            </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== 헤더 ===== -->
+  <header class="app-header">
+    <div class="header-brand">
+      <img src="/logo.png" alt="DB GlobalChip" class="header-logo" id="headerLogo">
+      <div class="header-title-wrap">
+        <h1 class="header-title">심천지사 전도금 정산 자동화 시스템</h1>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="month-select-wrap">
+        <span class="month-icon">📅</span>
+        <select id="monthSelect" class="month-select">
+          <option value="">불러오는 중...</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="stat-pills">
+        <div class="stat-pill">
+          <span class="pill-label">총</span>
+          <span class="pill-value" id="valTotal">0</span>
+          <span class="pill-unit">건</span>
         </div>
-        <div class="header-center">
-            <div class="month-select-container">
-                <label for="monthSelect">📅 정산 월 선택</label>
-                <select id="monthSelect">
-                    <option value="">불러오는 중...</option>
-                </select>
-            </div>
+        <div class="stat-pill processed">
+          <span class="pill-label">처리</span>
+          <span class="pill-value" id="valProcessed">0</span>
+          <span class="pill-unit">건</span>
         </div>
-        <div class="header-stats">
-            <span class="stat-badge" id="statTotal">📄 총 0건</span>
-            <span class="stat-badge" id="statProcessed">✅ 처리 0건</span>
-            <span class="stat-badge" id="statAmount">💰 ¥0.00</span>
+        <div class="stat-pill warning" id="statWarning">
+          <span class="pill-label">확인필요</span>
+          <span class="pill-value" id="valWarning">0</span>
+          <span class="pill-unit">건</span>
         </div>
-    </header>
+        <div class="stat-pill amount">
+          <span class="pill-label">총액</span>
+          <span class="pill-value" id="valAmount">¥0</span>
+        </div>
+      </div>
+      <button class="btn-save-excel" id="btnSaveExcel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/>
+          <polyline points="7 3 7 8 15 8"/>
+        </svg>
+        엑셀 최종 저장
+      </button>
+    </div>
+  </header>
 
-    <!-- 탭 네비게이션 -->
-    <nav class="tab-nav">
-        <button class="tab-btn active" data-tab="upload" id="tabUpload">📸 영수증 업로드</button>
-        <button class="tab-btn" data-tab="review" id="tabReview">✏️ 데이터 검토</button>
-        <button class="tab-btn" data-tab="table" id="tabTable">📊 정산 내역</button>
-        <button class="tab-btn" data-tab="export" id="tabExport">📥 내보내기</button>
-    </nav>
+  <!-- ===== 탭 네비게이션 ===== -->
+  <nav class="tab-nav">
+    <button class="tab-btn" data-tab="table" id="tabTable">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+      정산 내역
+    </button>
+    <button class="tab-btn" data-tab="review" id="tabReview">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      데이터 검토
+    </button>
+  </nav>
 
-    <!-- 메인 컨텐츠 -->
-    <main class="main-content">
+  <!-- ===== 메인 콘텐츠 ===== -->
+  <main class="main-content">
 
-        <!-- ===== 탭 1: 영수증 업로드 ===== -->
-        <section class="tab-panel active" id="panelUpload">
-            <div class="glass-card">
-                <div class="card-title">📸 영수증 이미지 업로드</div>
-                <div class="dropzone" id="dropzone">
-                    <input type="file" id="fileInput" multiple accept="image/*,.pdf,.heic">
-                    <div class="icon">📁</div>
-                    <h3>여기에 영수증 이미지를 드래그하세요</h3>
-                    <p>JPG, PNG, PDF, HEIC 지원 · 최대 50장 일괄 업로드</p>
+    <!-- ===== 탭 1: 정산 내역 ===== -->
+    <section class="tab-panel active" id="panelTable">
+      <div class="glass-card table-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            전체 정산 내역
+          </div>
+          <div class="table-controls">
+            <input type="text" id="tableSearch" class="search-input" placeholder="🔍 내역, 담당자 검색...">
+            <span class="record-count" id="recordCount">0건</span>
+          </div>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table" id="settlementTable">
+            <thead>
+              <tr>
+                <th class="col-no">#</th>
+                <th class="col-date sortable" data-col="date">날짜 <span class="sort-icon">↕</span></th>
+                <th class="col-desc">내역</th>
+                <th class="col-person">담당자</th>
+                <th class="col-major">대계정</th>
+                <th class="col-minor">소계정</th>
+                <th class="col-amount sortable" data-col="amount">금액(CNY) <span class="sort-icon">↕</span></th>
+                <th class="col-type">유형</th>
+                <th class="col-remark">비고</th>
+                <th class="col-action">편집</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td colspan="6" class="total-label">합 계</td>
+                <td class="amount-cell" id="totalAmount">¥0.00</td>
+                <td colspan="3"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="empty-state" id="tableEmpty">
+          <div class="empty-icon">📋</div>
+          <h3>정산 데이터가 없습니다</h3>
+          <p>파이썬 배치 실행 후 월을 선택하면 데이터가 표시됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 탭 2: 데이터 검토 ===== -->
+    <section class="tab-panel" id="panelReview">
+      <div class="review-layout">
+
+        <!-- 좌: 스크롤 가능한 썸네일 사이드바 -->
+        <aside class="review-sidebar glass-card">
+          <div class="sidebar-header">
+            <span class="sidebar-title">영수증 목록</span>
+            <span class="sidebar-count" id="sidebarCount">0건</span>
+          </div>
+          <div class="sidebar-list" id="sidebarList"></div>
+        </aside>
+
+        <!-- 우: 뷰어 + 폼 -->
+        <div class="review-main">
+          <div class="review-nav-bar">
+            <button class="nav-btn" id="btnPrev">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              이전
+            </button>
+            <span class="nav-counter" id="navCounter">0 / 0</span>
+            <button class="nav-btn" id="btnNext">
+              다음
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+
+          <div class="split-layout">
+            <!-- 이미지 뷰어 -->
+            <div class="glass-card viewer-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  영수증 원본
                 </div>
-                <div class="progress-bar" id="uploadProgress" style="display:none;">
-                    <div class="progress-fill" id="uploadProgressFill" style="width:0%"></div>
+                <div class="viewer-controls">
+                  <button id="btnZoomIn" class="viewer-btn" title="확대">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                  </button>
+                  <button id="btnZoomOut" class="viewer-btn" title="축소">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                  </button>
+                  <button id="btnRotate" class="viewer-btn" title="회전">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  </button>
+                  <button id="btnReset" class="viewer-btn" title="초기화">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  </button>
                 </div>
-                <p id="uploadStatus" style="margin-top:12px; font-size:0.85rem; color:var(--gray-500);"></p>
+              </div>
+              <div class="image-viewer" id="imageViewer">
+                <img id="reviewImage" src="" alt="영수증 이미지">
+              </div>
+              <div class="receipt-badge-row">
+                <span class="badge-type" id="badgeType">—</span>
+                <span class="badge-no" id="badgeNo">증빙 #—</span>
+                <span class="badge-amount" id="badgeAmount">—</span>
+              </div>
             </div>
 
-            <!-- 업로드된 썸네일 그리드 -->
-            <div class="glass-card" style="margin-top:20px;" id="thumbSection" style="display:none;">
-                <div class="card-title">🖼️ 업로드된 영수증 (<span id="thumbCount">0</span>건)</div>
-                <div class="thumb-grid" id="thumbGrid"></div>
-            </div>
-        </section>
+            <!-- 편집 폼 -->
+            <div class="glass-card form-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  OCR 추출 결과 편집
+                </div>
+                <div class="mapped-badge" id="mappedBadge"></div>
+              </div>
 
-        <!-- ===== 탭 2: 데이터 검토 ===== -->
-        <section class="tab-panel" id="panelReview">
-            <div class="nav-bar">
-                <button class="btn btn-secondary btn-sm" id="btnPrev">⬅ 이전</button>
-                <span class="nav-counter" id="navCounter">0 / 0</span>
-                <button class="btn btn-secondary btn-sm" id="btnNext">다음 ➡</button>
-            </div>
-            <div class="split-layout">
-                <!-- 좌: 이미지 뷰어 -->
-                <div class="glass-card">
-                    <div class="card-title">📷 영수증 원본</div>
-                    <div class="image-viewer" id="imageViewer">
-                        <img id="reviewImage" src="" alt="영수증 이미지">
-                        <div class="viewer-controls">
-                            <button id="btnZoomIn" title="확대">🔍+</button>
-                            <button id="btnZoomOut" title="축소">🔍-</button>
-                            <button id="btnRotate" title="회전">🔄</button>
-                            <button id="btnReset" title="초기화">↩️</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- 우: 편집 폼 -->
-                <div class="glass-card">
-                    <div class="card-title">✏️ OCR 추출 결과 편집</div>
-                    <form class="edit-form" id="editForm">
-                        <div class="form-group">
-                            <label>🏷️ 영수증 유형</label>
-                            <select id="editType">
-                                <option value="增值税发票">增值税发票 (VAT Fapiao)</option>
-                                <option value="火车票">火车票 (기차표)</option>
-                                <option value="加油票">加油票 (주유)</option>
-                                <option value="过路费">过路费 (톨비)</option>
-                                <option value="银行回单">银行回单 (은행)</option>
-                                <option value="기타">기타</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>📅 날짜</label>
-                            <input type="date" id="editDate">
-                        </div>
-                        <div class="form-group">
-                            <label>💰 금액 (CNY)</label>
-                            <input type="number" id="editAmount" step="0.01" placeholder="0.00">
-                        </div>
-                        <div class="form-group">
-                            <label>📝 내역</label>
-                            <input type="text" id="editDescription" placeholder="내역을 입력하세요">
-                        </div>
-                        <div class="form-group">
-                            <label>🏢 판매자</label>
-                            <input type="text" id="editSeller" placeholder="판매자명">
-                        </div>
-                        <div class="form-group">
-                            <label>👤 담당자</label>
-                            <select id="editPerson">
-                                <option value="">— 선택 —</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>🏷️ 대계정</label>
-                            <select id="editMajor">
-                                <option value="">— 선택 —</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>🏷️ 소계정</label>
-                            <select id="editMinor">
-                                <option value="">— 선택 —</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>📄 OCR 원본 텍스트</label>
-                            <textarea id="editRawText" rows="4" readonly style="font-size:0.75rem; color:var(--gray-400);"></textarea>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary" id="btnSaveReceipt">💾 저장</button>
-                            <button type="button" class="btn btn-danger btn-sm" id="btnDeleteReceipt">🗑️ 삭제</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
+              <form class="edit-form" id="editForm">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="editType">🏷️ 영수증 유형</label>
+                    <select id="editType">
+                      <option value="增值税发票">增值税发票 (VAT Fapiao)</option>
+                      <option value="火车票">火车票 (기차표)</option>
+                      <option value="行程单">行程单 (항공권)</option>
+                      <option value="出租车票">出租车票 (택시)</option>
+                      <option value="加油票">加油票 (주유)</option>
+                      <option value="过路费">过路费 (톨비)</option>
+                      <option value="银行回单">银行回单 (은행)</option>
+                      <option value="餐饮票">餐饮票 (식대)</option>
+                      <option value="普通收据">普通收据 (일반 영수증)</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
 
-        <!-- ===== 탭 3: 정산 내역 ===== -->
-        <section class="tab-panel" id="panelTable">
-            <div class="glass-card">
-                <div class="card-title">📊 전체 정산 내역</div>
-                <div class="data-table-wrapper">
-                    <table class="data-table" id="settlementTable">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>날짜</th>
-                                <th>내역</th>
-                                <th>담당자</th>
-                                <th>대계정</th>
-                                <th>소계정</th>
-                                <th>금액(CNY)</th>
-                                <th>유형</th>
-                                <th>관리</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="6" style="text-align:right;">합계</td>
-                                <td class="amount-cell" id="totalAmount">¥0.00</td>
-                                <td colspan="2"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                <div class="empty-state" id="tableEmpty">
-                    <div class="icon">📋</div>
-                    <h3>데이터가 없습니다</h3>
-                    <p>영수증을 업로드하면 여기에 정산 내역이 표시됩니다.</p>
-                </div>
-            </div>
-        </section>
+                  <div class="form-group">
+                    <label for="editDate">📅 날짜</label>
+                    <input type="date" id="editDate">
+                  </div>
 
-        <!-- ===== 탭 4: 내보내기 ===== -->
-        <section class="tab-panel" id="panelExport">
-            <div class="glass-card">
-                <div class="export-section">
-                    <div class="card-title">📥 엑셀 내보내기</div>
-                    <div class="export-preview">
-                        <h4>📊 내보내기 미리보기</h4>
-                        <div class="export-stat">
-                            <span class="label">총 영수증 수</span>
-                            <span class="value" id="exportTotal">0건</span>
-                        </div>
-                        <div class="export-stat">
-                            <span class="label">합계 금액 (CNY)</span>
-                            <span class="value" id="exportAmount">¥0.00</span>
-                        </div>
-                        <div class="export-stat">
-                            <span class="label">담당자 수</span>
-                            <span class="value" id="exportPersons">0명</span>
-                        </div>
-                        <div class="export-stat">
-                            <span class="label">대상 양식</span>
-                            <span class="value">26.06 시트</span>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-lg" id="btnExport" style="width:100%;">
-                        📥 관리 양식 엑셀 다운로드
-                    </button>
-                    <p style="text-align:center; font-size:0.8rem; color:var(--gray-400);">
-                        양식: 26년_6월 심천지사 전도금 정산(데이터 양식 변경).xlsx
-                    </p>
-                </div>
-            </div>
-        </section>
-    </main>
+                  <div class="form-group">
+                    <label for="editAmount">💰 금액 (CNY)</label>
+                    <input type="number" id="editAmount" step="0.01" placeholder="0.00">
+                  </div>
 
-    <script src="/app.js"></script>
+                  <div class="form-group">
+                    <label for="editPerson">👤 담당자</label>
+                    <select id="editPerson">
+                      <option value="">— 선택 —</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editDescription">📝 내역</label>
+                    <input type="text" id="editDescription" placeholder="내역을 입력하세요">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editSeller">🏢 판매자</label>
+                    <input type="text" id="editSeller" placeholder="판매자명">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editMajor">🏷️ 대계정</label>
+                    <select id="editMajor">
+                      <option value="">— 선택 —</option>
+                      <option value="업무추진비">업무추진비</option>
+                      <option value="여비교통비">여비교통비</option>
+                      <option value="지급임차료">지급임차료</option>
+                      <option value="통신비">통신비</option>
+                      <option value="해외지사비">해외지사비</option>
+                      <option value="급여">급여</option>
+                      <option value="잡이익">잡이익</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editMinor">🏷️ 소계정</label>
+                    <select id="editMinor">
+                      <option value="">— 선택 —</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="editRemark">📌 비고</label>
+                  <textarea id="editRemark" rows="2" placeholder="비고 내용을 입력하세요 (엑셀 비고 열에 반영됩니다)"></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" class="btn-primary" id="btnSaveReceipt">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    저장
+                  </button>
+                  <button type="button" class="btn-danger" id="btnDeleteReceipt">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    삭제
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/app.js"></script>
 </body>
 </html>

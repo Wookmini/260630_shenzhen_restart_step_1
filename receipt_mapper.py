@@ -73,6 +73,7 @@ MANUAL_KEYWORDS = {
     "滴滴": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
     "出租": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
     "교통": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
+    "톨비": {"major": "여비교통비", "minor": "교통비", "desc": "톨비"},
     "高速": {"major": "여비교통비", "minor": "교통비", "desc": "톨비"},
     "公司": {"major": "여비교통비", "minor": "교통비", "desc": "교통비/톨비"},
     "限公司": {"major": "여비교통비", "minor": "교통비", "desc": "교통비/톨비"},
@@ -81,6 +82,8 @@ MANUAL_KEYWORDS = {
     "용지": {"major": "해외지사비", "minor": "사무실관리", "desc": "A4용지 및 생수 등"},
     "펜": {"major": "해외지사비", "minor": "기타집기", "desc": "사무용품"},
     "得力": {"major": "해외지사비", "minor": "기타집기", "desc": "사무용품"}, # 델리 (중국 문구브랜드)
+    "화물운송료": {"major": "해외지사비", "minor": "운반비", "desc": "화물운송료"},
+    "货拉拉": {"major": "해외지사비", "minor": "운반비", "desc": "화물운송료"},
 }
 
 LEARNING_MODEL_PATH = os.path.join(BASE_DIR, "data", "shenzhen_receipt_learning_model.json")
@@ -100,7 +103,17 @@ def map_receipt_data(raw_description: str, seller: str = "", raw_text: str = "")
         
     combined_text = (raw_description + " " + seller).lower()
     
-    # 0. 과거 5월 참고데이터 학습 모델(shenzhen_receipt_learning_model.json) 매칭 시도
+    # 0. 수동 키워드 룰셋 먼저 확인 (가장 높은 우선순위)
+    for kw, mapping in MANUAL_KEYWORDS.items():
+        if kw.lower() in combined_text:
+            return {
+                "is_mapped": True,
+                "major": mapping["major"],
+                "minor": mapping["minor"],
+                "standard_desc": mapping["desc"]
+            }
+
+    # 1. 과거 5월 참고데이터 학습 모델(shenzhen_receipt_learning_model.json) 매칭 시도
     if raw_text and os.path.exists(LEARNING_MODEL_PATH):
         try:
             with open(LEARNING_MODEL_PATH, "r", encoding="utf-8") as f:
@@ -147,16 +160,6 @@ def map_receipt_data(raw_description: str, seller: str = "", raw_text: str = "")
                 }
         except Exception as e:
             print(f"[Learning Model Match Error] {e}")
-
-    # 1. 수동 키워드 룰셋 먼저 확인
-    for kw, mapping in MANUAL_KEYWORDS.items():
-        if kw.lower() in combined_text:
-            return {
-                "is_mapped": True,
-                "major": mapping["major"],
-                "minor": mapping["minor"],
-                "standard_desc": mapping["desc"]
-            }
 
     # 2. Backdata(과거 내역) 텍스트 유사도 매칭 (difflib 활용)
     backdata = load_mapping_data()

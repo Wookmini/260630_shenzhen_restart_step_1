@@ -89,14 +89,14 @@ def main(month_str):
     print(f"Found {len(images)} images to process. Sequential renaming complete.")
 
     # Load template data (to preserve manually entered amounts and descriptions if they exist)
-    template_path = os.path.join(target_dir, f"정산내역_{month_str}_v3양식.xlsx")
+    template_path = os.path.join(target_dir, f"심천지사 전도금 정산 양식_{month_str}.xlsx")
     template_data = {}
     if os.path.exists(template_path):
         try:
             import openpyxl
             wb = openpyxl.load_workbook(template_path, data_only=True)
             sheet = wb.active
-            for r_idx in range(21, sheet.max_row + 1):
+            for r_idx in range(22, sheet.max_row + 1):
                 ev_val = sheet.cell(row=r_idx, column=7).value
                 amt_val = sheet.cell(row=r_idx, column=13).value
                 desc_val = sheet.cell(row=r_idx, column=5).value
@@ -380,7 +380,7 @@ def main(month_str):
     print(f"\nSaved raw data to: {data_json_path}")
 
     # Export to excel
-    excel_path = os.path.join(target_dir, f"정산내역_{month_str}_v4.xlsx")
+    excel_path = os.path.join(target_dir, f"심천지사 전도금 정산 양식_{month_str}.xlsx")
     export_to_excel(results, month_label=month_str, output_path=excel_path)
     print(f"Saved Excel report to: {excel_path}")
 

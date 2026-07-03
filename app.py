@@ -57,6 +57,7 @@ class ReceiptUpdate(BaseModel):
     account_code: Optional[str] = None
     seller: Optional[str] = None
     type: Optional[str] = None
+    remark: Optional[str] = None
 
 # === 헬퍼 함수 ===
 def get_month_dir(month_str: str) -> str:
@@ -287,6 +288,24 @@ def get_accounts():
 def get_members():
     """담당자 목록 조회"""
     return MEMBERS
+
+@app.post("/api/months/{month_str}/save")
+def save_month_excel(month_str: str):
+    """현재 data.json 기반으로 엑셀 정산 파일 즉시 덮어쓰기 저장"""
+    receipts = load_month_receipts(month_str)
+    if not receipts:
+        raise HTTPException(status_code=404, detail="해당 월의 정산 데이터가 없습니다.")
+    regenerate_excel_sync(month_str, receipts)
+    saved_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    return {"status": "success", "message": f"엑셀 정산 파일 저장 완료 ({saved_at})"}
+
+@app.get("/logo.png")
+def serve_logo():
+    """회사 로고 이미지 서빙"""
+    logo_path = os.path.join(BASE_DIR, "logo.png")
+    if os.path.exists(logo_path):
+        return FileResponse(logo_path, media_type="image/png")
+    raise HTTPException(status_code=404, detail="로고 파일을 찾을 수 없습니다.")
 
 # === 정적 파일 서빙 ===
 os.makedirs(os.path.join(BASE_DIR, "static"), exist_ok=True)
