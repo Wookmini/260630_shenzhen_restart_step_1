@@ -14,6 +14,8 @@ const state = {
   members: [],
   imageZoom: 1,
   imageRotation: 0,
+  panX: 0,
+  panY: 0,
   sortCol: null,
   sortDir: 1,           // 1=오름차순, -1=내림차순
 };
@@ -353,6 +355,8 @@ function renderReview() {
   img.src = imgUrl;
   state.imageZoom = 1;
   state.imageRotation = 0;
+  state.panX = 0;
+  state.panY = 0;
   applyImageTransform();
 
   // 배지 행
@@ -416,14 +420,55 @@ function initViewerControls() {
   document.getElementById("btnReset")?.addEventListener("click", () => {
     state.imageZoom = 1;
     state.imageRotation = 0;
+    state.panX = 0;
+    state.panY = 0;
     applyImageTransform();
   });
+
+  const img = document.getElementById("reviewImage");
+  if (img) {
+    let isDragging = false;
+    let startX, startY;
+
+    img.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX - state.panX;
+      startY = e.clientY - state.panY;
+      img.style.cursor = "grabbing";
+      e.preventDefault(); // prevent default browser image dragging
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      state.panX = e.clientX - startX;
+      state.panY = e.clientY - startY;
+      applyImageTransform();
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (isDragging) {
+        isDragging = false;
+        img.style.cursor = "grab";
+      }
+    });
+
+    img.parentElement.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const zoomStep = 0.15;
+      if (e.deltaY < 0) {
+        state.imageZoom = Math.min(state.imageZoom + zoomStep, 4);
+      } else {
+        state.imageZoom = Math.max(state.imageZoom - zoomStep, 0.5);
+      }
+      applyImageTransform();
+    }, { passive: false });
+  }
 }
 
 function applyImageTransform() {
   const img = document.getElementById("reviewImage");
   if (img) {
-    img.style.transform = `scale(${state.imageZoom}) rotate(${state.imageRotation}deg)`;
+    img.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.imageZoom}) rotate(${state.imageRotation}deg)`;
   }
 }
 
