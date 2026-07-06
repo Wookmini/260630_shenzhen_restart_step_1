@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심천지사 전도금 정산 자동화 시스템 사용 매뉴얼</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        :root {
+            --db-green-light: #4ade80;
+            --db-green: #34b060;
+            --db-green-dark: #0b4520;
+            --bg-color: #f3f4f6;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(at 0% 0%, hsla(145, 100%, 85%, 0.4) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, hsla(145, 100%, 85%, 0.4) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--db-green) 0%, var(--db-green-dark) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(11, 69, 32, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 15px 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-desc {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+            font-weight: 300;
+            word-break: keep-all;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+
+        .step-number {
+            background: var(--db-green);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(52, 176, 96, 0.3);
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--db-green-dark);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        ol, ul {
+            padding-left: 25px;
+            margin-bottom: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+        
+        li strong {
+            color: var(--text-main);
+        }
+
+        .highlight {
+            background: rgba(52, 176, 96, 0.1);
+            color: var(--db-green-dark);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .alert {
+            display: flex;
+            gap: 15px;
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+
+        .alert-content p {
+            margin: 0;
+            color: #1e293b;
+        }
+        
+        .alert.tip {
+            border-left-color: var(--db-green);
+            background: #f0fdf4;
+        }
+
+        .alert.tip p {
+            color: #14532d;
+        }
+
+        kbd {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            color: #475569;
+            font-size: 0.9em;
+            padding: 2px 6px;
+            font-family: inherit;
+        }
+        
+        .btn-style {
+            display: inline-block;
+            background: var(--db-green);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>심천지사 전도금 정산 시스템 매뉴얼</h1>
+        <p class="header-desc">영수증 스캔본 정리부터 데이터 자동 추출, 웹앱을 통한 검토 및 최종 엑셀 정산 파일 저장까지의 과정을 안내합니다.</p>
+    </header>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h2>영수증 준비 및 폴더 생성</h2>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 0;">가장 먼저 해야 할 일은 정산할 월의 영수증 이미지 파일들을 모아두는 것입니다.</p>
+        <ol>
+            <li><span class="highlight">작업장소 (영수증 보관)</span> 폴더 안에 정산하실 월의 이름으로 <strong>새 폴더</strong>를 생성합니다.
+                <ul>
+                    <li>폴더명 예시: <span class="highlight">2026-06</span> (반드시 YYYY-MM 형식이어야 합니다.)</li>
+                </ul>
+            </li>
+            <li>생성한 폴더 안에 각 담당자별(예: Lin Wei Jian, 권유석 등) 이름으로 하위 폴더를 만들거나, 해당 경로에 스캔본 파일(PDF, JPG, PNG 등)들을 모아 넣습니다.</li>
+        </ol>
+        <div class="alert tip">
+            <div class="alert-icon">💡</div>
+            <div class="alert-content">
+                <p><strong>통짜 PDF 스캔본도 괜찮습니다!</strong><br>PDF 스캔본 하나를 통째로 넣어도 프로그램이 알아서 페이지별로 쪼개어(PNG) 개별 영수증으로 인식합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h2>자동 판독(OCR) 및 정산 실행</h2>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 0;">복잡한 터미널 조작 없이 더블클릭 한 번으로 엑셀 자동 맵핑을 수행할 수 있습니다.</p>
+        <ol>
+            <li>바탕화면이나 프로젝트 최상위 폴더에 있는 <span class="highlight">정산실행.bat</span> 파일을 <strong>더블클릭</strong>합니다.</li>
+            <li>검은색 창이 뜨면서 <em>"작업할 정산 월을 입력하세요 (예: 2026-06):"</em> 라는 문구가 나옵니다.</li>
+            <li>방금 영수증을 넣어둔 폴더의 월(예: <kbd>2026-06</kbd>)을 타이핑하고 <kbd>Enter</kbd>를 누릅니다.</li>
+            <li>백그라운드에서 AI가 영수증의 글씨를 읽고(OCR), 계정과목을 분류하며, 은행 이체수수료 정합성을 검증합니다.</li>
+            <li>작업이 끝나면 <strong>"처리가 완료되었습니다."</strong> 문구가 뜹니다. 아무 키나 누르시면 창이 닫힙니다.</li>
+        </ol>
+        <div class="alert">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <p><strong>안내 메시지 확인:</strong> 만약 1단계에서 폴더를 만들지 않고 월을 입력하셨다면, "폴더를 찾을 수 없습니다"라는 한글 안내 메시지가 뜹니다. 이 경우 폴더 생성 후 다시 실행해 주시면 됩니다!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h2>웹앱 접속 및 데이터 검토</h2>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 0;">자동으로 만들어진 엑셀 파일을 웹상에서 띄워놓고 보면서 빠르고 편하게 수정할 수 있습니다.</p>
+        <ol>
+            <li><strong>웹앱 서버 켜기 (최초 1회)</strong>
+                <ul>
+                    <li>(이미 웹 서버가 켜져 있다면 이 과정은 생략합니다.) 관리자가 <span class="highlight">웹앱서버실행.bat</span>을 더블클릭하여 실행해 두어야 합니다.</li>
+                </ul>
+            </li>
+            <li><strong>웹 브라우저 접속</strong>
+                <ul>
+                    <li>크롬(Chrome)이나 엣지(Edge)를 열고 주소창에 <span class="highlight">http://localhost:8080</span> 을 입력합니다.</li>
+                </ul>
+            </li>
+            <li>상단의 <strong>날짜 선택</strong> 드롭다운 버튼을 눌러 방금 작업하신 달을 선택합니다.</li>
+        </ol>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h2>영수증 원본 대조 및 내용 수정</h2>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 0;">정산 내역 테이블에서 특정 내역을 클릭하면 영수증 원본과 함께 값을 수정할 수 있는 화면으로 넘어갑니다.</p>
+        
+        <h3>💡 주요 편의 기능 (데이터 검토 탭)</h3>
+        <ul>
+            <li><strong>영수증 확대/축소:</strong> 영수증 이미지에 마우스를 올리고 <strong>마우스 휠(Wheel)</strong>을 위아래로 굴려보세요.</li>
+            <li><strong>영수증 이동(Pan):</strong> 이미지를 확대한 상태에서 마우스 왼쪽 버튼을 <strong>클릭한 채로 잡아끌면(Drag)</strong> 이리저리 이동할 수 있습니다.</li>
+            <li><strong>이전/다음 버튼:</strong> 상단의 <code>&lt; 이전</code> / <code>다음 &gt;</code> 버튼을 눌러가며 영수증을 순차적으로 빠르게 훑어볼 수 있습니다.</li>
+            <li><strong>목록에서 점프:</strong> 좌측의 '썸네일 사이드바'에서 특정 번호의 영수증을 클릭하면 해당 영수증으로 바로 이동합니다.</li>
+        </ul>
+
+        <h3>✍️ 데이터 수정 및 비고 작성</h3>
+        <ul>
+            <li>잘못 판독된 글씨(금액, 내역 등)가 있다면 화면 우측의 <strong>입력칸에서 바로 텍스트를 수정</strong>하세요.</li>
+            <li>추가로 기재하고 싶은 내용은 <strong>'비고'</strong> 란에 적어주시고 하단의 <span class="btn-style">저장</span> 버튼을 누르시면 즉시 엑셀 데이터에 반영됩니다.</li>
+        </ul>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <h2>최종 엑셀 파일 저장</h2>
+        </div>
+        <p style="color: var(--text-muted); margin-top: 0;">웹앱에서 모든 영수증 검토가 끝났다면 최종적으로 엑셀 파일에 저장해야 합니다.</p>
+        <ol>
+            <li>화면 우측 상단의 <span class="btn-style">엑셀 최종 저장</span> 버튼을 누릅니다.</li>
+            <li><em>"현재 작업하신 내용으로 파일을 덮어쓰시겠습니까?"</em> 라는 알림창이 뜨면 <strong>확인</strong>을 누릅니다.</li>
+            <li>이제 <span class="highlight">작업장소 (영수증 보관)/2026-06/</span> 폴더에 들어가보시면 <strong>정산내역_2026-06.xlsx</strong> 파일이 가장 최신 상태로 업데이트되어 있습니다!</li>
+        </ol>
+        
+        <div class="alert tip">
+            <div class="alert-icon">✨</div>
+            <div class="alert-content">
+                <p><strong>엑셀 파일 최종 결과물 확인</strong><br>
+                엑셀 파일을 열어보시면, 웹앱에서 수기로 적으신 내용은 <strong>R열(비고)</strong>에 분리되어 나타나고,<br>파표 회사코드 불일치나 은행 이체수수료 금액 불일치 등 시스템이 자동으로 찾아낸 경고 사항은 <strong>S열(항목)</strong>에 빨간색 칸과 함께 예쁘게 정리되어 나타납니다!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Copyright &copy; 2026 Wookmini. All rights reserved.
+    </footer>
+</div>
+
+</body>
+</html>

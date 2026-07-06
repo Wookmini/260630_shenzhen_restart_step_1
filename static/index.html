@@ -100,21 +100,23 @@
             <thead>
               <tr>
                 <th class="col-no">#</th>
-                <th class="col-date sortable" data-col="date">날짜 <span class="sort-icon">↕</span></th>
+                <th class="col-date sortable" data-col="withdrawal_date">출금일자 <span class="sort-icon">↕</span></th>
+                <th class="col-date sortable" data-col="date">증빙일자 <span class="sort-icon">↕</span></th>
+                <th class="col-no">증빙번호</th>
                 <th class="col-desc">내역</th>
                 <th class="col-person">담당자</th>
                 <th class="col-major">대계정</th>
                 <th class="col-minor">소계정</th>
                 <th class="col-amount sortable" data-col="amount">금액(CNY) <span class="sort-icon">↕</span></th>
                 <th class="col-type">유형</th>
-                <th class="col-remark">비고</th>
+                <th class="col-remark">시스템 판독 결과</th>
                 <th class="col-action">편집</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
             <tfoot>
               <tr class="total-row">
-                <td colspan="6" class="total-label">합 계</td>
+                <td colspan="8" class="total-label">합 계</td>
                 <td class="amount-cell" id="totalAmount">¥0.00</td>
                 <td colspan="3"></td>
               </tr>
@@ -202,29 +204,18 @@
               <form class="edit-form" id="editForm">
                 <div class="form-grid">
                   <div class="form-group">
-                    <label for="editType">🏷️ 영수증 유형</label>
-                    <select id="editType">
-                      <option value="增值税发票">增值税发票 (VAT Fapiao)</option>
-                      <option value="火车票">火车票 (기차표)</option>
-                      <option value="行程单">行程单 (항공권)</option>
-                      <option value="出租车票">出租车票 (택시)</option>
-                      <option value="加油票">加油票 (주유)</option>
-                      <option value="过路费">过路费 (톨비)</option>
-                      <option value="银行回单">银行回单 (은행)</option>
-                      <option value="餐饮票">餐饮票 (식대)</option>
-                      <option value="普通收据">普通收据 (일반 영수증)</option>
-                      <option value="기타">기타</option>
-                    </select>
+                    <label for="editWithdrawalDate">📅 출금일자</label>
+                    <input type="date" id="editWithdrawalDate">
                   </div>
 
                   <div class="form-group">
-                    <label for="editDate">📅 날짜</label>
+                    <label for="editDate">📅 증빙일자</label>
                     <input type="date" id="editDate">
                   </div>
 
                   <div class="form-group">
-                    <label for="editAmount">💰 금액 (CNY)</label>
-                    <input type="number" id="editAmount" step="0.01" placeholder="0.00">
+                    <label for="editReceiptNumber">🧾 증빙번호</label>
+                    <input type="text" id="editReceiptNumber" placeholder="증빙번호(FULL)">
                   </div>
 
                   <div class="form-group">
@@ -234,14 +225,9 @@
                     </select>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group full-width">
                     <label for="editDescription">📝 내역</label>
                     <input type="text" id="editDescription" placeholder="내역을 입력하세요">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="editSeller">🏢 판매자</label>
-                    <input type="text" id="editSeller" placeholder="판매자명">
                   </div>
 
                   <div class="form-group">
@@ -264,11 +250,37 @@
                       <option value="">— 선택 —</option>
                     </select>
                   </div>
+
+                  <div class="form-group">
+                    <label for="editAmount">💰 금액 (CNY)</label>
+                    <input type="number" id="editAmount" step="0.01" placeholder="0.00">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="editType">🏷️ 영수증 유형</label>
+                    <select id="editType">
+                      <option value="增值税发票">增值税发票 (VAT Fapiao)</option>
+                      <option value="火车票">火车票 (기차표)</option>
+                      <option value="行程单">行程单 (항공권)</option>
+                      <option value="出租车票">出租车票 (택시)</option>
+                      <option value="加油票">加油票 (주유)</option>
+                      <option value="过路费">过路费 (톨비)</option>
+                      <option value="银行回单">银行回单 (은행)</option>
+                      <option value="餐饮票">餐饮票 (식대)</option>
+                      <option value="普通收据">普通收据 (일반 영수증)</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div class="form-group full-width">
                   <label for="editRemark">📌 비고</label>
                   <textarea id="editRemark" rows="2" placeholder="비고 내용을 입력하세요 (엑셀 비고 열에 반영됩니다)"></textarea>
+                </div>
+
+                <div class="form-group full-width" style="margin-top: 1rem;">
+                  <label>🤖 자동화 시스템 판독 결과</label>
+                  <div id="systemValidationResult" class="system-remark-box" style="padding: 10px; background-color: #f9f9f9; border: 1px solid #e5e7eb; border-radius: 6px; font-size: 13.5px; color: #4b5563; min-height: 40px; display: flex; align-items: center;">특이사항 없음</div>
                 </div>
 
                 <div class="form-actions">

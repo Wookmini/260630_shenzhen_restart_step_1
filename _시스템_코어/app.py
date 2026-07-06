@@ -23,8 +23,8 @@ from excel_exporter import export_to_excel
 
 app = FastAPI(title="SROT - 심천지사 영수증 OCR 변환 웹앱")
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STORAGE_DIR = os.path.join(BASE_DIR, "영수증 보관소")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STORAGE_DIR = os.path.join(BASE_DIR, "작업장소 (영수증 보관)")
 
 # === 마스터 데이터 ===
 ACCOUNT_MASTER = [
@@ -47,7 +47,9 @@ MEMBERS = [
 
 # === Pydantic 모델 ===
 class ReceiptUpdate(BaseModel):
+    withdrawal_date: Optional[str] = None
     date: Optional[str] = None
+    receipt_number: Optional[str] = None
     amount: Optional[float] = None
     currency: Optional[str] = None
     description: Optional[str] = None
@@ -55,7 +57,6 @@ class ReceiptUpdate(BaseModel):
     account_major: Optional[str] = None
     account_minor: Optional[str] = None
     account_code: Optional[str] = None
-    seller: Optional[str] = None
     type: Optional[str] = None
     remark: Optional[str] = None
 
@@ -101,7 +102,7 @@ def regenerate_excel_sync(month_str: str, receipts: list):
 
 @app.get("/api/months")
 def get_months():
-    """영수증 보관소 하위의 월별 폴더 목록 조회"""
+    """작업장소 (영수증 보관) 하위의 월별 폴더 목록 조회"""
     os.makedirs(STORAGE_DIR, exist_ok=True)
     dirs = []
     for item in os.listdir(STORAGE_DIR):
@@ -146,7 +147,7 @@ def update_month_receipt(month_str: str, evidence_no: int, update: ReceiptUpdate
     file_path = receipt.get("file_path")
     if file_path and old_person != new_person and new_person:
         month_dir = get_month_dir(month_str)
-        # old path: 영수증 보관소/2026-06/이몽룡/001.png
+        # old path: 작업장소 (영수증 보관)/2026-06/이몽룡/001.png
         old_full_path = os.path.join(BASE_DIR, file_path)
         
         if os.path.exists(old_full_path):
@@ -158,7 +159,7 @@ def update_month_receipt(month_str: str, evidence_no: int, update: ReceiptUpdate
             shutil.move(old_full_path, new_full_path)
             
             # file_path 필드도 갱신
-            new_rel_path = f"영수증 보관소/{month_str}/{new_person}/{filename}"
+            new_rel_path = f"작업장소 (영수증 보관)/{month_str}/{new_person}/{filename}"
             receipt["file_path"] = new_rel_path
             
             # 이전 담당자 폴더가 비어 있으면 폴더 제거
@@ -233,7 +234,7 @@ def delete_month_receipt(month_str: str, evidence_no: int):
                     shutil.move(old_full_path, new_full_path)
                     
                 # 필드 갱신
-                r["file_path"] = f"영수증 보관소/{month_str}/{person}/{new_filename}"
+                r["file_path"] = f"작업장소 (영수증 보관)/{month_str}/{person}/{new_filename}"
 
     # 4. 저장 및 엑셀 싱크
     save_month_receipts(month_str, receipts)
@@ -302,7 +303,7 @@ def save_month_excel(month_str: str):
 @app.get("/logo.png")
 def serve_logo():
     """회사 로고 이미지 서빙"""
-    logo_path = os.path.join(BASE_DIR, "logo.png")
+    logo_path = os.path.join(BASE_DIR, "static", "logo.png")
     if os.path.exists(logo_path):
         return FileResponse(logo_path, media_type="image/png")
     raise HTTPException(status_code=404, detail="로고 파일을 찾을 수 없습니다.")

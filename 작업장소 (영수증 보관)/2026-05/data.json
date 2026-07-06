@@ -12,7 +12,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 1,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/001.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/001.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -28,7 +28,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 2,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/002.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/002.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -44,7 +44,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 3,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/003.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/003.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -60,7 +60,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 4,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/004.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/004.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -76,7 +76,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 5,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/005.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/005.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -92,7 +92,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 6,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/006.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/006.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -108,7 +108,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 7,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/007.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/007.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -124,7 +124,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 8,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/008.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/008.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -140,7 +140,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 9,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/009.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/009.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -156,7 +156,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 10,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/010.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/010.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -172,7 +172,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 11,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/011.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/011.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -188,7 +188,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 12,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/012.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/012.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -204,7 +204,7 @@
     "person": "Chen Feng Ju",
     "evidence_no": 13,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/013.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/013.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -220,11 +220,11 @@
     "person": "Chen Feng Ju",
     "evidence_no": 14,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Feng Ju/014.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Feng Ju/014.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 2513.0,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:2513.0 vs 영수증:2000.6)"
+    "validation_warning": "금액 불일치 (이체 2,513.00 / 영수증 2,000.60)"
   },
   {
     "type": "增值税发票",
@@ -239,7 +239,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 15,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/015.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/015.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -255,7 +255,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 16,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/016.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/016.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -271,7 +271,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 17,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/017.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/017.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -287,7 +287,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 18,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/018.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/018.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -303,7 +303,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 19,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/019.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/019.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -319,7 +319,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 20,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/020.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/020.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -335,7 +335,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 21,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/021.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/021.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -351,7 +351,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 22,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/022.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/022.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -367,7 +367,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 23,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/023.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/023.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -383,7 +383,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 24,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/024.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/024.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -399,7 +399,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 25,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/025.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/025.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -415,7 +415,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 26,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/026.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/026.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -431,7 +431,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 27,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/027.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/027.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -447,7 +447,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 28,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/028.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/028.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -463,7 +463,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 29,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/029.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/029.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -479,7 +479,7 @@
     "person": "Chen Guo Liang",
     "evidence_no": 30,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/030.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/030.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -495,11 +495,11 @@
     "person": "Chen Guo Liang",
     "evidence_no": 31,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Chen Guo Liang/031.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Chen Guo Liang/031.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 4410.89,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:4410.89 vs 영수증:3463.56)"
+    "validation_warning": "금액 불일치 (이체 4,410.89 / 영수증 3,463.56)"
   },
   {
     "type": "增值税发票",
@@ -514,7 +514,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 32,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/032.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/032.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -530,7 +530,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 33,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/033.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/033.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -546,7 +546,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 34,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/034.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/034.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -562,7 +562,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 35,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/035.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/035.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -578,7 +578,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 36,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/036.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/036.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -594,7 +594,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 37,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/037.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/037.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -610,7 +610,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 38,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/038.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/038.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -626,7 +626,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 39,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/039.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/039.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -642,7 +642,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 40,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/040.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/040.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -658,7 +658,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 41,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/041.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/041.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -674,7 +674,7 @@
     "person": "Lin Wei Jian",
     "evidence_no": 42,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/042.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/042.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -690,11 +690,11 @@
     "person": "Lin Wei Jian",
     "evidence_no": 43,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Lin Wei Jian/043.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Lin Wei Jian/043.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 8707.9,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:8707.9 vs 영수증:9373.700000000003)"
+    "validation_warning": "금액 불일치 (이체 8,707.90 / 영수증 9,373.70)"
   },
   {
     "type": "增值税发票",
@@ -709,7 +709,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 44,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/044.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/044.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -725,7 +725,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 45,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/045.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/045.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -741,7 +741,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 46,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/046.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/046.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -757,7 +757,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 47,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/047.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/047.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -773,7 +773,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 48,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/048.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/048.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -789,7 +789,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 49,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/049.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/049.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -805,7 +805,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 50,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/050.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/050.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -821,7 +821,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 51,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/051.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/051.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -837,7 +837,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 52,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/052.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/052.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -853,7 +853,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 53,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/053.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/053.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -869,7 +869,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 54,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/054.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/054.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -885,7 +885,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 55,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/055.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/055.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -901,7 +901,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 56,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/056.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/056.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -917,7 +917,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 57,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/057.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/057.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -933,7 +933,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 58,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/058.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/058.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -949,7 +949,7 @@
     "person": "Liu Ming Liang",
     "evidence_no": 59,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/059.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/059.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -965,11 +965,11 @@
     "person": "Liu Ming Liang",
     "evidence_no": 60,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Liu Ming Liang/060.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Liu Ming Liang/060.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 3981.0,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:3981.0 vs 영수증:2993.01)"
+    "validation_warning": "금액 불일치 (이체 3,981.00 / 영수증 2,993.01)"
   },
   {
     "type": "增值税发票",
@@ -984,7 +984,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 61,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/061.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/061.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1000,7 +1000,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 62,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/062.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/062.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1016,7 +1016,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 63,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/063.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/063.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1032,7 +1032,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 64,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/064.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/064.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1048,7 +1048,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 65,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/065.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/065.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1064,7 +1064,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 66,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/066.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/066.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1080,7 +1080,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 67,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/067.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/067.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1096,7 +1096,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 68,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/068.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/068.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1112,7 +1112,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 69,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/069.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/069.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1128,7 +1128,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 70,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/070.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/070.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1144,7 +1144,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 71,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/071.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/071.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1160,7 +1160,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 72,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/072.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/072.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1176,7 +1176,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 73,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/073.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/073.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1192,7 +1192,7 @@
     "person": "Piao Mei Ling",
     "evidence_no": 74,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Piao Mei Ling/074.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Piao Mei Ling/074.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 5952.82,
     "withdrawal_date": "2026-05-23",
@@ -1211,7 +1211,7 @@
     "person": "Xiong Feng",
     "evidence_no": 75,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/075.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/075.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1227,7 +1227,7 @@
     "person": "Xiong Feng",
     "evidence_no": 76,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/076.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/076.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1243,7 +1243,7 @@
     "person": "Xiong Feng",
     "evidence_no": 77,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/077.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/077.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1259,7 +1259,7 @@
     "person": "Xiong Feng",
     "evidence_no": 78,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/078.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/078.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1275,7 +1275,7 @@
     "person": "Xiong Feng",
     "evidence_no": 79,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/079.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/079.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1291,7 +1291,7 @@
     "person": "Xiong Feng",
     "evidence_no": 80,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/080.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/080.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1307,7 +1307,7 @@
     "person": "Xiong Feng",
     "evidence_no": 81,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/081.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/081.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1323,7 +1323,7 @@
     "person": "Xiong Feng",
     "evidence_no": 82,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/082.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/082.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1339,7 +1339,7 @@
     "person": "Xiong Feng",
     "evidence_no": 83,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/083.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/083.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1355,7 +1355,7 @@
     "person": "Xiong Feng",
     "evidence_no": 84,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/084.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/084.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1371,7 +1371,7 @@
     "person": "Xiong Feng",
     "evidence_no": 85,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/085.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/085.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1387,7 +1387,7 @@
     "person": "Xiong Feng",
     "evidence_no": 86,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/086.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/086.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1403,7 +1403,7 @@
     "person": "Xiong Feng",
     "evidence_no": 87,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/087.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/087.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1419,7 +1419,7 @@
     "person": "Xiong Feng",
     "evidence_no": 88,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/088.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/088.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1435,7 +1435,7 @@
     "person": "Xiong Feng",
     "evidence_no": 89,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/089.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/089.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1451,7 +1451,7 @@
     "person": "Xiong Feng",
     "evidence_no": 90,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/090.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/090.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1467,7 +1467,7 @@
     "person": "Xiong Feng",
     "evidence_no": 91,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/091.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/091.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1483,7 +1483,7 @@
     "person": "Xiong Feng",
     "evidence_no": 92,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/092.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/092.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1499,7 +1499,7 @@
     "person": "Xiong Feng",
     "evidence_no": 93,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/093.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/093.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1515,7 +1515,7 @@
     "person": "Xiong Feng",
     "evidence_no": 94,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/094.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/094.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1531,11 +1531,11 @@
     "person": "Xiong Feng",
     "evidence_no": 95,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Xiong Feng/095.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Xiong Feng/095.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 6525.46,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:6525.46 vs 영수증:11477.960000000001)"
+    "validation_warning": "금액 불일치 (이체 6,525.46 / 영수증 11,477.96)"
   },
   {
     "type": "增值税发票",
@@ -1550,7 +1550,7 @@
     "person": "Zhang Liang",
     "evidence_no": 96,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/096.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/096.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1566,7 +1566,7 @@
     "person": "Zhang Liang",
     "evidence_no": 97,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/097.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/097.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1582,7 +1582,7 @@
     "person": "Zhang Liang",
     "evidence_no": 98,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/098.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/098.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1598,7 +1598,7 @@
     "person": "Zhang Liang",
     "evidence_no": 99,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/099.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/099.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1614,7 +1614,7 @@
     "person": "Zhang Liang",
     "evidence_no": 100,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/100.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/100.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1630,7 +1630,7 @@
     "person": "Zhang Liang",
     "evidence_no": 101,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/101.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/101.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1646,7 +1646,7 @@
     "person": "Zhang Liang",
     "evidence_no": 102,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/102.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/102.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1662,7 +1662,7 @@
     "person": "Zhang Liang",
     "evidence_no": 103,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/103.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/103.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1678,7 +1678,7 @@
     "person": "Zhang Liang",
     "evidence_no": 104,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/104.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/104.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1694,7 +1694,7 @@
     "person": "Zhang Liang",
     "evidence_no": 105,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/105.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/105.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1710,7 +1710,7 @@
     "person": "Zhang Liang",
     "evidence_no": 106,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/106.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/106.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1726,7 +1726,7 @@
     "person": "Zhang Liang",
     "evidence_no": 107,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/107.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/107.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1742,7 +1742,7 @@
     "person": "Zhang Liang",
     "evidence_no": 108,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/108.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/108.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1758,7 +1758,7 @@
     "person": "Zhang Liang",
     "evidence_no": 109,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/109.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/109.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1774,7 +1774,7 @@
     "person": "Zhang Liang",
     "evidence_no": 110,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/110.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/110.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1790,7 +1790,7 @@
     "person": "Zhang Liang",
     "evidence_no": 111,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/111.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/111.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1806,7 +1806,7 @@
     "person": "Zhang Liang",
     "evidence_no": 112,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/112.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/112.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1822,7 +1822,7 @@
     "person": "Zhang Liang",
     "evidence_no": 113,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/113.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/113.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1838,7 +1838,7 @@
     "person": "Zhang Liang",
     "evidence_no": 114,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/114.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/114.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1854,7 +1854,7 @@
     "person": "Zhang Liang",
     "evidence_no": 115,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/115.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/115.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -1870,11 +1870,11 @@
     "person": "Zhang Liang",
     "evidence_no": 116,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/116.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/116.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 19434.91,
     "withdrawal_date": "2026-05-06",
-    "validation_warning": "불일치 (이체:19434.91 vs 영수증:19301.41)"
+    "validation_warning": "금액 불일치 (이체 19,434.91 / 영수증 19,301.41)"
   },
   {
     "type": "기타",
@@ -1889,7 +1889,7 @@
     "person": "Zhang Liang",
     "evidence_no": 117,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/117.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/117.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1905,7 +1905,7 @@
     "person": "Zhang Liang",
     "evidence_no": 118,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/118.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/118.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1921,7 +1921,7 @@
     "person": "Zhang Liang",
     "evidence_no": 119,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/119.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/119.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1937,7 +1937,7 @@
     "person": "Zhang Liang",
     "evidence_no": 120,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/120.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/120.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1953,7 +1953,7 @@
     "person": "Zhang Liang",
     "evidence_no": 121,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/121.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/121.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1969,7 +1969,7 @@
     "person": "Zhang Liang",
     "evidence_no": 122,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/122.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/122.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -1985,7 +1985,7 @@
     "person": "Zhang Liang",
     "evidence_no": 123,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/123.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/123.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2001,7 +2001,7 @@
     "person": "Zhang Liang",
     "evidence_no": 124,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/124.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/124.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2017,7 +2017,7 @@
     "person": "Zhang Liang",
     "evidence_no": 125,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/125.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/125.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2033,7 +2033,7 @@
     "person": "Zhang Liang",
     "evidence_no": 126,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/126.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/126.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2049,7 +2049,7 @@
     "person": "Zhang Liang",
     "evidence_no": 127,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/127.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/127.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2065,7 +2065,7 @@
     "person": "Zhang Liang",
     "evidence_no": 128,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/128.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/128.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2081,7 +2081,7 @@
     "person": "Zhang Liang",
     "evidence_no": 129,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/129.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/129.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2097,7 +2097,7 @@
     "person": "Zhang Liang",
     "evidence_no": 130,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/130.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/130.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2113,7 +2113,7 @@
     "person": "Zhang Liang",
     "evidence_no": 131,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/131.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/131.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2129,7 +2129,7 @@
     "person": "Zhang Liang",
     "evidence_no": 132,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/132.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/132.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2145,7 +2145,7 @@
     "person": "Zhang Liang",
     "evidence_no": 133,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/133.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/133.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2161,7 +2161,7 @@
     "person": "Zhang Liang",
     "evidence_no": 134,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/134.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/134.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2177,7 +2177,7 @@
     "person": "Zhang Liang",
     "evidence_no": 135,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/135.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/135.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2193,7 +2193,7 @@
     "person": "Zhang Liang",
     "evidence_no": 136,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/136.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/136.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2209,7 +2209,7 @@
     "person": "Zhang Liang",
     "evidence_no": 137,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/137.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/137.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2225,7 +2225,7 @@
     "person": "Zhang Liang",
     "evidence_no": 138,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/138.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/138.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2241,7 +2241,7 @@
     "person": "Zhang Liang",
     "evidence_no": 139,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/139.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/139.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2257,11 +2257,11 @@
     "person": "Zhang Liang",
     "evidence_no": 140,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/Zhang Liang/140.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/Zhang Liang/140.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 5680.95,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:5680.95 vs 영수증:123312540.1)"
+    "validation_warning": "금액 불일치 (이체 5,680.95 / 영수증 123,312,540.10)"
   },
   {
     "type": "增值税发票",
@@ -2276,7 +2276,7 @@
     "person": "권유석",
     "evidence_no": 141,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/141.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/141.png",
     "withdrawal_date": "2026-04-10"
   },
   {
@@ -2292,7 +2292,7 @@
     "person": "권유석",
     "evidence_no": 142,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/142.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/142.png",
     "withdrawal_date": "2026-04-10"
   },
   {
@@ -2308,7 +2308,7 @@
     "person": "권유석",
     "evidence_no": 143,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/143.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/143.png",
     "withdrawal_date": "2026-04-10"
   },
   {
@@ -2324,7 +2324,7 @@
     "person": "권유석",
     "evidence_no": 144,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/144.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/144.png",
     "withdrawal_date": "2026-04-10"
   },
   {
@@ -2340,7 +2340,7 @@
     "person": "권유석",
     "evidence_no": 145,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/145.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/145.png",
     "withdrawal_date": "2026-04-08"
   },
   {
@@ -2356,7 +2356,7 @@
     "person": "권유석",
     "evidence_no": 146,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/146.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/146.png",
     "withdrawal_date": "2026-04-22"
   },
   {
@@ -2372,7 +2372,7 @@
     "person": "권유석",
     "evidence_no": 147,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/147.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/147.png",
     "withdrawal_date": "2026-04-23"
   },
   {
@@ -2388,7 +2388,7 @@
     "person": "권유석",
     "evidence_no": 148,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/148.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/148.png",
     "withdrawal_date": "2026-04-23"
   },
   {
@@ -2404,7 +2404,7 @@
     "person": "권유석",
     "evidence_no": 149,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/149.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/149.png",
     "withdrawal_date": "2026-04-23"
   },
   {
@@ -2420,7 +2420,7 @@
     "person": "권유석",
     "evidence_no": 150,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/150.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/150.png",
     "withdrawal_date": "2026-04-23"
   },
   {
@@ -2436,7 +2436,7 @@
     "person": "권유석",
     "evidence_no": 151,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/151.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/151.png",
     "withdrawal_date": "2026-03-27"
   },
   {
@@ -2452,7 +2452,7 @@
     "person": "권유석",
     "evidence_no": 152,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/152.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/152.png",
     "withdrawal_date": "2026-03-27"
   },
   {
@@ -2468,7 +2468,7 @@
     "person": "권유석",
     "evidence_no": 153,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/153.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/153.png",
     "withdrawal_date": "2026-04-01"
   },
   {
@@ -2484,7 +2484,7 @@
     "person": "권유석",
     "evidence_no": 154,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/154.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/154.png",
     "withdrawal_date": "2026-04-02"
   },
   {
@@ -2500,7 +2500,7 @@
     "person": "권유석",
     "evidence_no": 155,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/155.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/155.png",
     "withdrawal_date": "2026-04-05"
   },
   {
@@ -2516,7 +2516,7 @@
     "person": "권유석",
     "evidence_no": 156,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/156.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/156.png",
     "withdrawal_date": "2026-04-19"
   },
   {
@@ -2532,7 +2532,7 @@
     "person": "권유석",
     "evidence_no": 157,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/157.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/157.png",
     "withdrawal_date": "2026-04-21"
   },
   {
@@ -2548,7 +2548,7 @@
     "person": "권유석",
     "evidence_no": 158,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/158.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/158.png",
     "withdrawal_date": "2026-04-21"
   },
   {
@@ -2564,7 +2564,7 @@
     "person": "권유석",
     "evidence_no": 159,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/159.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/159.png",
     "withdrawal_date": "2026-04-22"
   },
   {
@@ -2580,7 +2580,7 @@
     "person": "권유석",
     "evidence_no": 160,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/권유석/160.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/권유석/160.png",
     "withdrawal_date": "2026-05-05"
   },
   {
@@ -2596,7 +2596,7 @@
     "person": "김명관",
     "evidence_no": 161,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/161.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/161.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2612,7 +2612,7 @@
     "person": "김명관",
     "evidence_no": 162,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/162.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/162.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2628,7 +2628,7 @@
     "person": "김명관",
     "evidence_no": 163,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/163.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/163.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2644,7 +2644,7 @@
     "person": "김명관",
     "evidence_no": 164,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/164.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/164.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2660,7 +2660,7 @@
     "person": "김명관",
     "evidence_no": 165,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/165.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/165.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2676,7 +2676,7 @@
     "person": "김명관",
     "evidence_no": 166,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/166.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/166.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2692,7 +2692,7 @@
     "person": "김명관",
     "evidence_no": 167,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/167.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/167.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2708,7 +2708,7 @@
     "person": "김명관",
     "evidence_no": 168,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/168.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/168.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2724,7 +2724,7 @@
     "person": "김명관",
     "evidence_no": 169,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/169.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/169.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2740,7 +2740,7 @@
     "person": "김명관",
     "evidence_no": 170,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/170.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/170.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2756,7 +2756,7 @@
     "person": "김명관",
     "evidence_no": 171,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/171.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/171.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2772,7 +2772,7 @@
     "person": "김명관",
     "evidence_no": 172,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/172.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/172.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2788,7 +2788,7 @@
     "person": "김명관",
     "evidence_no": 173,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/173.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/173.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2804,7 +2804,7 @@
     "person": "김명관",
     "evidence_no": 174,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/174.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/174.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2820,7 +2820,7 @@
     "person": "김명관",
     "evidence_no": 175,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/175.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/175.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2836,7 +2836,7 @@
     "person": "김명관",
     "evidence_no": 176,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/176.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/176.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2852,7 +2852,7 @@
     "person": "김명관",
     "evidence_no": 177,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/177.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/177.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2868,7 +2868,7 @@
     "person": "김명관",
     "evidence_no": 178,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/178.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/178.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2884,7 +2884,7 @@
     "person": "김명관",
     "evidence_no": 179,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/179.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/179.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2900,7 +2900,7 @@
     "person": "김명관",
     "evidence_no": 180,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/김명관/180.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/김명관/180.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 8264.29,
     "withdrawal_date": "2026-05-23",
@@ -2919,7 +2919,7 @@
     "person": "신순연",
     "evidence_no": 181,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/181.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/181.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2935,7 +2935,7 @@
     "person": "신순연",
     "evidence_no": 182,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/182.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/182.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2951,7 +2951,7 @@
     "person": "신순연",
     "evidence_no": 183,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/183.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/183.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2967,7 +2967,7 @@
     "person": "신순연",
     "evidence_no": 184,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/184.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/184.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2983,7 +2983,7 @@
     "person": "신순연",
     "evidence_no": 185,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/185.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/185.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -2999,7 +2999,7 @@
     "person": "신순연",
     "evidence_no": 186,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/186.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/186.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3015,7 +3015,7 @@
     "person": "신순연",
     "evidence_no": 187,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/187.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/187.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3031,7 +3031,7 @@
     "person": "신순연",
     "evidence_no": 188,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/188.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/188.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3047,7 +3047,7 @@
     "person": "신순연",
     "evidence_no": 189,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/189.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/189.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3063,7 +3063,7 @@
     "person": "신순연",
     "evidence_no": 190,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/190.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/190.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3079,7 +3079,7 @@
     "person": "신순연",
     "evidence_no": 191,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/191.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/191.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3095,7 +3095,7 @@
     "person": "신순연",
     "evidence_no": 192,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/192.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/192.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3111,7 +3111,7 @@
     "person": "신순연",
     "evidence_no": 193,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/193.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/193.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3127,7 +3127,7 @@
     "person": "신순연",
     "evidence_no": 194,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/194.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/194.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3143,7 +3143,7 @@
     "person": "신순연",
     "evidence_no": 195,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/195.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/195.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3159,7 +3159,7 @@
     "person": "신순연",
     "evidence_no": 196,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/196.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/196.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3175,7 +3175,7 @@
     "person": "신순연",
     "evidence_no": 197,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/197.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/197.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3191,11 +3191,11 @@
     "person": "신순연",
     "evidence_no": 198,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/신순연/198.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/신순연/198.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 5432.35,
     "withdrawal_date": "2026-05-23",
-    "validation_warning": "불일치 (이체:5432.35 vs 영수증:5394.8099999999995)"
+    "validation_warning": "금액 불일치 (이체 5,432.35 / 영수증 5,394.81)"
   },
   {
     "type": "银行回单",
@@ -3213,7 +3213,7 @@
     "deposit_cny": 35488.17,
     "deposit_rate": 6.8025,
     "deposit_usd": 5216.93,
-    "file_path": "영수증 보관소/2026-05/심천지사/199.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/199.png",
     "withdrawal_date": "2026-05-06"
   },
   {
@@ -3229,7 +3229,7 @@
     "person": "심천지사",
     "evidence_no": 200,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/200.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/200.png",
     "withdrawal_date": "2026-05-12"
   },
   {
@@ -3245,7 +3245,7 @@
     "person": "심천지사",
     "evidence_no": 201,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/201.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/201.png",
     "withdrawal_date": "2026-05-12"
   },
   {
@@ -3261,7 +3261,7 @@
     "person": "심천지사",
     "evidence_no": 202,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/202.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/202.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 467.76,
     "withdrawal_date": "2026-05-12",
@@ -3283,7 +3283,7 @@
     "deposit_cny": 402839.04,
     "deposit_rate": 6.7996,
     "deposit_usd": 59244.52,
-    "file_path": "영수증 보관소/2026-05/심천지사/203.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/203.png",
     "withdrawal_date": "2026-05-18"
   },
   {
@@ -3299,7 +3299,7 @@
     "person": "심천지사",
     "evidence_no": 204,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/204.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/204.png",
     "withdrawal_date": "2026-05-19"
   },
   {
@@ -3315,7 +3315,7 @@
     "person": "심천지사",
     "evidence_no": 205,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/205.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/205.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 20000.0,
     "withdrawal_date": "2026-05-19",
@@ -3334,7 +3334,7 @@
     "person": "심천지사",
     "evidence_no": 206,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/206.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/206.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3350,7 +3350,7 @@
     "person": "심천지사",
     "evidence_no": 207,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/207.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/207.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3366,7 +3366,7 @@
     "person": "심천지사",
     "evidence_no": 208,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/208.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/208.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 1010.0,
     "withdrawal_date": "2026-05-23",
@@ -3385,7 +3385,7 @@
     "person": "심천지사",
     "evidence_no": 209,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/209.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/209.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3401,7 +3401,7 @@
     "person": "심천지사",
     "evidence_no": 210,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/210.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/210.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3417,7 +3417,7 @@
     "person": "심천지사",
     "evidence_no": 211,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/211.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/211.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3433,7 +3433,7 @@
     "person": "심천지사",
     "evidence_no": 212,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/212.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/212.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3449,7 +3449,7 @@
     "person": "심천지사",
     "evidence_no": 213,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/213.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/213.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3465,7 +3465,7 @@
     "person": "심천지사",
     "evidence_no": 214,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/214.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/214.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3481,7 +3481,7 @@
     "person": "심천지사",
     "evidence_no": 215,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/215.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/215.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3497,7 +3497,7 @@
     "person": "심천지사",
     "evidence_no": 216,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/216.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/216.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3513,7 +3513,7 @@
     "person": "심천지사",
     "evidence_no": 217,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/217.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/217.png",
     "withdrawal_date": "2026-05-23"
   },
   {
@@ -3529,7 +3529,7 @@
     "person": "심천지사",
     "evidence_no": 218,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/218.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/218.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 39640.0,
     "withdrawal_date": "2026-05-23",
@@ -3548,7 +3548,7 @@
     "person": "심천지사",
     "evidence_no": 219,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/219.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/219.png",
     "is_bank_fee_receipt": true,
     "principal_amount": 280937.55,
     "withdrawal_date": "2026-05-23",
@@ -3567,7 +3567,7 @@
     "person": "심천지사",
     "evidence_no": 219,
     "is_mapped": true,
-    "file_path": "영수증 보관소/2026-05/심천지사/219.png",
+    "file_path": "작업장소 (영수증 보관)/2026-05/심천지사/219.png",
     "withdrawal_date": "2026-05-23"
   }
 ]

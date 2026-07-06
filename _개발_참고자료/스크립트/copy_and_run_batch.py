@@ -4,7 +4,7 @@ import sys
 import subprocess
 
 SRC_DIR = r"C:\Users\20000177\Desktop\Wooktigravity\260630_shenzhen_restart_step_1\과거 참고데이터\26년 5월\5월 스캔본_재정비\엑셀 대응"
-DEST_ROOT = r"C:\Users\20000177\Desktop\Wooktigravity\260630_shenzhen_restart_step_1\영수증 보관소\2026-05"
+DEST_ROOT = r"C:\Users\20000177\Desktop\Wooktigravity\260630_shenzhen_restart_step_1\작업장소 (영수증 보관)\2026-05"
 
 # PDF filename (digits only or range) to Assignee directory
 ASSIGNEE_MAP = {

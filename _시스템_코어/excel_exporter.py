@@ -9,9 +9,9 @@ import openpyxl
 from openpyxl.styles import PatternFill
 from typing import List, Dict, Any
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_PATH = os.path.join(
-    BASE_DIR, "영수증 보관소", "심천지사 전도금 정산 양식_YYYY-MM.xlsx"
+    BASE_DIR, "작업장소 (영수증 보관)", "심천지사 전도금 정산 양식_YYYY-MM.xlsx"
 )
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 
@@ -76,7 +76,7 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
                          8: "대계정", 9: "소계정",
                          10: "CNY", 11: "환산요율", 12: "USD",
                          13: "CNY", 14: "환산요율", 15: "USD",
-                         16: "CNY", 17: "USD", 18: "비고"}
+                         16: "CNY", 17: "USD", 18: "비고", 19: "항목"}
         for col, val in headers_row19.items():
             ws.cell(row=19, column=col, value=val)
         for col, val in headers_row20.items():
@@ -185,23 +185,29 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
         # Q열: 잔액 USD (입금 가산, 출금 차감)
         ws.cell(row=r, column=17, value=f"=Q{r-1}+L{r}-O{r}")
 
-        # R열: 이체증빙(비고) - 검증 경고/일치 여부 기입
-        warning = receipt.get("validation_warning")
-        if warning:
-            warn_cell = ws.cell(row=r, column=18, value=warning)
-            if "불일치" in warning:
-                warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+        # R열: 비고 (통합) - 수기 기재 또는 웹앱 비고란
+        remark_text = receipt.get("remark")
+        if remark_text:
+            ws.cell(row=r, column=18, value=remark_text)
 
-        # S열: 지출증빙(비고) - remark 필드 우선, 없으면 파표 코드 검증 결과 사용
-        remark_val = receipt.get("remark")
-        if remark_val:
-            ws.cell(row=r, column=19, value=remark_val)
-        elif receipt.get("type") == "增值税发票":
-            if receipt.get("tax_code_valid"):
-                ws.cell(row=r, column=19, value="파표 회사코드 일치")
-            else:
-                tax_warn_cell = ws.cell(row=r, column=19, value="파표 회사코드 불일치/누락")
-                tax_warn_cell.fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
+        # S열: 항목 - 시스템 자동 판독 결과 및 경고 (은행/파표 등)
+        # S열: 항목 - 시스템 자동 판독 결과 및 경고 (은행/파표 등)
+        warning = receipt.get("validation_warning")
+        system_remarks = []
+        
+        if warning:
+            system_remarks.append(f"[{warning}]")
+            
+        if receipt.get("type") == "增值税发票":
+            if not receipt.get("tax_code_valid"):
+                system_remarks.append("파표 회사코드 불일치/누락")
+        elif receipt.get("type") and receipt.get("type") != "银行回单":
+            system_remarks.append("파표 외 영수증")
+                
+        if system_remarks:
+            from openpyxl.styles import Font
+            item_cell = ws.cell(row=r, column=19, value=" / ".join(system_remarks))
+            item_cell.font = Font(color="FF0000")
 
     wb.save(output_path)
     return output_path

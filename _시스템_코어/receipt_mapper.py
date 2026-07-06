@@ -3,8 +3,8 @@ import json
 import openpyxl
 import difflib
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE_PATH = os.path.join(BASE_DIR, "영수증 보관소", "정산내역_YYYY-MM(양식).xlsx")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_PATH = os.path.join(BASE_DIR, "작업장소 (영수증 보관)", "정산내역_YYYY-MM(양식).xlsx")
 MAPPING_JSON_PATH = os.path.join(BASE_DIR, "data", "account_mapping.json")
 
 def extract_backdata_from_excel():

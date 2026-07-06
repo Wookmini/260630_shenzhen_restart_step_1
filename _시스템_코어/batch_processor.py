@@ -15,14 +15,16 @@ def clean_assignee_name(name: str) -> str:
     """이름 뒤에 붙은 직급(책임, 수석, 팀장 등)을 제거하고 순수 이름만 추출"""
     return re.sub(r'\s*(책임|수석|팀장|부장|과장|전문가|총감|총경리|사원|대리)\s*$', '', name).strip()
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RECEIPT_STORAGE_DIR = os.path.join(BASE_DIR, "영수증 보관소")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RECEIPT_STORAGE_DIR = os.path.join(BASE_DIR, "작업장소 (영수증 보관)")
 
 def main(month_str):
     target_dir = os.path.join(RECEIPT_STORAGE_DIR, month_str)
     if not os.path.exists(target_dir):
-        print(f"Directory not found: {target_dir}")
-        return
+        print(f"\n[오류] '{month_str}' 월의 폴더를 찾을 수 없습니다.")
+        print(f"경로: {target_dir}")
+        print(f"먼저 '작업장소 (영수증 보관)' 폴더 안에 '{month_str}' 이름으로 새 폴더를 만드신 후, 영수증 이미지들을 넣어주세요!")
+        sys.exit(1)
 
     # Gather images
     images = []
@@ -367,7 +369,7 @@ def main(month_str):
                 
             diff = abs(sum_expenses - principal_float)
             if diff > 1.0:
-                br['validation_warning'] = f"불일치 (이체:{principal_float} vs 영수증:{sum_expenses})"
+                br['validation_warning'] = f"금액 불일치 (이체 {principal_float:,.2f} / 영수증 {sum_expenses:,.2f})"
                 print(f"    [경고] {person}님 이체증({br.get('evidence_no')}번) 원금({principal_float})과 영수증 합계({sum_expenses}) 불일치!")
             else:
                 br['validation_warning'] = "금액 일치"

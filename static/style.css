@@ -375,8 +375,8 @@ body {
 .col-minor  { width: 130px; white-space: nowrap; }
 .col-amount { width: 110px; text-align: right; font-weight: 600; white-space: nowrap; }
 .col-type   { width: 155px; }
-.col-remark { width: 220px; font-size: 0.78rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.col-action { width: 65px; text-align: center; }
+.col-remark { width: 170px; font-size: 0.78rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-action { width: 85px; text-align: center; }
 
 .amount-cell { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 .warning-text { color: var(--accent-red); font-weight: 600; }
@@ -750,8 +750,8 @@ body {
 
 .form-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 4px;
+  gap: 0.75rem;
+  margin-top: 2rem;
 }
 
 .btn-primary {

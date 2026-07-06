@@ -11,7 +11,7 @@ import fitz  # PyMuPDF
 from rapidocr_onnxruntime import RapidOCR
 
 # === 경로 설정 ===
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE_PATH = os.path.join(BASE_DIR, "data", "ocr_cache.json")
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 

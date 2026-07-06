@@ -163,11 +163,27 @@ async function loadReceipts() {
   }
 }
 
+// === 시스템 판독 결과 헬퍼 ===
+function getValidationWarnings(r) {
+  const warnings = [];
+  if (r.validation_warning) {
+    warnings.push('[' + r.validation_warning + ']');
+  }
+  if (r.type === '增值税发票') {
+    if (!r.tax_code_valid) {
+      warnings.push('파표 회사코드 불일치/누락');
+    }
+  } else if (r.type && r.type !== '银行回单') {
+    warnings.push('파표 외 영수증');
+  }
+  return warnings;
+}
+
 // === 통계 뱃지 업데이트 ===
 function updateStats() {
   const total     = state.receipts.length;
   const processed = state.receipts.filter((r) => r.amount != null && r.is_mapped !== false).length;
-  const warning   = state.receipts.filter((r) => r.is_mapped === false).length;
+  const warning   = state.receipts.filter((r) => r.is_mapped === false || getValidationWarnings(r).length > 0).length;
   const totalAmt  = state.receipts.reduce((s, r) => s + (r.amount || 0), 0);
 
   document.getElementById("valTotal").textContent     = total;
@@ -252,18 +268,31 @@ function renderTable() {
   let total = 0;
   tbody.innerHTML = state.filtered.map((r) => {
     total += r.amount || 0;
-    const isUnmapped = r.is_mapped === false;
+    const warnings = getValidationWarnings(r);
+    const hasIssue = warnings.length > 0;
+    
+    // 이슈가 있거나 매핑이 안 된 경우 unmapped-row 적용
+    const isUnmapped = r.is_mapped === false || hasIssue;
     const rowCls = isUnmapped ? "unmapped-row" : "";
     const origIdx = state.receipts.indexOf(r);
 
-    const majorCell = isUnmapped
+    const majorCell = (r.is_mapped === false)
       ? `<span class="warning-text">⚠️ 확인 필요</span>`
       : (r.account_major || "—");
+
+    let sysValidationText = "";
+    let sysValidationStyle = "";
+    if (hasIssue) {
+      sysValidationText = warnings.join(" / ");
+      sysValidationStyle = "color: #b91c1c; font-weight: 600;";
+    }
 
     return `
       <tr class="${rowCls}">
         <td class="col-no">${r.evidence_no}</td>
+        <td class="col-date">${r.withdrawal_date || "—"}</td>
         <td class="col-date">${r.date || "—"}</td>
+        <td class="col-no">${r.receipt_number || "—"}</td>
         <td class="col-desc">${r.description || "—"}</td>
         <td class="col-person">${r.person || "—"}</td>
         <td class="col-major">${majorCell}</td>
@@ -272,7 +301,7 @@ function renderTable() {
           ${r.amount != null ? "¥" + r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 }) : "—"}
         </td>
         <td class="col-type"><span class="type-badge">${r.type || "기타"}</span></td>
-        <td class="col-remark">${r.remark || ""}</td>
+        <td class="col-remark" style="${sysValidationStyle}" title="${sysValidationText}">${sysValidationText}</td>
         <td class="col-action">
           <button class="btn-edit-sm" onclick="openReviewAt(${origIdx})">편집</button>
         </td>
@@ -291,6 +320,7 @@ function openReviewAt(index) {
   document.getElementById("tabReview").classList.add("active");
   document.getElementById("panelReview").classList.add("active");
   renderReview();
+  renderSidebar();
 }
 
 // === 사이드바 썸네일 목록 렌더링 ===
@@ -377,13 +407,27 @@ function renderReview() {
     badge.className   = "mapped-badge ok";
   }
 
-  // 폼 필드
   document.getElementById("editType").value        = r.type || "기타";
+  document.getElementById("editWithdrawalDate").value = r.withdrawal_date || "";
   document.getElementById("editDate").value        = r.date || "";
+  document.getElementById("editReceiptNumber").value = r.receipt_number || "";
   document.getElementById("editAmount").value      = r.amount != null ? r.amount : "";
   document.getElementById("editDescription").value = r.description || "";
-  document.getElementById("editSeller").value      = r.seller || "";
   document.getElementById("editRemark").value      = r.remark || "";
+
+  // S열 로직(자동화 시스템 판독 결과)
+  const warnings = getValidationWarnings(r);
+  const sysResultEl = document.getElementById("systemValidationResult");
+  if (warnings.length > 0) {
+    sysResultEl.textContent = warnings.join(" / ");
+    sysResultEl.style.backgroundColor = "#fee2e2";
+    sysResultEl.style.color = "#b91c1c";
+    sysResultEl.style.borderColor = "#fca5a5";
+    sysResultEl.parentElement.style.display = "block";
+  } else {
+    sysResultEl.textContent = "";
+    sysResultEl.parentElement.style.display = "none";
+  }
 
   // 담당자 드롭다운 (동적 생성)
   buildPersonDropdown(r.person || "");
@@ -487,10 +531,11 @@ async function saveCurrentReceipt() {
 
   const update = {
     type:          document.getElementById("editType").value,
+    withdrawal_date: document.getElementById("editWithdrawalDate").value || null,
     date:          document.getElementById("editDate").value || null,
+    receipt_number: document.getElementById("editReceiptNumber").value || null,
     amount:        parseFloat(document.getElementById("editAmount").value) || null,
     description:   document.getElementById("editDescription").value || null,
-    seller:        document.getElementById("editSeller").value || null,
     person:        document.getElementById("editPerson").value || null,
     account_major: document.getElementById("editMajor").value || null,
     account_minor: document.getElementById("editMinor").value || null,
@@ -557,6 +602,11 @@ async function saveExcel() {
     showToast("저장할 데이터가 없습니다.", "warning");
     return;
   }
+
+  if (!confirm(`현재 작업하신 내용으로 [정산내역_${state.currentMonth}.xlsx] 파일을 덮어쓰시겠습니까?`)) {
+    return;
+  }
+
   const btn = document.getElementById("btnSaveExcel");
   btn.disabled = true;
   btn.innerHTML = `<span>⏳</span> 저장 중...`;
