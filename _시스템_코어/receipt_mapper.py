@@ -73,17 +73,23 @@ MANUAL_KEYWORDS = {
     "滴滴": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
     "出租": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
     "교통": {"major": "여비교통비", "minor": "교통비", "desc": "교통비"},
-    "톨비": {"major": "여비교통비", "minor": "교통비", "desc": "톨비"},
-    "高速": {"major": "여비교통비", "minor": "교통비", "desc": "톨비"},
-    "公司": {"major": "여비교통비", "minor": "교통비", "desc": "교통비/톨비"},
-    "限公司": {"major": "여비교통비", "minor": "교통비", "desc": "교통비/톨비"},
-    "股份": {"major": "여비교통비", "minor": "교통비", "desc": "교통비/톨비"},
+    "톨비": {"major": "여비교통비", "minor": "교통비", "desc": "톨비/주차비"},
+    "高速": {"major": "여비교통비", "minor": "교통비", "desc": "톨비/주차비"},
     "문구": {"major": "해외지사비", "minor": "기타집기", "desc": "사무용품"},
     "용지": {"major": "해외지사비", "minor": "사무실관리", "desc": "A4용지 및 생수 등"},
     "펜": {"major": "해외지사비", "minor": "기타집기", "desc": "사무용품"},
     "得力": {"major": "해외지사비", "minor": "기타집기", "desc": "사무용품"}, # 델리 (중국 문구브랜드)
     "화물운송료": {"major": "해외지사비", "minor": "운반비", "desc": "화물운송료"},
     "货拉拉": {"major": "해외지사비", "minor": "운반비", "desc": "화물운송료"},
+    "空运": {"major": "해외지사비", "minor": "운반비", "desc": "택배비/운송비"},
+    "当日达空运": {"major": "해외지사비", "minor": "운반비", "desc": "택배비/운송비"},
+    "住宿费": {"major": "여비교통비", "minor": "해외", "desc": "숙박비"},
+    "酒店": {"major": "여비교통비", "minor": "해외", "desc": "숙박비"},
+    "公寓": {"major": "여비교통비", "minor": "해외", "desc": "숙박비"},
+    "旅行社": {"major": "여비교통비", "minor": "해외", "desc": "항공권"},
+    "代订": {"major": "여비교통비", "minor": "해외", "desc": "항공권"},
+    "航班": {"major": "여비교통비", "minor": "해외", "desc": "항공권"},
+    "机票": {"major": "여비교통비", "minor": "해외", "desc": "항공권"},
 }
 
 LEARNING_MODEL_PATH = os.path.join(BASE_DIR, "data", "shenzhen_receipt_learning_model.json")
@@ -113,7 +119,7 @@ def map_receipt_data(raw_description: str, seller: str = "", raw_text: str = "")
                 "standard_desc": mapping["desc"]
             }
 
-    # 1. 과거 5월 참고데이터 학습 모델(shenzhen_receipt_learning_model.json) 매칭 시도
+    # 2. 과거 5월 참고데이터 학습 모델(shenzhen_receipt_learning_model.json) 매칭 시도
     if raw_text and os.path.exists(LEARNING_MODEL_PATH):
         try:
             with open(LEARNING_MODEL_PATH, "r", encoding="utf-8") as f:

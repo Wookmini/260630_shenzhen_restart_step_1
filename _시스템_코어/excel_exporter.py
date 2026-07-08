@@ -170,14 +170,19 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
 
         # M열: 출금 CNY
         amount = receipt.get("amount")
-        if amount is not None:
+        if amount is not None and receipt.get("type") != "입금영수증":
             ws.cell(row=r, column=13, value=amount)
 
         # N열: 환산요율 (환율표 참조 수식)
         ws.cell(row=r, column=14, value=f"='통장내역(환율표)'!$D$88")
 
         # O열: 출금 USD (= CNY / 환율)
-        ws.cell(row=r, column=15, value=f"=M{r}/N{r}")
+        if receipt.get("type") == "입금수수료" and receipt.get("withdrawal_usd") is not None:
+            ws.cell(row=r, column=15, value=receipt.get("withdrawal_usd"))
+        elif receipt.get("type") == "입금영수증":
+            ws.cell(row=r, column=15, value="")
+        else:
+            ws.cell(row=r, column=15, value=f"=M{r}/N{r}")
 
         # P열: 잔액 CNY (입금 가산, 출금 차감)
         ws.cell(row=r, column=16, value=f"=P{r-1}+J{r}-M{r}")
@@ -196,18 +201,27 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
         system_remarks = []
         
         if warning:
-            system_remarks.append(f"[{warning}]")
+            if "✅" in warning:
+                system_remarks.append(warning)
+            else:
+                system_remarks.append(f"[{warning}]")
             
         if receipt.get("type") == "增值税发票":
             if not receipt.get("tax_code_valid"):
-                system_remarks.append("파표 회사코드 불일치/누락")
+                if receipt.get("description") == "통신비":
+                    system_remarks.append("✅ 통신비 - 파표 회사코드 X")
+                else:
+                    system_remarks.append("파표 회사코드 불일치/누락")
         elif receipt.get("type") and receipt.get("type") != "银行回单":
             system_remarks.append("파표 외 영수증")
                 
         if system_remarks:
-            from openpyxl.styles import Font
-            item_cell = ws.cell(row=r, column=19, value=" / ".join(system_remarks))
-            item_cell.font = Font(color="FF0000")
+            from openpyxl.styles import Font, Alignment
+            remark_str = "\n".join(system_remarks)
+            item_cell = ws.cell(row=r, column=19, value=remark_str)
+            item_cell.alignment = Alignment(wrap_text=True)
+            if "✅" not in remark_str:
+                item_cell.font = Font(color="FF0000")
 
     wb.save(output_path)
     return output_path

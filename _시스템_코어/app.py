@@ -8,6 +8,7 @@ import json
 import re
 import shutil
 import datetime
+from datetime import timedelta
 from typing import List, Dict, Any, Optional
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
@@ -45,7 +46,25 @@ MEMBERS = [
     "Chen Guo Liang", "Liu Ming Liang", "Chen Feng Ju",
 ]
 
+AUTHORIZED_USERS = {
+    "20000243": "PiaoMeiLing",
+    "20000001": "이현주",
+    "20000117": "김수민",
+    "20000177": "정영욱"
+}
+
+# --- 접속 세션(Lock) 관리 ---
+ACTIVE_SESSION = {
+    "emp_id": None,
+    "name": None,
+    "last_active": None
+}
+
 # === Pydantic 모델 ===
+class LoginRequest(BaseModel):
+    emp_id: str
+    name: str
+
 class ReceiptUpdate(BaseModel):
     withdrawal_date: Optional[str] = None
     date: Optional[str] = None
@@ -86,9 +105,9 @@ def save_month_receipts(month_str: str, receipts: list):
         json.dump(receipts, f, ensure_ascii=False, indent=2)
 
 def regenerate_excel_sync(month_str: str, receipts: list):
-    """특정 월의 엑셀 파일을 정산내역_{month_str}.xlsx로 자동 재생성"""
+    """특정 월의 엑셀 파일을 심천지사 전도금 정산 양식_{month_str}.xlsx로 자동 재생성"""
     month_dir = get_month_dir(month_str)
-    excel_path = os.path.join(month_dir, f"정산내역_{month_str}.xlsx")
+    excel_path = os.path.join(month_dir, f"심천지사 전도금 정산 양식_{month_str}.xlsx")
     
     # 템플릿 사용 (없으면 기본 생성)
     # excel_exporter는 ROOT의 TEMPLATE_PATH를 바라봄
@@ -99,6 +118,48 @@ def regenerate_excel_sync(month_str: str, receipts: list):
         print(f"[Sync Error] Failed to regenerate excel: {e}")
 
 # === API 엔드포인트 ===
+
+@app.post("/api/login")
+def login(req: LoginRequest):
+    global ACTIVE_SESSION
+    
+    # 1. 자격 증명 확인
+    if req.emp_id not in AUTHORIZED_USERS or AUTHORIZED_USERS[req.emp_id].replace(" ", "").lower() != req.name.replace(" ", "").lower():
+        return {"success": False, "message": "사번 또는 이름이 일치하지 않습니다."}
+
+    # 2. 동시 접속(Lock) 확인
+    now = datetime.datetime.now()
+    if ACTIVE_SESSION["emp_id"] is not None and ACTIVE_SESSION["emp_id"] != req.emp_id:
+        # 다른 사람이 접속 중인 경우, 마지막 활동 시간이 60초 이내인지 확인
+        if ACTIVE_SESSION["last_active"] and (now - ACTIVE_SESSION["last_active"]) < timedelta(seconds=60):
+            current_user = ACTIVE_SESSION["name"]
+            return {"success": False, "message": f"현재 <span class='highlight-name'>{current_user}</span>님이 접속 중입니다.<br>동시 접속은 불가합니다."}
+            
+    # 3. 로그인 성공 및 Lock 획득
+    ACTIVE_SESSION["emp_id"] = req.emp_id
+    ACTIVE_SESSION["name"] = AUTHORIZED_USERS[req.emp_id]
+    ACTIVE_SESSION["last_active"] = now
+    
+    return {"success": True, "message": "로그인 성공"}
+
+@app.post("/api/heartbeat")
+def heartbeat(req: LoginRequest):
+    global ACTIVE_SESSION
+    now = datetime.datetime.now()
+    # 하트비트를 보낸 사람이 현재 세션 소유자라면 시간 갱신
+    if ACTIVE_SESSION["emp_id"] == req.emp_id:
+        ACTIVE_SESSION["last_active"] = now
+        return {"success": True}
+    return {"success": False, "message": "세션 만료"}
+
+@app.post("/api/logout")
+def logout(req: LoginRequest):
+    global ACTIVE_SESSION
+    if ACTIVE_SESSION["emp_id"] == req.emp_id:
+        ACTIVE_SESSION["emp_id"] = None
+        ACTIVE_SESSION["name"] = None
+        ACTIVE_SESSION["last_active"] = None
+    return {"success": True}
 
 @app.get("/api/months")
 def get_months():
@@ -261,7 +322,7 @@ def serve_month_image(month_str: str, assignee: str, filename: str):
 def download_month_excel(month_str: str):
     """특정 월의 정산 엑셀 파일 다운로드"""
     month_dir = get_month_dir(month_str)
-    excel_path = os.path.join(month_dir, f"정산내역_{month_str}.xlsx")
+    excel_path = os.path.join(month_dir, f"심천지사 전도금 정산 양식_{month_str}.xlsx")
     
     if not os.path.exists(excel_path):
         # 엑셀 파일이 없으면 재생성 시도
@@ -271,7 +332,7 @@ def download_month_excel(month_str: str):
         regenerate_excel_sync(month_str, receipts)
         
     if os.path.exists(excel_path):
-        filename = f"정산내역_{month_str}.xlsx"
+        filename = f"심천지사 전도금 정산 양식_{month_str}.xlsx"
         return FileResponse(
             excel_path,
             media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -299,6 +360,49 @@ def save_month_excel(month_str: str):
     regenerate_excel_sync(month_str, receipts)
     saved_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     return {"status": "success", "message": f"엑셀 정산 파일 저장 완료 ({saved_at})"}
+
+@app.post("/api/months/{month_str}/reprocess")
+def reprocess_month(month_str: str):
+    """수정된 엑셀 데이터를 바탕으로 파이썬 batch_processor를 재실행하여 검증 결과를 최신화"""
+    import subprocess
+    try:
+        script_path = os.path.join(BASE_DIR, "_시스템_코어", "batch_processor.py")
+        subprocess.run([sys.executable, script_path, month_str], check=True)
+        return {"status": "success", "message": f"{month_str} 월 시스템 판독(검증) 재가동 완료"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"배치 처리 중 오류 발생: {str(e)}")
+
+@app.post("/api/months/{month_str}/close")
+def close_month(month_str: str):
+    """특정 월의 정산 데이터를 마감(Closing)하여 영구 보존 데이터로 저장"""
+    if ACTIVE_SESSION["name"] not in ["정영욱", "김수민"]:
+        raise HTTPException(status_code=403, detail="마감 권한이 없습니다.")
+        
+    closing_path = os.path.join(STORAGE_DIR, month_str, "closing.json")
+    if os.path.exists(closing_path):
+        raise HTTPException(status_code=409, detail="이미 확정한 데이터가 있습니다.\n새로 확정하고자 하시면,\n피플팀 관리자에게 문의해 주세요.")
+        
+    receipts = load_month_receipts(month_str)
+    if not receipts:
+        raise HTTPException(status_code=404, detail="마감할 정산 데이터가 없습니다.")
+        
+    closing_data = []
+    for r in receipts:
+        if r.get("receipt_number"):
+            closing_data.append({
+                "evidence_no": r.get("evidence_no"),
+                "receipt_number": r.get("receipt_number"),
+                "month": month_str
+            })
+            
+    closing_path = os.path.join(STORAGE_DIR, month_str, "closing.json")
+    try:
+        with open(closing_path, 'w', encoding='utf-8') as f:
+            json.dump(closing_data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"마감 파일 저장 중 오류 발생: {str(e)}")
+        
+    return {"status": "success", "message": f"{month_str} 월 데이터 마감 완료. 총 {len(closing_data)}건의 증빙번호 영구 보존됨."}
 
 @app.get("/logo.png")
 def serve_logo():

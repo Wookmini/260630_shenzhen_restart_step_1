@@ -22,6 +22,92 @@ const state = {
 
 // === 초기화 ===
 document.addEventListener("DOMContentLoaded", async () => {
+  if (checkLogin()) {
+    initApp();
+  }
+});
+
+function checkLogin() {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const loginOverlay = document.getElementById("loginOverlay");
+  const loginForm = document.getElementById("loginForm");
+  const loginErrorMsg = document.getElementById("loginErrorMsg");
+
+  if (isLoggedIn === "true") {
+    loginOverlay.style.display = "none";
+    startHeartbeat();
+    return true;
+  }
+
+  loginOverlay.style.display = "flex";
+  
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const empId = document.getElementById("empIdInput").value.trim();
+    const empName = document.getElementById("empNameInput").value.trim();
+    
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emp_id: empId, name: empName })
+      });
+      const data = await res.json();
+      if (data.success) {
+        sessionStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("empId", empId);
+        sessionStorage.setItem("empName", empName);
+        loginOverlay.style.display = "none";
+        startHeartbeat();
+        initApp();
+      } else {
+        loginErrorMsg.innerHTML = data.message;
+        loginErrorMsg.style.display = "block";
+      }
+    } catch (err) {
+      console.error(err);
+      loginErrorMsg.innerHTML = "서버 통신 오류가 발생했습니다.";
+      loginErrorMsg.style.display = "block";
+    }
+  });
+  
+  return false;
+}
+
+// === 세션(Lock) 관리 ===
+let heartbeatInterval = null;
+
+function startHeartbeat() {
+  if (heartbeatInterval) clearInterval(heartbeatInterval);
+  
+  // 30초마다 하트비트 전송
+  heartbeatInterval = setInterval(async () => {
+    const empId = sessionStorage.getItem("empId");
+    const empName = sessionStorage.getItem("empName");
+    if (!empId) return;
+    
+    try {
+      await fetch("/api/heartbeat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emp_id: empId, name: empName })
+      });
+    } catch (e) {
+      console.error("Heartbeat error", e);
+    }
+  }, 30000);
+}
+
+window.addEventListener("beforeunload", () => {
+  const empId = sessionStorage.getItem("empId");
+  const empName = sessionStorage.getItem("empName");
+  if (empId) {
+    const data = JSON.stringify({ emp_id: empId, name: empName });
+    navigator.sendBeacon("/api/logout", data);
+  }
+});
+
+async function initApp() {
   initTabs();
   initViewerControls();
   initFormActions();
@@ -29,7 +115,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSearch();
   await loadMasterData();
   await initMonthSelector();
-});
+  initCloseMonth();
+}
 
 // === 탭 전환 ===
 function initTabs() {
@@ -154,6 +241,8 @@ async function loadReceipts() {
     state.receipts = await res.json();
     state.receipts.sort((a, b) => (a.evidence_no || 999) - (b.evidence_no || 999));
     state.filtered = [...state.receipts];
+    updateTablePersonFilter();
+    updateTableMajorFilter();
     updateStats();
     renderTable();
     renderSidebar();
@@ -166,15 +255,21 @@ async function loadReceipts() {
 // === 시스템 판독 결과 헬퍼 ===
 function getValidationWarnings(r) {
   const warnings = [];
-  if (r.validation_warning) {
-    warnings.push('[' + r.validation_warning + ']');
+  if (r.validation_warning && r.validation_warning !== "✅ 금액 일치") {
+    let warnStr = r.validation_warning.replace(/~~/g, "").replace(/➡️ /g, "");
+    if (!warnStr.includes("⚠️") && warnStr.includes("금액 불일치")) {
+      warnStr = "⚠️ " + warnStr;
+    }
+    warnings.push(warnStr);
   }
   if (r.type === '增值税发票') {
     if (!r.tax_code_valid) {
-      warnings.push('파표 회사코드 불일치/누락');
+      if (r.description === '통신비') {
+        warnings.push('✅ 통신비 - 파표 회사코드 X (개인)');
+      } else {
+        warnings.push('⚠️ 파표 회사코드 불일치/누락');
+      }
     }
-  } else if (r.type && r.type !== '银行回单') {
-    warnings.push('파표 외 영수증');
   }
   return warnings;
 }
@@ -182,8 +277,8 @@ function getValidationWarnings(r) {
 // === 통계 뱃지 업데이트 ===
 function updateStats() {
   const total     = state.receipts.length;
-  const processed = state.receipts.filter((r) => r.amount != null && r.is_mapped !== false).length;
-  const warning   = state.receipts.filter((r) => r.is_mapped === false || getValidationWarnings(r).length > 0).length;
+  const warning   = state.receipts.filter((r) => r.is_mapped === false || getValidationWarnings(r).filter(w => !w.includes('✅')).length > 0).length;
+  const processed = total - warning; // 완벽하게 처리되어 사람의 확인이 필요 없는 건수
   const totalAmt  = state.receipts.reduce((s, r) => s + (r.amount || 0), 0);
 
   document.getElementById("valTotal").textContent     = total;
@@ -201,26 +296,81 @@ function updateStats() {
   }
 }
 
-// === 테이블 검색 ===
+// === 테이블 검색 및 필터 ===
+function applyTableFilters() {
+  const searchEl = document.getElementById("tableSearch");
+  const personEl = document.getElementById("tablePersonFilter");
+  const majorEl = document.getElementById("tableMajorFilter");
+  const q = searchEl ? searchEl.value.trim().toLowerCase() : "";
+  const personFilter = personEl ? personEl.value : "";
+  const majorFilter = majorEl ? majorEl.value : "";
+
+  state.filtered = state.receipts.filter((r) => {
+    const matchPerson = !personFilter || (r.person === personFilter);
+    if (!matchPerson) return false;
+    
+    const matchMajor = !majorFilter || (r.account_major === majorFilter);
+    if (!matchMajor) return false;
+
+    if (!q) return true;
+    return (
+      (r.description || "").toLowerCase().includes(q) ||
+      (r.person || "").toLowerCase().includes(q) ||
+      (r.account_major || "").toLowerCase().includes(q) ||
+      (r.account_minor || "").toLowerCase().includes(q) ||
+      String(r.evidence_no).includes(q)
+    );
+  });
+  renderTable();
+}
+
 function initSearch() {
   const searchEl = document.getElementById("tableSearch");
-  if (!searchEl) return;
-  searchEl.addEventListener("input", () => {
-    const q = searchEl.value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = [...state.receipts];
-    } else {
-      state.filtered = state.receipts.filter((r) => {
-        return (
-          (r.description || "").toLowerCase().includes(q) ||
-          (r.person || "").toLowerCase().includes(q) ||
-          (r.account_major || "").toLowerCase().includes(q) ||
-          (r.account_minor || "").toLowerCase().includes(q) ||
-          String(r.evidence_no).includes(q)
-        );
-      });
-    }
-    renderTable();
+  const personEl = document.getElementById("tablePersonFilter");
+  const majorEl = document.getElementById("tableMajorFilter");
+  
+  if (searchEl) {
+    searchEl.addEventListener("input", applyTableFilters);
+  }
+  if (personEl) {
+    personEl.addEventListener("change", applyTableFilters);
+  }
+  if (majorEl) {
+    majorEl.addEventListener("change", applyTableFilters);
+  }
+}
+
+function updateTablePersonFilter() {
+  const personEl = document.getElementById("tablePersonFilter");
+  if (!personEl) return;
+  
+  const currentVal = personEl.value;
+  const allPersons = new Set();
+  state.receipts.forEach((r) => {
+    if (r.person) allPersons.add(r.person);
+  });
+  
+  personEl.innerHTML = '<option value="">👤 담당자 전체</option>';
+  [...allPersons].sort().forEach((m) => {
+    const sel = m === currentVal ? "selected" : "";
+    personEl.innerHTML += `<option value="${m}" ${sel}>${m}</option>`;
+  });
+}
+
+function updateTableMajorFilter() {
+  const majorEl = document.getElementById("tableMajorFilter");
+  if (!majorEl) return;
+  
+  const currentVal = majorEl.value;
+  const allMajors = new Set();
+  state.receipts.forEach((r) => {
+    if (r.account_major) allMajors.add(r.account_major);
+  });
+  
+  majorEl.innerHTML = '<option value="">📁 대계정 전체</option>';
+  [...allMajors].sort().forEach((m) => {
+    const sel = m === currentVal ? "selected" : "";
+    majorEl.innerHTML += `<option value="${m}" ${sel}>${m}</option>`;
   });
 }
 
@@ -269,7 +419,8 @@ function renderTable() {
   tbody.innerHTML = state.filtered.map((r) => {
     total += r.amount || 0;
     const warnings = getValidationWarnings(r);
-    const hasIssue = warnings.length > 0;
+    const realWarnings = warnings.filter(w => !w.includes("✅"));
+    const hasIssue = realWarnings.length > 0;
     
     // 이슈가 있거나 매핑이 안 된 경우 unmapped-row 적용
     const isUnmapped = r.is_mapped === false || hasIssue;
@@ -280,11 +431,19 @@ function renderTable() {
       ? `<span class="warning-text">⚠️ 확인 필요</span>`
       : (r.account_major || "—");
 
-    let sysValidationText = "";
-    let sysValidationStyle = "";
+    let remarkHtml = "—";
     if (hasIssue) {
-      sysValidationText = warnings.join(" / ");
-      sysValidationStyle = "color: #b91c1c; font-weight: 600;";
+      const wText = warnings.join(' / ').replace(/\n/g, '<br>');
+      const plainText = warnings.join(' / ').replace(/\n/g, ' ');
+      remarkHtml = `<span class="warning-text" title="${plainText}">${wText}</span>`;
+    } else if (warnings.length > 0 || (r.validation_warning && r.validation_warning.includes("✅ 금액 일치"))) {
+      let formatted = "";
+      if (warnings.length > 0) {
+        formatted = warnings.join(" / ").replace(/\n/g, "<br>");
+      } else {
+        formatted = r.validation_warning.replace(/\n/g, "<br>");
+      }
+      remarkHtml = `<span style="color: #059669; font-weight: 500; font-size: 0.85em; line-height: 1.4;">${formatted}</span>`;
     }
 
     return `
@@ -292,16 +451,16 @@ function renderTable() {
         <td class="col-no">${r.evidence_no}</td>
         <td class="col-date">${r.withdrawal_date || "—"}</td>
         <td class="col-date">${r.date || "—"}</td>
-        <td class="col-no">${r.receipt_number || "—"}</td>
+        <td class="col-receipt-no">${r.receipt_number || "—"}</td>
         <td class="col-desc">${r.description || "—"}</td>
         <td class="col-person">${r.person || "—"}</td>
         <td class="col-major">${majorCell}</td>
         <td class="col-minor">${r.account_minor || "—"}</td>
-        <td class="col-amount amount-cell">
-          ${r.amount != null ? "¥" + r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 }) : "—"}
+        <td class="col-amount amount-cell" title="${r.amount != null ? "¥" + r.amount.toLocaleString("ko-KR") : ""}">
+          ${(r.amount != null && r.type !== '입금영수증' && r.type !== '입금수수료') ? "¥" + r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 }) : "—"}
         </td>
         <td class="col-type"><span class="type-badge">${r.type || "기타"}</span></td>
-        <td class="col-remark" style="${sysValidationStyle}" title="${sysValidationText}">${sysValidationText}</td>
+        <td class="col-remark">${remarkHtml}</td>
         <td class="col-action">
           <button class="btn-edit-sm" onclick="openReviewAt(${origIdx})">편집</button>
         </td>
@@ -333,7 +492,10 @@ function renderSidebar() {
   list.innerHTML = state.receipts.map((r, i) => {
     const imgUrl     = getReceiptImgUrl(r);
     const isActive   = i === state.currentIndex;
-    const isUnmapped = r.is_mapped === false;
+    const warnings   = getValidationWarnings(r);
+    const realWarnings = warnings.filter(w => !w.includes("✅"));
+    const hasIssue   = realWarnings.length > 0;
+    const isUnmapped = r.is_mapped === false || hasIssue;
     return `
       <div class="sidebar-item${isActive ? " active" : ""}${isUnmapped ? " unmapped" : ""}"
            data-index="${i}" onclick="selectFromSidebar(${i})">
@@ -393,7 +555,7 @@ function renderReview() {
   document.getElementById("badgeType").textContent   = r.type || "기타";
   document.getElementById("badgeNo").textContent     = `증빙 #${r.evidence_no}`;
   document.getElementById("badgeAmount").textContent =
-    r.amount != null
+    (r.amount != null && r.type !== '입금영수증' && r.type !== '입금수수료')
       ? "¥" + r.amount.toLocaleString("ko-KR", { minimumFractionDigits: 2 })
       : "—";
 
@@ -417,12 +579,30 @@ function renderReview() {
 
   // S열 로직(자동화 시스템 판독 결과)
   const warnings = getValidationWarnings(r);
+  const realWarnings = warnings.filter(w => !w.includes("✅"));
   const sysResultEl = document.getElementById("systemValidationResult");
-  if (warnings.length > 0) {
-    sysResultEl.textContent = warnings.join(" / ");
+  
+  if (realWarnings.length > 0) {
+    const wText = warnings.join(" / ").replace(/\n/g, "<br>");
+    sysResultEl.innerHTML = wText;
     sysResultEl.style.backgroundColor = "#fee2e2";
     sysResultEl.style.color = "#b91c1c";
     sysResultEl.style.borderColor = "#fca5a5";
+    sysResultEl.parentElement.style.display = "block";
+  } else if (warnings.length > 0) {
+    // Only '✅' warnings present
+    const wText = warnings.join(" / ").replace(/\n/g, "<br>");
+    sysResultEl.innerHTML = wText;
+    sysResultEl.style.backgroundColor = "#d1fae5";
+    sysResultEl.style.color = "#059669";
+    sysResultEl.style.borderColor = "#a7f3d0";
+    sysResultEl.parentElement.style.display = "block";
+  } else if (r.validation_warning && r.validation_warning === "✅ 금액 일치") {
+    let formatted = r.validation_warning.replace(/\n/g, "<br>");
+    sysResultEl.innerHTML = formatted;
+    sysResultEl.style.backgroundColor = "#d1fae5";
+    sysResultEl.style.color = "#059669";
+    sysResultEl.style.borderColor = "#a7f3d0";
     sysResultEl.parentElement.style.display = "block";
   } else {
     sysResultEl.textContent = "";
@@ -557,7 +737,7 @@ async function saveCurrentReceipt() {
       { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(update) }
     );
     if (!res.ok) throw new Error("저장 실패");
-    showToast("저장 완료! 엑셀 정산서에 자동 반영되었습니다.", "success");
+    showToast(`<strong style="color: #fff8a3; letter-spacing: 0.5px;">#${r.evidence_no} 영수증</strong> 임시저장 완료!<br>상단 엑셀 최종 저장버튼을 눌러야 엑셀에 반영됩니다.`, "success");
     await loadReceipts();
     renderReview();
   } catch (e) {
@@ -636,12 +816,106 @@ function showToast(message, type = "info") {
   if (!container) return;
   const toast = document.createElement("div");
   toast.className = `toast ${type}`;
-  toast.textContent = message;
+  toast.innerHTML = message;
   container.appendChild(toast);
   setTimeout(() => {
     toast.style.opacity = "0";
     toast.style.transform = "translateX(30px)";
     toast.style.transition = "all 0.3s ease";
     setTimeout(() => toast.remove(), 300);
-  }, 4000);
+  }, 8000);
+}
+
+// === 시스템 재가동 로직 ===
+async function reprocessBatch() {
+  if (!state.currentMonth) return;
+  if (!confirm("최종 저장된 엑셀 데이터를 바탕으로 파이썬 시스템 검증을 다시 가동하시겠습니까?\n\n수정된 금액 등의 정보가 반영되어 ⚠️ 경고 마크가 최신화됩니다. (약 3~10초 소요)")) return;
+  
+  showToast("시스템을 재가동합니다. 잠시만 기다려주세요...", "info");
+  
+  const btn = document.getElementById("btnReprocess");
+  if(btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span> 재가동 중...`;
+  }
+  
+  try {
+    const res = await fetch(`/api/months/${state.currentMonth}/reprocess`, {
+      method: "POST"
+    });
+    if (!res.ok) {
+      const errData = await res.json();
+      throw new Error(errData.detail || "시스템 재가동 실패");
+    }
+    
+    showToast("시스템 판독이 성공적으로 재가동되었습니다! 화면을 새로고침합니다.", "success");
+    
+    // 1초 뒤 데이터 새로고침
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
+    
+  } catch (err) {
+    showToast("오류 발생: " + err.message, "error");
+    if(btn) {
+        btn.disabled = false;
+        btn.innerHTML = `시스템 판독 재검증`;
+    }
+  }
+}
+
+// === 재무관리팀 마감 로직 ===
+function initCloseMonth() {
+  const btnCloseMonth = document.getElementById("btnCloseMonth");
+  if (!btnCloseMonth) return;
+
+  const empName = sessionStorage.getItem("empName") || "";
+  if (empName === "정영욱" || empName === "김수민") {
+    btnCloseMonth.style.display = "inline-flex";
+  }
+
+  btnCloseMonth.addEventListener("click", () => {
+    if (!state.currentMonth) return;
+    document.getElementById("closeMonthText").textContent = state.currentMonth;
+    document.getElementById("closeMonthOverlay").style.display = "flex";
+  });
+
+  const btnConfirmClose = document.getElementById("btnConfirmClose");
+  const btnCancelClose = document.getElementById("btnCancelClose");
+
+  if (btnCancelClose) {
+    btnCancelClose.addEventListener("click", () => {
+      document.getElementById("closeMonthOverlay").style.display = "none";
+    });
+  }
+
+  if (btnConfirmClose) {
+    btnConfirmClose.addEventListener("click", async () => {
+      document.getElementById("closeMonthOverlay").style.display = "none";
+      if (!state.currentMonth) return;
+      
+      try {
+        const res = await fetch(`/api/months/${state.currentMonth}/close`, { method: "POST" });
+        if (!res.ok) {
+          const errData = await res.json();
+          if (res.status === 409) {
+            document.getElementById("closeErrorMsg").innerHTML = errData.detail.replace(/\n/g, "<br>");
+            document.getElementById("closeErrorOverlay").style.display = "flex";
+            return;
+          }
+          throw new Error(errData.detail || "마감 처리 실패");
+        }
+        showToast(`${state.currentMonth}월 데이터 마감이 완료되었습니다!`, "success");
+      } catch (err) {
+        showToast("오류 발생: " + err.message, "error");
+      }
+    });
+  }
+
+  const btnCloseErrorOk = document.getElementById("btnCloseErrorOk");
+  if (btnCloseErrorOk) {
+    btnCloseErrorOk.addEventListener("click", () => {
+      document.getElementById("closeErrorOverlay").style.display = "none";
+    });
+  }
 }

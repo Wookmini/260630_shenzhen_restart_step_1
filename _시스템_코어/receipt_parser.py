@@ -7,8 +7,41 @@ import re
 from typing import Optional
 
 
-# === 계정과목 자동 매핑 규칙 ===
+# === 계정과목 자동 매핑 규칙 (순서 중요: 상단부터 우선 매칭) ===
 ACCOUNT_RULES = {
+    # 1. 특정 상호명 및 고유명사 (최우선 순위)
+    "顺丰": {"major": "해외지사비", "minor": "기타", "code": "51321010"},      # 순펑 (택배비)
+    "货拉拉": {"major": "해외지사비", "minor": "기타", "code": "51321010"},     # 화물라라 (택배/운송)
+    "空运": {"major": "해외지사비", "minor": "기타", "code": "51321010"},       # 항공운송 (택배/화물)
+    "物流": {"major": "해외지사비", "minor": "기타", "code": "51321010"},       # 물류 (택배/화물)
+    "货物运输": {"major": "해외지사비", "minor": "기타", "code": "51321010"},   # 화물운송
+    "运输代理": {"major": "해외지사비", "minor": "기타", "code": "51321010"},   # 운송대리/포워딩
+    "快递服务": {"major": "해외지사비", "minor": "기타", "code": "51321010"},   # 택배서비스
+    "客运服务": {"major": "여비교통비", "minor": "해외", "code": "51061030"},   # 여객운송서비스 (교통비)
+    "餐饮服务": {"major": "업무추진비", "minor": None, "code": "51321010"},    # 요식서비스 (식대) - 중국 내에서 주로 쓰임
+    "业务招待": {"major": "업무추진비", "minor": None, "code": "51321010"},    # 접대서비스 (접대비)
+    "通信服务": {"major": "통신비", "minor": "기타", "code": "51071700"},     # 통신서비스
+    "电信服务": {"major": "통신비", "minor": "기타", "code": "51071700"},     # 통신서비스
+    "中国移动": {"major": "통신비", "minor": "기타", "code": "51071700"},     # 차이나모바일
+    "中国联通": {"major": "통신비", "minor": "기타", "code": "51071700"},     # 차이나유니콤
+    "中国电信": {"major": "통신비", "minor": "기타", "code": "51071700"},     # 차이나텔레콤
+    "平安财产保险": {"major": "해외지사비", "minor": None, "code": "51321010"}, # 핑안보험 (운영비/보험)
+    "滴滴": {"major": "여비교통비", "minor": "해외", "code": "51061030"},       # 디디추싱 (택시/교통비)
+    "旅行社": {"major": "여비교통비", "minor": "해외", "code": "51061030"},     # 여행사 (교통/출장)
+    "酒店": {"major": "여비교통비", "minor": "해외", "code": "51061030"},       # 호텔 (숙박비)
+    "公寓": {"major": "여비교통비", "minor": "해외", "code": "51061030"},       # 아파트 (숙박비)
+    "住宿服务": {"major": "여비교통비", "minor": "해외", "code": "51061030"},   # 숙박서비스
+    "住宿": {"major": "여비교통비", "minor": "해외", "code": "51061030"},       # 숙박
+    
+    # 2. 일반 명사 (차순위)
+    "임대": {"major": "지급임차료", "minor": "사무실임차료", "code": "51201020"},
+    "租金": {"major": "지급임차료", "minor": "사무실임차료", "code": "51201020"},
+    "은행수수료": {"major": "해외지사비", "minor": None, "code": "51321010"},
+    "手续费": {"major": "해외지사비", "minor": None, "code": "51321010"},
+    "택배": {"major": "해외지사비", "minor": "기타", "code": "51321010"},
+    "快递": {"major": "해외지사비", "minor": "기타", "code": "51321010"},
+    "사무용품": {"major": "해외지사비", "minor": None, "code": "51321010"},
+    "办公": {"major": "해외지사비", "minor": None, "code": "51321010"},
     "주유": {"major": "여비교통비", "minor": "해외", "code": "51061030"},
     "加油": {"major": "여비교통비", "minor": "해외", "code": "51061030"},
     "汽油": {"major": "여비교통비", "minor": "해외", "code": "51061030"},
@@ -27,14 +60,6 @@ ACCOUNT_RULES = {
     "통신": {"major": "통신비", "minor": "기타", "code": "51071700"},
     "WIFI": {"major": "통신비", "minor": "기타", "code": "51071700"},
     "电信": {"major": "통신비", "minor": "기타", "code": "51071700"},
-    "임대": {"major": "지급임차료", "minor": "사무실임차료", "code": "51201020"},
-    "租金": {"major": "지급임차료", "minor": "사무실임차료", "code": "51201020"},
-    "은행수수료": {"major": "해외지사비", "minor": None, "code": "51321010"},
-    "手续费": {"major": "해외지사비", "minor": None, "code": "51321010"},
-    "택배": {"major": "해외지사비", "minor": None, "code": "51321010"},
-    "快递": {"major": "해외지사비", "minor": None, "code": "51321010"},
-    "사무용품": {"major": "해외지사비", "minor": None, "code": "51321010"},
-    "办公": {"major": "해외지사비", "minor": None, "code": "51321010"},
 }
 
 
@@ -62,7 +87,7 @@ def clean_amount(amt_str: str) -> Optional[float]:
         return None
 
 
-def parse_receipt(raw_text: str) -> dict:
+def parse_receipt(raw_text: str, filename: str = "") -> dict:
     """
     OCR 텍스트에서 구조화된 영수증 데이터 추출
     반환: {type, date, amount, currency, seller, description, account_major, account_minor, account_code}
@@ -83,6 +108,12 @@ def parse_receipt(raw_text: str) -> dict:
     }
 
     if not raw_text or not raw_text.strip():
+        return result
+
+    # === 0. 입금 영수증 식별 (최우선) ===
+    if "입금" in filename or "COMMISSION USD" in raw_text.upper():
+        result["type"] = "입금영수증"
+        _parse_deposit_receipt(raw_text, result)
         return result
 
     # === 1. 영수증 유형 식별 및 필드 추출 ===
@@ -234,10 +265,17 @@ def _parse_vat_fapiao(text: str, result: dict):
     target_code = "91440300MAELRTJ5XE"
     result["tax_code_valid"] = (target_code in text)
 
-    # 영수증 번호 (증빙번호)
-    num_m = re.search(r"(?:发票号码|号码|发票代码)\s*[:：]?\s*(\d{8,20})", text)
+    # 영수증 번호 (증빙번호) - 发票号码(Number) 우선, 그 다음 발급번호(号码), 마지막으로 发票代码(Code), 그리고 订单号(앱 결제 주문번호)
+    num_m = re.search(r"(?:发票号码)\s*[:：]?\s*(\d{8,20})", text)
+    if not num_m:
+        num_m = re.search(r"(?:号码)\s*[:：]?\s*(\d{8,20})", text)
+    if not num_m:
+        num_m = re.search(r"(?:发票代码)\s*[:：]?\s*(\d{8,20})", text)
+    if not num_m:
+        num_m = re.search(r"(?:订单号)\s*[:：]?\s*([A-Za-z0-9\s]{15,40})", text)
+        
     if num_m:
-        result["receipt_number"] = num_m.group(1)
+        result["receipt_number"] = num_m.group(1).replace(" ", "").replace("\n", "")
     else:
         # 단독 20자리 숫자 (전전발표)
         num20_m = re.search(r"\b(\d{20})\b", text)
@@ -280,15 +318,35 @@ def _parse_fuel_receipt(text: str, result: dict):
 
 def _parse_toll_receipt(text: str, result: dict):
     """过路费 파싱"""
-    # 디디추싱 위챗 결제 라인 근처 금액 추출 (가장 정확함)
-    wx_m = re.search(r"免密支付\n*([\d.,]+)元", text)
-    if wx_m:
-        result["amount"] = float(wx_m.group(1))
+    # 1. 고속도로 통행료 및 주차비 파표 대체 목적 추출 (최우선순위)
+    # 택시 주행요금은 보통 별도의 파표로 청구하므로, 앱 화면은 통행료/주차비 등 파표 불가 항목 청구 목적임
+    non_fapiao_total = 0.0
     
-    if not result.get("amount"):
-        wx_m2 = re.search(r"([\d.,]+)元\n*支付时间", text)
-        if wx_m2:
-            result["amount"] = float(wx_m2.group(1))
+    toll_m = re.search(r'高速路桥费[^\d]*([\d.,]+)\s*元', text)
+    if toll_m:
+        non_fapiao_total += float(toll_m.group(1))
+        
+    park_m = re.search(r'停车费[^\d]*([\d.,]+)\s*元', text)
+    if park_m:
+        non_fapiao_total += float(park_m.group(1))
+        
+    # 세차비/청소비 (파표 불가 항목으로 합산)
+    wash_m = re.search(r'(?:洗车费|清洁费)[^\d]*([\d.,]+)\s*元', text)
+    if wash_m:
+        non_fapiao_total += float(wash_m.group(1))
+        
+    if non_fapiao_total > 0:
+        result["amount"] = non_fapiao_total
+    else:
+        # 2. 통행료/주차비가 없으면 기존처럼 총액(免密支付 등) 추출
+        wx_m = re.search(r"免密支付\n*([\d.,]+)元", text)
+        if wx_m:
+            result["amount"] = float(wx_m.group(1))
+        
+        if not result.get("amount"):
+            wx_m2 = re.search(r"([\d.,]+)元\n*支付时间", text)
+            if wx_m2:
+                result["amount"] = float(wx_m2.group(1))
 
     if not result.get("amount"):
         # 디디추싱 등에서 '总实付' 부근의 쪼개진 숫자(예: 543\n5元\n总实付) 처리
@@ -304,14 +362,22 @@ def _parse_toll_receipt(text: str, result: dict):
             if non_zero:
                 result["amount"] = max(non_zero)
 
-    _fallback_date(text, result)
+        _fallback_date(text, result)
+        
+    # 앱 결제 주문번호(订单号) 추출을 증빙번호로 활용 (중복 검증용)
+    if not result.get("receipt_number"):
+        ord_m = re.search(r"(?:订单号)\s*[:：]?\s*([A-Za-z0-9\s]{15,40})", text)
+        if ord_m:
+            result["receipt_number"] = ord_m.group(1).replace(" ", "").replace("\n", "")
     
     # 택시인지 톨비인지 구분
     if "叫车" in text or "滴滴" in text or "免密支付" in text or "出租车" in text:
-        result["description"] = "택시비"
-        result["type"] = "出租车票"
+        # 택시 영수증(비파표)은 주행요금을 제외한 통행료/주차비 청구 목적이 대원칙임
+        result["description"] = "톨비/주차비"
+        result["type"] = "过路费/停车费"
     else:
-        result["description"] = "톨비"
+        result["description"] = "톨비/주차비"
+        result["type"] = "过路费/停车费"
 
 
 def _parse_bank_receipt(text: str, result: dict):
@@ -433,7 +499,7 @@ def _fallback_date(text: str, result: dict):
 
 def _auto_classify_account(text: str, result: dict):
     """키워드 기반 자동 계정 분류"""
-    combined = (text + " " + (result.get("description") or "")).lower()
+    combined = (text + " " + (result.get("description") or "") + " " + (result.get("seller") or "")).lower()
     for keyword, account in ACCOUNT_RULES.items():
         if keyword.lower() in combined:
             result["account_major"] = account["major"]
@@ -514,3 +580,27 @@ def extract_cn_amount_string(text: str) -> str:
     if not valid_candidates:
         return ""
     return max(valid_candidates, key=len)
+
+
+def _parse_deposit_receipt(text: str, result: dict):
+    import re
+    usd_match = re.search(r'USD\s*([\d,]+\.?\d*)', text)
+    if usd_match:
+        result['deposit_usd'] = float(usd_match.group(1).replace(',', ''))
+    rate_match = re.search(r'6\.\d+', text)
+    if rate_match:
+        result['deposit_rate'] = float(rate_match.group(0))
+    fee_match = re.search(r'COMMISSION USD\s*([\d,]+\.?\d*)', text, re.IGNORECASE)
+    if fee_match:
+        result['withdrawal_usd'] = float(fee_match.group(1).replace(',', ''))
+    date_match = re.search(r'(\d{4}[-/]\d{1,2}[-/]\d{1,2})', text)
+    if date_match:
+        result['date'] = date_match.group(1).replace('/', '-')
+    if result.get('deposit_usd') and result.get('deposit_rate') and result.get('withdrawal_usd') is not None:
+        cny = (result['deposit_usd'] - result['withdrawal_usd']) * result['deposit_rate']
+        result['deposit_cny'] = round(cny, 2)
+        result['amount'] = result['deposit_cny']
+    result['description'] = 'USD입금/RMB환전'
+    result['account_major'] = '해외지사비'
+    result['account_minor'] = '전도금 입금'
+    result['person'] = '심천지사'
