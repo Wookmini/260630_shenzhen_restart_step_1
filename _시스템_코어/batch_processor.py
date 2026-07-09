@@ -465,29 +465,22 @@ def main(month_str):
         person_groups[res['person']].append(res)
         
     # === [2차 재배치: 전체 통합 정렬 및 글로벌 증빙번호/파일명 정규화] ===
-    deposit_receipts = []
-    normal_receipts = []
-    bank_receipts = []
-    
-    for r in results:
-        if r.get('type') == '입금영수증' or r.get('type') == '입금수수료':
-            deposit_receipts.append(r)
-        elif r.get('is_bank_fee_receipt') or r.get('type') == '银行回单':
-            bank_receipts.append(r)
-        else:
-            normal_receipts.append(r)
-            
-    def get_sort_date(r):
-        return r.get('date') or r.get('withdrawal_date') or "9999-99-99"
-        
-    def sort_key(r):
+    def unified_sort_key(r):
+        # 1. 입금영수증 최우선
+        is_deposit = 0 if r.get('type') in ('입금영수증', '입금수수료') else 1
+        # 2. 심천지사 우선
         is_shenzhen = 0 if r.get('person') == '심천지사' else 1
-        return (is_shenzhen, get_sort_date(r))
+        # 3. 사람별 그룹화
+        person_name = r.get('person') or ''
+        # 4. 은행 이체증명서는 그룹 내 맨 마지막
+        is_bank_receipt = 1 if r.get('is_bank_fee_receipt') or r.get('type') == '银行回单' else 0
+        # 5. 시간순 정렬
+        date_str = r.get('date') or r.get('withdrawal_date') or "9999-99-99"
         
-    normal_receipts.sort(key=sort_key)
-    bank_receipts.sort(key=sort_key)
-    
-    sorted_receipts = deposit_receipts + normal_receipts + bank_receipts
+        return (is_deposit, is_shenzhen, person_name, is_bank_receipt, date_str)
+        
+    results.sort(key=unified_sort_key)
+    sorted_receipts = results
     
     temp_renames = []
     current_no = 0
@@ -548,10 +541,9 @@ def main(month_str):
         bank_receipts.sort(key=lambda x: int(x.get('evidence_no') or 0))
         
         if not bank_receipts:
-            # 은행 이체증명서가 없는 경우
+            print(f"\n[알림] {person}님의 은행 이체증명서를 찾을 수 없습니다. (증빙일자로 출금일자 대체)\n")
             for r in person_receipts:
                 r['withdrawal_date'] = r.get('date')
-            print(f"\n[알림] {person}님의 은행 이체증명서를 찾을 수 없습니다. (증빙일자로 출금일자 대체)")
             continue
             
         # 영수증들을 각 이체증명서에 매칭

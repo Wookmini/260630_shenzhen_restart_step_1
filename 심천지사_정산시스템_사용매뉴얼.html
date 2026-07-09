@@ -233,6 +233,16 @@
             <h2>자동 판독(OCR) 및 정산 실행</h2>
         </div>
         <p style="color: var(--text-muted); margin-top: 0;">복잡한 터미널 조작 없이 더블클릭 한 번으로 엑셀 자동 맵핑을 수행할 수 있습니다.</p>
+        
+        <div class="alert tip" style="border-left-color: #ef4444; background: #fef2f2;">
+            <div class="alert-icon">🚨</div>
+            <div class="alert-content">
+                <p style="color: #991b1b; margin-bottom: 5px;"><strong>[필수 규칙] 이전 달 엑셀 파일 저장 (수식 캐시 확정)</strong></p>
+                <p style="color: #991b1b; margin-top: 0; font-size: 0.95em;">새로운 달의 배치를 돌리기 <strong>직전</strong>에, 반드시 <strong>이전 달의 엑셀 파일을 열어 저장(Ctrl+S) 후 닫아주셔야 합니다.</strong><br>
+                파이썬은 엑셀 고유의 복잡한 수식(환율, 입출금 가감)을 스스로 연산하지 못합니다. 사용자가 엑셀로 직접 열어 저장을 눌러주어야만 엑셀 엔진이 이월 잔액을 메모리에 확정(Cache)시켜 다음 달 기초 잔액으로 정확히 넘겨줄 수 있습니다.<br>
+                <em>(예: 7월 정산을 돌리기 전, 6월 폴더의 <code>2026-06.xlsx</code> 파일을 열고 저장(Ctrl+S) 후 닫기)</em></p>
+            </div>
+        </div>
         <ol>
             <li>바탕화면이나 프로젝트 최상위 폴더에 있는 <span class="highlight">정산실행.bat</span> 파일을 <strong>더블클릭</strong>합니다.</li>
             <li>검은색 창이 뜨면서 <em>"작업할 정산 월을 입력하세요 (예: 2026-06):"</em> 라는 문구가 나옵니다.</li>
@@ -244,6 +254,15 @@
             <div class="alert-icon">⚠️</div>
             <div class="alert-content">
                 <p><strong>안내 메시지 확인:</strong> 만약 1단계에서 폴더를 만들지 않고 월을 입력하셨다면, "폴더를 찾을 수 없습니다"라는 한글 안내 메시지가 뜹니다. 이 경우 폴더 생성 후 다시 실행해 주시면 됩니다!</p>
+            </div>
+        </div>
+
+        <div class="alert tip" style="border-left-color: #ef4444; background: #fef2f2;">
+            <div class="alert-icon">🚨</div>
+            <div class="alert-content">
+                <p style="color: #991b1b;"><strong>[중요 주의사항] 영수증 사진을 교체하거나 순서를 바꿀 때!</strong><br>
+                평소 엑셀 내용을 조금 수정하거나 영수증을 단순히 <b>추가</b>하실 때는 엑셀 파일을 절대 지우시면 안 됩니다(수동 작성 내용 보존).<br>
+                다만, <b>특정 번호의 영수증 사진을 아예 다른 사진으로 교체(덮어쓰기)</b>하거나 <b>순서를 대대적으로 바꿀 경우</b>에는, 기존에 생성되어 있던 <code>심천지사 전도금 정산 양식_...xlsx</code> 엑셀 파일을 <b>반드시 먼저 삭제</b>한 뒤 <code>정산실행.bat</code>을 돌려주세요. 삭제하지 않으면 사용자가 이전에 수정한 과거 기록이 새로운 영수증에 잘못 덮어씌워져 금액이 꼬일 수 있습니다.</p>
             </div>
         </div>
     </div>
@@ -306,8 +325,10 @@
         <div class="alert tip">
             <div class="alert-icon">✨</div>
             <div class="alert-content">
-                <p><strong>엑셀 파일 최종 결과물 확인</strong><br>
-                엑셀 파일을 열어보시면, 웹앱에서 수기로 적으신 내용은 <strong>R열(비고)</strong>에 분리되어 나타나고,<br>파표 회사코드 불일치나 은행 이체수수료 금액 불일치 등 시스템이 자동으로 찾아낸 경고 사항은 <strong>S열(항목)</strong>에 빨간색 칸과 함께 예쁘게 정리되어 나타납니다!</p>
+                <p><strong>엑셀 파일 최종 결과물 확인 (최신 시스템 반영)</strong><br>
+                - <b>스마트 환율 및 이월 잔액 계산:</b> 이전 달의 이월 잔액(RMB)이 모두 소진될 때까지는 전월 최종 환산요율이, 소진 이후 건부터는 당월 최종 환산요율이 엑셀에 자동으로 일괄 적용됩니다. (전도금 수수료인 USD 10/25 항목 역시 전월 최종 요율로 계산됩니다.)<br>
+                - <b>깔끔한 분할 표기:</b> 이월 잔액 부족으로 정산이 2줄로 나뉘는 영수증의 경우 <code>(분할 1/2)</code> 등의 표기가 내역(E열)을 해치지 않고 <strong>R열(비고)</strong>에 정리됩니다.<br>
+                - <b>오류 검출 및 수동 입력 보존:</b> 파표 회사코드 불일치나 은행 수수료 금액 불일치 등은 <strong>S열(검증)</strong>에 붉은색으로 강조되며, 웹앱에서 수동으로 입력하신 비고 사항은 기존 내용이 날아가지 않고 R열에 안전하게 누적 병합됩니다!</p>
             </div>
         </div>
     </div>
