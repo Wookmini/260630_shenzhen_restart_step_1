@@ -5,6 +5,7 @@
 import os
 import shutil
 import datetime
+import calendar
 import openpyxl
 from openpyxl.styles import PatternFill
 from typing import List, Dict, Any
@@ -85,9 +86,20 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
     # 대상 시트 접근
     if month_label in wb.sheetnames:
         ws = wb[month_label]
-    else:
-        ws = wb.active
+    elif 'YY.MM' in wb.sheetnames:
+        ws = wb['YY.MM']
         ws.title = month_label
+    else:
+        # Fallback: find a sheet that starts with 20 or resembles a date, avoiding '통장'
+        ws = None
+        for s in wb.sheetnames:
+            if s != '통장내역(환율표)' and not s.startswith('_'):
+                ws = wb[s]
+                ws.title = month_label
+                break
+        if not ws:
+            ws = wb.active
+            ws.title = month_label
 
     # Clear existing data rows starting from row 21 to allow clean overwrite/regeneration
     # We restrict the clearing loop to 1000 rows to prevent extreme lag from large ws.max_row (e.g. 490k rows)
@@ -99,107 +111,188 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
                 cell.value = None
                 cell.fill = openpyxl.styles.PatternFill(fill_type=None)
 
+    # 전월 이월 잔액(21행) 자동 계산 로직
+    try:
+        # month_label 파싱 (예: "2026-06" 또는 "26.06")
+        sep = "-" if "-" in month_label else "."
+        parts = month_label.split(sep)
+        if len(parts) >= 2:
+            y_str, m_str = parts[0], parts[1]
+            target_year = int(y_str) if len(y_str) == 4 else int(y_str) + 2000
+            target_month = int(m_str)
+            
+            if target_month == 1:
+                prev_year = target_year - 1
+                prev_month = 12
+            else:
+                prev_year = target_year
+                prev_month = target_month - 1
+                
+            _, last_day = calendar.monthrange(prev_year, prev_month)
+            last_date_of_prev_month = datetime.date(prev_year, prev_month, last_day)
+            prev_month_str = f"{prev_year}-{prev_month:02d}"
+            
+            # === [전월 이월 잔액 및 환율 자동 연동 로직] ===
+            prev_excel_path = os.path.join(BASE_DIR, "작업장소 (영수증 보관)", prev_month_str, f"심천지사 전도금 정산 양식_{prev_month_str}.xlsx")
+            
+            last_p = 0.0
+            last_q = 0.0
+            
+            if os.path.exists(prev_excel_path):
+                try:
+                    wb_prev = openpyxl.load_workbook(prev_excel_path, data_only=True)
+                    ws_prev = None
+                    # 메인 시트 찾기
+                    for s in wb_prev.sheetnames:
+                        if prev_month_str in s or "심천지사" in s:
+                            ws_prev = wb_prev[s]
+                            break
+                    if not ws_prev:
+                        ws_prev = wb_prev.active
+                    
+                    # 마지막 P, Q 잔액 탐색 (아래에서 위로)
+                    max_r = min(ws_prev.max_row, 1000)
+                    for r_idx in range(max_r, 20, -1):
+                        val_p = ws_prev.cell(row=r_idx, column=16).value
+                        if val_p is not None and str(val_p).strip() != "":
+                            val_q = ws_prev.cell(row=r_idx, column=17).value
+                            try:
+                                last_p = float(val_p)
+                                last_q = float(val_q) if val_q is not None and str(val_q).strip() != "" else 0.0
+                                break
+                            except ValueError:
+                                pass
+                except Exception as e:
+                    print(f"Warning: Failed to load previous month excel {prev_excel_path}: {e}")
+            
+            # 21행 셀 기입 (수식 제거, 값 직접 기입 및 기존 쓰레기 데이터 클리어)
+            ws.cell(row=21, column=2, value=last_date_of_prev_month.strftime('%Y-%m-%d'))
+            # C열(3)부터 O열(15)까지 비우기
+            for col_idx in range(3, 16):
+                ws.cell(row=21, column=col_idx, value=None)
+            ws.cell(row=21, column=16, value=last_p)
+            ws.cell(row=21, column=17, value=last_q)
+            
+    except Exception as e:
+        print(f"Warning: Failed to calculate previous month balance: {e}")
+
     start_row = 22
 
-    # 영수증 데이터 삽입
-    for idx, receipt in enumerate(receipts):
-        r = start_row + idx
-        evidence_no = receipt.get("evidence_no", idx + 1)
+    # === [FIFO 환율 적용 및 분할 처리 준비] ===
+    # data_only=True로 원본 엑셀 파일을 다시 읽어서 당월 환율 기록(rate_history) 추출
+    wb_data = openpyxl.load_workbook(output_path, data_only=True)
+    
+    # 전월 이월 잔액(RMB) 및 환율은 위에서 추출한 값을 직접 파이썬 메모리에 할당
+    try:
+        remaining_carry_rmb = float(ws.cell(row=21, column=16).value or 0.0)
+        carry_usd = float(ws.cell(row=21, column=17).value or 0.0)
+        prev_rate_val = remaining_carry_rmb / carry_usd if carry_usd > 0 else 0.0
+    except ValueError:
+        remaining_carry_rmb = 0.0
+        prev_rate_val = 0.0
 
-        # B열: 출금일자 (은행 이체증명서 기준 일괄 적용된 날짜)
+    rate_history = [] # list of (date, row_idx, rate_value)
+
+    try:
+        if '통장내역(환율표)' in wb_data.sheetnames:
+            acc_ws_data = wb_data['통장내역(환율표)']
+            for i in range(2, acc_ws_data.max_row + 1):
+                b_val = acc_ws_data.cell(row=i, column=2).value
+                d_val = acc_ws_data.cell(row=i, column=4).value
+                dt = None
+                if isinstance(b_val, datetime.datetime):
+                    dt = b_val
+                elif isinstance(b_val, str) and len(b_val) >= 10:
+                    try:
+                        dt = datetime.datetime.strptime(b_val[:10], '%Y-%m-%d')
+                    except ValueError:
+                        pass
+                if dt and d_val is not None and str(d_val).strip() != '':
+                    try:
+                        rate_history.append((dt.date(), i, float(d_val)))
+                    except ValueError:
+                        rate_history.append((dt.date(), i, 0.0))
+    except Exception as e:
+        print(f"Warning: Failed to load data_only workbook for FIFO logic: {e}")
+    finally:
+        wb_data.close()
+
+    def get_latest_rate_row(*args, **kwargs):
+        if rate_history:
+            return rate_history[-1][1]
+        return prev_rate_row
+
+    def write_receipt_row(ws, r, receipt, ev_no, rmb_amt, rate_formula, split_marker):
         withdrawal_date_val = receipt.get("withdrawal_date")
         if withdrawal_date_val and isinstance(withdrawal_date_val, datetime.datetime):
             withdrawal_date_val = withdrawal_date_val.strftime("%Y-%m-%d")
-        elif withdrawal_date_val and isinstance(withdrawal_date_val, str):
-            # 문자열이라도 yyyy-mm-dd 형태로 유지
-            if len(withdrawal_date_val) > 10:
-                withdrawal_date_val = withdrawal_date_val[:10]
+        elif withdrawal_date_val and isinstance(withdrawal_date_val, str) and len(withdrawal_date_val) > 10:
+            withdrawal_date_val = withdrawal_date_val[:10]
         ws.cell(row=r, column=2, value=withdrawal_date_val)
 
-        # C열: 증빙일자 (OCR 추출 원본 날짜)
         date_val = receipt.get("date")
         if date_val and isinstance(date_val, datetime.datetime):
             date_val = date_val.strftime("%Y-%m-%d")
-        elif date_val and isinstance(date_val, str):
-            if len(date_val) > 10:
-                date_val = date_val[:10]
+        elif date_val and isinstance(date_val, str) and len(date_val) > 10:
+            date_val = date_val[:10]
         ws.cell(row=r, column=3, value=date_val)
 
-        # D열: 증빙번호 (파표일 경우에만)
         if receipt.get("type") == "增值税发票":
             ws.cell(row=r, column=4, value=receipt.get("receipt_number", ""))
         else:
             ws.cell(row=r, column=4, value="")
 
-        # E열: 내역
-        desc_cell = ws.cell(row=r, column=5, value=receipt.get("description", ""))
-
-        # F열: 담당자
+        desc = receipt.get("description", "")
+        desc_cell = ws.cell(row=r, column=5, value=desc)
         ws.cell(row=r, column=6, value=receipt.get("person", ""))
+        ws.cell(row=r, column=7, value=ev_no)
 
-        # G열: 증빙번호
-        ws.cell(row=r, column=7, value=evidence_no)
-
-        # H열: 대계정
         major_cell = ws.cell(row=r, column=8, value=receipt.get("account_major", ""))
-
-        # I열: 소계정
         minor_cell = ws.cell(row=r, column=9, value=receipt.get("account_minor", ""))
         
-        # 맵핑 실패(Unknown) 시 빨간색 배경 적용
         if receipt.get("is_mapped") is False:
             red_fill = PatternFill(start_color="FFCCCC", end_color="FFCCCC", fill_type="solid")
             desc_cell.fill = red_fill
             major_cell.fill = red_fill
             minor_cell.fill = red_fill
 
-        # J열: 입금 CNY
-        deposit_cny = receipt.get("deposit_cny")
+        deposit_cny = receipt.get("deposit_cny") if not split_marker else None
         if deposit_cny is not None:
             ws.cell(row=r, column=10, value=deposit_cny)
 
-        # K열: 입금 환산요율
-        deposit_rate = receipt.get("deposit_rate")
+        deposit_rate = receipt.get("deposit_rate") if not split_marker else None
         if deposit_rate is not None:
             ws.cell(row=r, column=11, value=deposit_rate)
 
-        # L열: 입금 USD
-        deposit_usd = receipt.get("deposit_usd")
+        deposit_usd = receipt.get("deposit_usd") if not split_marker else None
         if deposit_usd is not None:
             ws.cell(row=r, column=12, value=deposit_usd)
 
-        # M열: 출금 CNY
-        amount = receipt.get("amount")
-        if amount is not None and receipt.get("type") != "입금영수증":
-            ws.cell(row=r, column=13, value=amount)
+        if rmb_amt is not None and receipt.get("type") != "입금영수증":
+            ws.cell(row=r, column=13, value=rmb_amt)
 
-        # N열: 환산요율 (환율표 참조 수식)
-        ws.cell(row=r, column=14, value=f"='통장내역(환율표)'!$D$88")
+        if rate_formula:
+            ws.cell(row=r, column=14, value=rate_formula)
 
-        # O열: 출금 USD (= CNY / 환율)
-        if receipt.get("type") == "입금수수료" and receipt.get("withdrawal_usd") is not None:
+        if receipt.get("type") == "입금수수료" and receipt.get("withdrawal_usd") is not None and not split_marker:
             ws.cell(row=r, column=15, value=receipt.get("withdrawal_usd"))
+            ws.cell(row=r, column=13, value=f"=O{r}*N{r}")
         elif receipt.get("type") == "입금영수증":
             ws.cell(row=r, column=15, value="")
         else:
             ws.cell(row=r, column=15, value=f"=M{r}/N{r}")
 
-        # P열: 잔액 CNY (입금 가산, 출금 차감)
         ws.cell(row=r, column=16, value=f"=P{r-1}+J{r}-M{r}")
-
-        # Q열: 잔액 USD (입금 가산, 출금 차감)
         ws.cell(row=r, column=17, value=f"=Q{r-1}+L{r}-O{r}")
 
-        # R열: 비고 (통합) - 수기 기재 또는 웹앱 비고란
-        remark_text = receipt.get("remark")
+        remark_text = receipt.get("remark") or ""
+        if split_marker:
+            remark_text = f"{remark_text} {split_marker}".strip()
         if remark_text:
             ws.cell(row=r, column=18, value=remark_text)
 
-        # S열: 항목 - 시스템 자동 판독 결과 및 경고 (은행/파표 등)
-        # S열: 항목 - 시스템 자동 판독 결과 및 경고 (은행/파표 등)
         warning = receipt.get("validation_warning")
         system_remarks = []
-        
         if warning:
             if "✅" in warning:
                 system_remarks.append(warning)
@@ -223,8 +316,56 @@ def export_to_excel(receipts: List[Dict[str, Any]], month_label: str = "26.06", 
             if "✅" not in remark_str:
                 item_cell.font = Font(color="FF0000")
 
+    current_row = 22
+    for idx, receipt in enumerate(receipts):
+        evidence_no = receipt.get("evidence_no", idx + 1)
+        r_type = receipt.get("type")
+        
+        if r_type == '입금영수증':
+            write_receipt_row(ws, current_row, receipt, evidence_no, None, None, "")
+            current_row += 1
+            continue
+
+        if r_type == '입금수수료':
+            # 전도금 수수료도 전월 최종 환산요율 적용
+            write_receipt_row(ws, current_row, receipt, evidence_no, None, prev_rate_val, "")
+            
+            # 수수료만큼 이월 잔액(RMB) 차감
+            if remaining_carry_rmb > 0.001:
+                fee_usd = receipt.get('amount') or 0.0
+                fee_rmb = fee_usd * prev_rate_val
+                remaining_carry_rmb = max(0.0, remaining_carry_rmb - fee_rmb)
+                
+            current_row += 1
+            continue
+
+        receipt_rmb = receipt.get('amount') or 0.0
+        
+        if remaining_carry_rmb > 0.001:
+            if receipt_rmb <= remaining_carry_rmb:
+                write_receipt_row(ws, current_row, receipt, evidence_no, receipt_rmb, prev_rate_val, "")
+                remaining_carry_rmb -= receipt_rmb
+                current_row += 1
+            else:
+                write_receipt_row(ws, current_row, receipt, evidence_no, remaining_carry_rmb, prev_rate_val, "(분할 1/2)")
+                current_row += 1
+                
+                rest_amount = receipt_rmb - remaining_carry_rmb
+                remaining_carry_rmb = 0.0
+                
+                curr_rate_idx = get_latest_rate_row(receipt.get('withdrawal_date'))
+                curr_rate_form = f"='통장내역(환율표)'!D{curr_rate_idx}" if curr_rate_idx else ""
+                write_receipt_row(ws, current_row, receipt, evidence_no, rest_amount, curr_rate_form, "(분할 2/2)")
+                current_row += 1
+        else:
+            curr_rate_idx = get_latest_rate_row(receipt.get('withdrawal_date'))
+            curr_rate_form = f"='통장내역(환율표)'!D{curr_rate_idx}" if curr_rate_idx else ""
+            write_receipt_row(ws, current_row, receipt, evidence_no, receipt_rmb, curr_rate_form, "")
+            current_row += 1
+
     wb.save(output_path)
     return output_path
+
 
 
 def get_available_exports() -> list:

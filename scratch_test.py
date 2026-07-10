@@ -1,17 +1,22 @@
-import sys, os, subprocess
-filepath = r'c:\Users\20000177\Desktop\Wooktigravity\260630_shenzhen_restart_step_1\_시스템_코어\batch_processor.py'
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
+import openpyxl
+import sys
+import os
 
-# Make template_data empty to bypass old overrides during test
-content = content.replace('if os.path.exists(template_path):', 'if False:')
+sys.stdout.reconfigure(encoding='utf-8')
 
-# bypass excel save to avoid PermissionError
-content = content.replace('export_to_excel(results, month_label=month_str, output_path=excel_path)', '# export_to_excel(...)')
+path = '작업장소 (영수증 보관)/2026-06/심천지사 전도금 정산 양식_2026-06.xlsx'
 
-# Save as test processor
-test_filepath = filepath.replace('batch_processor.py', 'batch_processor_test.py')
-with open(test_filepath, 'w', encoding='utf-8') as f:
-    f.write(content)
-
-subprocess.run([sys.executable, test_filepath, '2026-06'])
+if os.path.exists(path):
+    wb = openpyxl.load_workbook(path, data_only=True)
+    if '2026-06' in wb.sheetnames:
+        sheet = wb['2026-06']
+        print(f"--- Data from {path} (Sheet: 2026-06) ---")
+        for r_idx in range(21, 35):
+            ev_val = sheet.cell(row=r_idx, column=7).value
+            amt_val = sheet.cell(row=r_idx, column=13).value
+            desc_val = sheet.cell(row=r_idx, column=5).value
+            rate_val = sheet.cell(row=r_idx, column=14).value
+            remark = sheet.cell(row=r_idx, column=18).value
+            print(f"Row {r_idx}: EV={ev_val}, Amt={amt_val}, Rate={rate_val}, Desc={desc_val}, Remark={remark}")
+    else:
+        print("Sheet '2026-06' not found.")
