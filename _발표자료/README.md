@@ -17,8 +17,11 @@ _발표자료/
 │   ├── logo.png
 │   ├── img_*.png
 │   └── _ppt_part1.txt
-└── V2/                ← 현재 작업 버전 (강당용 개선)
+└── V2/                ← 기존 작업 버전 (강당용 개선)
     └── presentation.html
+└── V3/                ← 최신 작업 버전 (데모-흐름 순서 변경)
+    ├── presentation.html
+    └── ppt_script_v3.md
 ```
 
 ---
