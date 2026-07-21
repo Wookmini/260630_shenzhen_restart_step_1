@@ -213,15 +213,16 @@ def update_month_receipt(month_str: str, evidence_no: int, update: ReceiptUpdate
         
         if os.path.exists(old_full_path):
             filename = os.path.basename(old_full_path)
+            # Preserve subfolder structure when moving to new person
+            rel_to_person = os.path.relpath(old_full_path, os.path.join(month_dir, old_person))
             new_person_dir = os.path.join(month_dir, new_person)
-            os.makedirs(new_person_dir, exist_ok=True)
+            new_full_path = os.path.join(new_person_dir, rel_to_person)
             
-            new_full_path = os.path.join(new_person_dir, filename)
+            os.makedirs(os.path.dirname(new_full_path), exist_ok=True)
             shutil.move(old_full_path, new_full_path)
             
             # file_path 필드도 갱신
-            new_rel_path = f"작업장소 (영수증 보관)/{month_str}/{new_person}/{filename}"
-            receipt["file_path"] = new_rel_path
+            receipt["file_path"] = os.path.relpath(new_full_path, BASE_DIR).replace('\\', '/')
             
             # 이전 담당자 폴더가 비어 있으면 폴더 제거
             old_person_dir = os.path.dirname(old_full_path)
@@ -287,15 +288,14 @@ def delete_month_receipt(month_str: str, evidence_no: int):
                 ext = os.path.splitext(old_full_path)[1].lower()
                 new_filename = f"{new_no:03d}{ext}"
                 
-                new_person_dir = os.path.join(month_dir, person)
-                os.makedirs(new_person_dir, exist_ok=True)
-                new_full_path = os.path.join(new_person_dir, new_filename)
+                old_dir = os.path.dirname(old_full_path)
+                new_full_path = os.path.join(old_dir, new_filename)
                 
                 if old_full_path != new_full_path:
                     shutil.move(old_full_path, new_full_path)
                     
                 # 필드 갱신
-                r["file_path"] = f"작업장소 (영수증 보관)/{month_str}/{person}/{new_filename}"
+                r["file_path"] = os.path.relpath(new_full_path, BASE_DIR).replace('\\', '/')
 
     # 4. 저장 및 엑셀 싱크
     save_month_receipts(month_str, receipts)
@@ -305,8 +305,27 @@ def delete_month_receipt(month_str: str, evidence_no: int):
 
 @app.get("/api/months/{month_str}/images/{assignee}/{filename}")
 def serve_month_image(month_str: str, assignee: str, filename: str):
-    """특정 월의 영수증 이미지 파일 직접 서빙"""
+    """(하위 호환용) 특정 월의 영수증 이미지 파일 서빙"""
     fpath = os.path.join(STORAGE_DIR, month_str, assignee, filename)
+    if os.path.exists(fpath):
+        ext = os.path.splitext(fpath)[1].lower()
+        media_map = {
+            ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+            ".png": "image/png", ".gif": "image/gif",
+            ".webp": "image/webp", ".pdf": "application/pdf",
+        }
+        media_type = media_map.get(ext, "application/octet-stream")
+        return FileResponse(fpath, media_type=media_type)
+    raise HTTPException(status_code=404, detail="이미지 파일을 찾을 수 없습니다.")
+
+@app.get("/api/images/{file_path:path}")
+def serve_image_by_path(file_path: str):
+    """임의 깊이의 하위 폴더 구조를 모두 지원하는 이미지 서빙 라우트"""
+    fpath = os.path.join(BASE_DIR, file_path)
+    # 보안: BASE_DIR 외부 접근 차단
+    if not os.path.abspath(fpath).startswith(os.path.abspath(STORAGE_DIR)):
+        raise HTTPException(status_code=403, detail="접근이 거부되었습니다.")
+        
     if os.path.exists(fpath):
         ext = os.path.splitext(fpath)[1].lower()
         media_map = {

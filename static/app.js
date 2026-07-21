@@ -227,10 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // === 이미지 URL ===
 function getReceiptImgUrl(r) {
   if (!r || !r.file_path) return "";
-  const parts = r.file_path.split("/");
-  const filename = parts[parts.length - 1];
-  const person = r.person || "Unknown";
-  return `/api/months/${state.currentMonth}/images/${encodeURIComponent(person)}/${filename}`;
+  return `/api/images/${encodeURIComponent(r.file_path)}`;
 }
 
 // === 영수증 데이터 로드 ===

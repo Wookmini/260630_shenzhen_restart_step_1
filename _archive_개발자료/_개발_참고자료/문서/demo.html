@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="심천지사 중국 영수증 OCR 변환 웹앱 - 영수증 사진을 업로드하면 자동으로 엑셀 데이터로 변환합니다.">
+    <title>SROT - 심천지사 영수증 OCR 변환 (시연용 Demo)</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        .demo-banner {
+            background-color: #ff9800;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-banner">⚠️ 본 페이지는 백엔드 서버 없이 동작하는 시연(Demo)용 페이지입니다. 데이터는 가짜(더미) 데이터입니다.</div>
+    <!-- 토스트 알림 컨테이너 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- 헤더 -->
+    <header class="app-header">
+        <div class="app-logo">
+            <div class="icon">🧾</div>
+            <div>
+                <h1>SROT</h1>
+                <span class="subtitle">심천지사 영수증 OCR 변환 시스템</span>
+            </div>
+        </div>
+        <div class="header-stats">
+            <span class="stat-badge" id="statTotal">📄 총 0건</span>
+            <span class="stat-badge" id="statProcessed">✅ 처리 0건</span>
+            <span class="stat-badge" id="statAmount">💰 ¥0.00</span>
+        </div>
+    </header>
+
+    <!-- 탭 네비게이션 -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="upload" id="tabUpload">📸 영수증 업로드</button>
+        <button class="tab-btn" data-tab="review" id="tabReview">✏️ 데이터 검토</button>
+        <button class="tab-btn" data-tab="table" id="tabTable">📊 정산 내역</button>
+        <button class="tab-btn" data-tab="export" id="tabExport">📥 내보내기</button>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+
+        <!-- ===== 탭 1: 영수증 업로드 ===== -->
+        <section class="tab-panel active" id="panelUpload">
+            <div class="glass-card">
+                <div class="card-title">📸 영수증 이미지 업로드</div>
+                <div class="dropzone" id="dropzone">
+                    <input type="file" id="fileInput" multiple accept="image/*,.pdf,.heic">
+                    <div class="icon">📁</div>
+                    <h3>여기에 영수증 이미지를 드래그하세요</h3>
+                    <p>JPG, PNG, PDF, HEIC 지원 · 최대 50장 일괄 업로드</p>
+                </div>
+                <div class="progress-bar" id="uploadProgress" style="display:none;">
+                    <div class="progress-fill" id="uploadProgressFill" style="width:0%"></div>
+                </div>
+                <p id="uploadStatus" style="margin-top:12px; font-size:0.85rem; color:var(--gray-500);"></p>
+            </div>
+
+            <!-- 업로드된 썸네일 그리드 -->
+            <div class="glass-card" style="margin-top:20px;" id="thumbSection" style="display:none;">
+                <div class="card-title">🖼️ 업로드된 영수증 (<span id="thumbCount">0</span>건)</div>
+                <div class="thumb-grid" id="thumbGrid"></div>
+            </div>
+        </section>
+
+        <!-- ===== 탭 2: 데이터 검토 ===== -->
+        <section class="tab-panel" id="panelReview">
+            <div class="nav-bar">
+                <button class="btn btn-secondary btn-sm" id="btnPrev">⬅ 이전</button>
+                <span class="nav-counter" id="navCounter">0 / 0</span>
+                <button class="btn btn-secondary btn-sm" id="btnNext">다음 ➡</button>
+            </div>
+            <div class="split-layout">
+                <!-- 좌: 이미지 뷰어 -->
+                <div class="glass-card">
+                    <div class="card-title">📷 영수증 원본</div>
+                    <div class="image-viewer" id="imageViewer">
+                        <img id="reviewImage" src="" alt="영수증 이미지" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 80%22><rect fill=%22%23f1f5f9%22 width=%22100%22 height=%2280%22/><text x=%2250%22 y=%2245%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22 font-size=%2212%22>No Preview (Demo)</text></svg>'">
+                        <div class="viewer-controls">
+                            <button id="btnZoomIn" title="확대">🔍+</button>
+                            <button id="btnZoomOut" title="축소">🔍-</button>
+                            <button id="btnRotate" title="회전">🔄</button>
+                            <button id="btnReset" title="초기화">↩️</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 우: 편집 폼 -->
+                <div class="glass-card">
+                    <div class="card-title">✏️ OCR 추출 결과 편집</div>
+                    <form class="edit-form" id="editForm">
+                        <div class="form-group">
+                            <label>🏷️ 영수증 유형</label>
+                            <select id="editType">
+                                <option value="增值税发票">增值税发票 (VAT Fapiao)</option>
+                                <option value="火车票">火车票 (기차표)</option>
+                                <option value="加油票">加油票 (주유)</option>
+                                <option value="过路费">过路费 (톨비)</option>
+                                <option value="银行回单">银行回单 (은행)</option>
+                                <option value="기타">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>📅 날짜</label>
+                            <input type="date" id="editDate">
+                        </div>
+                        <div class="form-group">
+                            <label>💰 금액 (CNY)</label>
+                            <input type="number" id="editAmount" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>📝 내역</label>
+                            <input type="text" id="editDescription" placeholder="내역을 입력하세요">
+                        </div>
+                        <div class="form-group">
+                            <label>🏢 판매자</label>
+                            <input type="text" id="editSeller" placeholder="판매자명">
+                        </div>
+                        <div class="form-group">
+                            <label>👤 담당자</label>
+                            <select id="editPerson">
+                                <option value="">— 선택 —</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🏷️ 대계정</label>
+                            <select id="editMajor">
+                                <option value="">— 선택 —</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>🏷️ 소계정</label>
+                            <select id="editMinor">
+                                <option value="">— 선택 —</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>📄 OCR 원본 텍스트</label>
+                            <textarea id="editRawText" rows="4" readonly style="font-size:0.75rem; color:var(--gray-400);"></textarea>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" id="btnSaveReceipt">💾 저장</button>
+                            <button type="button" class="btn btn-danger btn-sm" id="btnDeleteReceipt">🗑️ 삭제</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 탭 3: 정산 내역 ===== -->
+        <section class="tab-panel" id="panelTable">
+            <div class="glass-card">
+                <div class="card-title">📊 전체 정산 내역</div>
+                <div class="data-table-wrapper">
+                    <table class="data-table" id="settlementTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>날짜</th>
+                                <th>내역</th>
+                                <th>담당자</th>
+                                <th>대계정</th>
+                                <th>소계정</th>
+                                <th>금액(CNY)</th>
+                                <th>유형</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="6" style="text-align:right;">합계</td>
+                                <td class="amount-cell" id="totalAmount">¥0.00</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="empty-state" id="tableEmpty">
+                    <div class="icon">📋</div>
+                    <h3>데이터가 없습니다</h3>
+                    <p>영수증을 업로드하면 여기에 정산 내역이 표시됩니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 탭 4: 내보내기 ===== -->
+        <section class="tab-panel" id="panelExport">
+            <div class="glass-card">
+                <div class="export-section">
+                    <div class="card-title">📥 엑셀 내보내기</div>
+                    <div class="export-preview">
+                        <h4>📊 내보내기 미리보기</h4>
+                        <div class="export-stat">
+                            <span class="label">총 영수증 수</span>
+                            <span class="value" id="exportTotal">0건</span>
+                        </div>
+                        <div class="export-stat">
+                            <span class="label">합계 금액 (CNY)</span>
+                            <span class="value" id="exportAmount">¥0.00</span>
+                        </div>
+                        <div class="export-stat">
+                            <span class="label">담당자 수</span>
+                            <span class="value" id="exportPersons">0명</span>
+                        </div>
+                        <div class="export-stat">
+                            <span class="label">대상 양식</span>
+                            <span class="value">26.06 시트</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" id="btnExport" style="width:100%;">
+                        📥 관리 양식 엑셀 다운로드 (Demo)
+                    </button>
+                    <p style="text-align:center; font-size:0.8rem; color:var(--gray-400);">
+                        양식: 26년_6월 심천지사 전도금 정산(데이터 양식 변경).xlsx
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 더미 데이터 설정
+        const mockAccounts = [
+            { major: "업무추진비", minor: "일반" },
+            { major: "여비교통비", minor: "해외" },
+            { major: "지급임차료", minor: "사무실임차료" },
+            { major: "지급임차료", minor: "차량임차료" },
+            { major: "통신비", minor: "기타" },
+            { major: "해외지사비", minor: null }
+        ];
+        
+        const mockMembers = ["김동욱", "이심천", "박정산", "최영수"];
+        
+        let mockReceipts = [
+            {
+                id: "mock_1",
+                original_filename: "receipt_01_watermark_rotated.jpg",
+                type: "增值税发票",
+                date: "2026-03-23",
+                amount: 42.0,
+                description: "북경 통신장비 테스트용 (RapidOCR 처리 시연)",
+                seller: "北京我遥我控科技有限公司",
+                person: "김동욱",
+                account_major: "해외지사비",
+                account_minor: "",
+                raw_text: "발표\n금액 42.00\n날짜 2026-03-23\n北京我遥我控科技有限公司"
+            },
+            {
+                id: "mock_2",
+                original_filename: "taxi_shenzhen_jun.png",
+                type: "出租车票",
+                date: "2026-06-15",
+                amount: 135.5,
+                description: "심천 출장 택시비",
+                seller: "深圳市交通",
+                person: "이심천",
+                account_major: "여비교통비",
+                account_minor: "해외",
+                raw_text: "TAXI\n135.5 RMB\n2026-06-15"
+            },
+            {
+                id: "mock_3",
+                original_filename: "bank_transfer.pdf",
+                type: "银行回单",
+                date: "2026-06-20",
+                amount: 1500.0,
+                description: "6월 사무실 임대료",
+                seller: "SHINHAN BANK",
+                person: "박정산",
+                account_major: "지급임차료",
+                account_minor: "사무실임차료",
+                raw_text: "SHINHAN BANK\n1500.00\n2026-06-20"
+            }
+        ];
+
+        // fetch API 모킹 (서버 통신 가로채기)
+        const originalFetch = window.fetch;
+        window.fetch = async function(url, options) {
+            const method = (options?.method || 'GET').toUpperCase();
+            console.log(`[Mock Fetch] ${method} ${url}`);
+            
+            const jsonResponse = (data) => Promise.resolve({
+                ok: true,
+                json: () => Promise.resolve(data)
+            });
+
+            if (url === '/api/accounts' && method === 'GET') {
+                return jsonResponse(mockAccounts);
+            }
+            if (url === '/api/members' && method === 'GET') {
+                return jsonResponse(mockMembers);
+            }
+            if (url === '/api/receipts' && method === 'GET') {
+                return jsonResponse(mockReceipts);
+            }
+            if (url === '/api/upload' && method === 'POST') {
+                await new Promise(r => setTimeout(r, 1500));
+                
+                // 새로운 더미 데이터 추가
+                const newId = "mock_" + Date.now();
+                mockReceipts.unshift({
+                    id: newId,
+                    original_filename: "new_upload_demo.jpg",
+                    type: "기타",
+                    date: "2026-06-30",
+                    amount: 99.9,
+                    description: "데모 업로드 데이터",
+                    seller: "새로운 판매자",
+                    person: "최영수",
+                    account_major: "업무추진비",
+                    account_minor: "일반",
+                    raw_text: "업로드 테스트\n99.9"
+                });
+                return jsonResponse({ uploaded: 1 });
+            }
+            if (url.startsWith('/api/receipts/') && method === 'PUT') {
+                const id = url.split('/').pop();
+                const body = JSON.parse(options.body);
+                const index = mockReceipts.findIndex(r => r.id === id);
+                if (index !== -1) {
+                    mockReceipts[index] = { ...mockReceipts[index], ...body };
+                }
+                return jsonResponse({ success: true });
+            }
+            if (url.startsWith('/api/receipts/') && method === 'DELETE') {
+                const id = url.split('/').pop();
+                mockReceipts = mockReceipts.filter(r => r.id !== id);
+                return jsonResponse({ success: true });
+            }
+            if (url === '/api/export/excel' && method === 'POST') {
+                const blob = new Blob(["이 파일은 시연용 다운로드 파일입니다."], { type: "text/plain" });
+                return Promise.resolve({
+                    ok: true,
+                    headers: {
+                        get: () => 'filename="정산_export_demo.txt"'
+                    },
+                    blob: () => Promise.resolve(blob)
+                });
+            }
+
+            // 이미지 preview 처리는 Mock 하지 않으므로 404 발생 후 onerror(SVG)가 동작함
+            return originalFetch(url, options);
+        };
+    </script>
+    <script src="static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+html = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>심천지사 정산 자동화 발표</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#060b18;color:#fff;overflow:hidden;width:100vw;height:100vh}
+.deck{width:100%;height:100%;position:relative}
+.slide{display:none;width:100%;height:100%;position:absolute;top:0;left:0;padding:56px 80px 80px;flex-direction:column;justify-content:center;animation:fi .5s ease}
+.slide.active{display:flex}
+@keyframes fi{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.sn{position:absolute;bottom:28px;right:44px;font-size:15px;opacity:.35;letter-spacing:1px}
+.tag{display:inline-block;background:rgba(52,176,96,.2);border:1px solid #34b060;color:#4ade80;padding:5px 18px;border-radius:30px;font-size:14px;margin-bottom:22px;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:72px;font-weight:900;line-height:1.1;margin-bottom:20px;background:linear-gradient(135deg,#fff 0%,#a7f3d0 60%,#60a5fa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-size:48px;font-weight:800;margin-bottom:28px;color:#fff}
+h3{font-size:26px;font-weight:700;margin-bottom:14px;color:#4ade80}
+p{font-size:22px;line-height:1.85;color:rgba(255,255,255,.85)}
+li{font-size:22px;line-height:1.85;color:rgba(255,255,255,.85);margin-bottom:10px}
+ul{padding-left:28px}
+.sub{font-size:26px;color:rgba(255,255,255,.6);line-height:1.6}
+.ac{color:#4ade80;font-weight:700}
+.rd{color:#f87171;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:12px}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:30px;backdrop-filter:blur(10px)}
+.card h3{font-size:22px;margin-bottom:12px}
+.card p,.card li{font-size:19px}
+.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,#4ade80,#3b82f6);transition:width .35s;z-index:200}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:20px;padding:18px;z-index:100;background:linear-gradient(to top,rgba(6,11,24,.9),transparent)}
+nav button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:10px 32px;border-radius:30px;font-size:16px;cursor:pointer;font-family:inherit;transition:.2s;letter-spacing:.5px}
+nav button:hover{background:rgba(52,176,96,.35);border-color:#4ade80}
+#cnt{color:rgba(255,255,255,.45);font-size:15px;min-width:60px;text-align:center}
+/* TERMINAL */
+.terminal-wrap{background:#1a1a2e;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+.term-bar{background:#2d2d3d;padding:13px 18px;display:flex;align-items:center;gap:9px}
+.dot{width:14px;height:14px;border-radius:50%}
+.dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+.term-title{margin-left:auto;margin-right:auto;font-size:13px;color:rgba(255,255,255,.4);letter-spacing:1px}
+.term-body{padding:28px 32px;font-family:'Consolas','Courier New',monospace;font-size:19px;line-height:2.2;color:#f8f8f2;background:#0d1117}
+.pp{color:#50fa7b;font-weight:bold;margin-right:8px}
+.ty{color:#f8f8f2}
+.co{color:#8be9fd}
+.cm{color:#6272a4}
+.cursor{display:inline-block;width:10px;height:22px;background:#f8f8f2;vertical-align:middle;animation:bl 1s step-end infinite;margin-left:3px}
+@keyframes bl{0%,50%{opacity:1}51%,100%{opacity:0}}
+/* FLOW */
+.flow{display:flex;align-items:center;flex-wrap:nowrap;gap:0;margin-top:20px;overflow:hidden}
+.fi{background:rgba(52,176,96,.12);border:1px solid rgba(52,176,96,.35);border-radius:14px;padding:18px 16px;font-size:17px;text-align:center;flex:1;line-height:1.5}
+.fi .ic{font-size:30px;display:block;margin-bottom:6px}
+.arr{font-size:24px;color:rgba(52,176,96,.5);padding:0 6px;flex-shrink:0}
+/* PILLS */
+.pill{display:block;background:#0f172a;border:1px solid #1e3a5f;border-radius:12px;padding:18px 24px;margin:8px 0;font-size:18px;color:#94a3b8}
+.pill .n{font-size:34px;font-weight:900;color:#4ade80;display:block;margin-bottom:3px;font-family:'Noto Sans KR',sans-serif}
+/* STAT */
+.stat-row{display:flex;gap:20px;margin-top:20px}
+.stat{flex:1;background:rgba(255,255,255,.05);border-radius:16px;padding:24px;text-align:center;border:1px solid rgba(255,255,255,.08)}
+.stat .val{font-size:52px;font-weight:900;display:block;background:linear-gradient(135deg,#4ade80,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat .lbl{font-size:17px;color:rgba(255,255,255,.55);margin-top:6px}
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);color:#fbbf24;border-radius:10px;padding:8px 18px;font-size:17px;margin:5px}
+/* CHAT */
+.chat-line{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
+.chat-who{font-size:13px;font-weight:700;white-space:nowrap;padding-top:4px;min-width:36px}
+.chat-who.me{color:#4ade80}.chat-who.ai{color:#60a5fa}
+.chat-bubble{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 18px;font-size:18px;line-height:1.7;color:rgba(255,255,255,.85)}
+.chat-bubble.ai{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2)}
+/* BG GLOW */
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.15;pointer-events:none;z-index:0}
+.slide-inner{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;height:100%}
+.imgbox{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);height:100%;object-fit:cover}
+.imgbox img{width:100%;height:100%;object-fit:cover}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="deck" id="deck">
+
+<!-- S1: TITLE -->
+<div class="slide" id="s1" style="text-align:center;align-items:center">
+<div class="glow" style="width:700px;height:700px;background:#4ade80;top:50%;left:30%;transform:translate(-50%,-50%)"></div>
+<div class="glow" style="width:500px;height:500px;background:#3b82f6;top:50%;left:70%;transform:translate(-50%,-50%)"></div>
+<div style="position:relative;z-index:1;max-width:1100px;width:100%">
+<div class="tag" style="font-size:16px;padding:7px 24px;margin-bottom:28px">심천지사 업무혁신 사례 발표 2026</div>
+<h1 style="font-size:88px;margin-bottom:24px">영수증 한 장씩<br>입력하던 시대의 끝</h1>
+<p class="sub" style="font-size:30px;margin-bottom:40px">바이브코딩으로 실현한 전도금 정산 <span class="ac">완전 자동화</span></p>
+<div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center">
+<div class="badge" style="font-size:19px;padding:10px 24px">🏢 심천지사 담당부서</div>
+<div class="badge" style="font-size:19px;padding:10px 24px">📅 2026.07</div>
+<div class="badge" style="font-size:19px;padding:10px 24px">⏱ 10~15분</div>
+</div>
+</div>
+<div class="sn">01 / 10</div>
+</div>
+
+<!-- S2: BEFORE -->
+<div class="slide" id="s2">
+<div class="tag">BEFORE · 기존 수작업 방식</div>
+<div class="grid2" style="height:72%">
+<div style="display:flex;flex-direction:column;justify-content:center">
+<h2 style="font-size:42px">매월 반복되던<br>이 힘든 일들…</h2>
+<ul style="margin-top:8px">
+<li>영수증(파표) <span class="rd">한 장씩 눈으로 읽기</span></li>
+<li>금액·날짜·계정과목 <span class="rd">직접 타이핑</span></li>
+<li>환율·이월잔액 <span class="rd">수동 계산</span></li>
+<li>담당자만 아는 <span class="rd">암묵적 노하우</span></li>
+<li>정산 완료까지 <span class="rd">2~3일 소요</span></li>
+</ul>
+</div>
+<div class="imgbox">
+<img src="img_before_after.png" alt="Before After 비교">
+</div>
+</div>
+<div class="sn">02 / 10</div>
+</div>
+
+<!-- S3: PROBLEM -->
+<div class="slide" id="s3">
+<div class="tag">문제 정의</div>
+<h2>3가지 핵심 문제</h2>
+<div class="stat-row">
+<div class="stat" style="border-color:rgba(248,113,113,.3)">
+<span class="val" style="background:linear-gradient(135deg,#f87171,#fb923c);-webkit-background-clip:text">⏰</span>
+<span class="val" style="font-size:36px">시간 낭비</span>
+<div class="lbl">반복 수작업으로<br>정산 기간 대부분 소모</div>
+</div>
+<div class="stat" style="border-color:rgba(251,191,36,.3)">
+<span class="val" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text">⚠️</span>
+<span class="val" style="font-size:36px">오류 위험</span>
+<div class="lbl">직접 입력 →<br>계산 실수·계정 오분류</div>
+</div>
+<div class="stat" style="border-color:rgba(248,113,113,.3)">
+<span class="val" style="background:linear-gradient(135deg,#f87171,#e879f9);-webkit-background-clip:text">🔒</span>
+<span class="val" style="font-size:36px">업무 의존</span>
+<div class="lbl">담당자 부재 시<br>업무 완전 마비</div>
+</div>
+</div>
+<p style="margin-top:28px;font-size:24px;text-align:center;color:#4ade80;font-weight:700">→ 이 세 가지를 한 번에 해결하는 방법을 찾았습니다</p>
+<div class="sn">03 / 10</div>
+</div>
+
+<!-- S4: WHAT IS VIBE CODING -->
+<div class="slide" id="s4">
+<div class="tag">해결책</div>
+<h2>바이브코딩이란?</h2>
+<div class="grid2">
+<div class="card" style="border-color:rgba(248,113,113,.3)">
+<h3 style="color:#f87171">❌ 기존 개발 방식</h3>
+<ul>
+<li>개발자에게 복잡한 요청서 작성</li>
+<li>수개월 ~ 수년 개발 기간</li>
+<li>수천만 원 ~ 억 단위 비용</li>
+<li>스펙 협의 반복, 수정 어려움</li>
+</ul>
+</div>
+<div class="card" style="border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.06)">
+<h3 style="color:#4ade80">✅ 바이브코딩 방식</h3>
+<ul>
+<li><span class="ac">내가 직접</span> AI와 대화</li>
+<li>수일 ~ 수주 내 완성</li>
+<li>비용 <span class="ac">대폭 절감</span></li>
+<li>원하는 대로 <span class="ac">즉시 수정</span></li>
+</ul>
+</div>
+</div>
+<p style="margin-top:28px;font-size:24px;text-align:center">코딩을 <span class="ac" style="font-size:28px">몰라도 됩니다.</span> 내 업무를 가장 잘 아는 사람이 <span class="ac">AI와 대화</span>하면 됩니다.</p>
+<div class="sn">04 / 10</div>
+</div>
+
+<!-- S5: PROMPT EXAMPLE (TERMINAL) -->
+<div class="slide" id="s5">
+<div class="tag">실제 프롬프트 예시</div>
+<h2 style="font-size:40px;margin-bottom:20px">이렇게 말했더니 만들어졌습니다</h2>
+<div class="terminal-wrap">
+<div class="term-bar">
+<div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+<div class="term-title">Antigravity AI Agent — 바이브코딩 세션</div>
+</div>
+<div class="term-body" id="typewriter-container">
+<div><span class="pp">USER&nbsp;❯</span><span class="ty type-line" data-text="심천지사 전도금 정산 업무를 자동화하고 싶어.">심천지사 전도금 정산 업무를 자동화하고 싶어.</span></div>
+<div><span class="pp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ty type-line" data-text="매월 30~50장의 영수증 PDF와 이미지 파일이 있어.">매월 30~50장의 영수증 PDF와 이미지 파일이 있어.</span></div>
+<div><span class="pp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ty type-line" data-text="AI가 글씨를 읽어서 대계정/소계정을 자동 분류하고" data-html="AI가 글씨를 읽어서 <span class='co'>대계정/소계정을 자동 분류</span>하고">AI가 글씨를 읽어서 <span class="co">대계정/소계정을 자동 분류</span>하고</span></div>
+<div><span class="pp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ty type-line" data-text="기존 엑셀 양식에 맞게 자동으로 채워줬으면 해." data-html="기존 엑셀 양식에 맞게 <span class='co'>자동으로 채워줬으면 해.</span>">기존 엑셀 양식에 맞게 <span class="co">자동으로 채워줬으면 해.</span></span></div>
+<div><span class="pp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="ty type-line" data-text="웹으로 결과를 보면서 잘못된 것만 수정하고 싶어.">웹으로 결과를 보면서 잘못된 것만 수정하고 싶어.</span></div>
+<div style="margin-top:10px"><span class="pp">AI&nbsp;&nbsp;&nbsp;❯</span><span class="cm type-line" data-text="알겠습니다. 5단계 자동화 시스템을 설계합니다...">알겠습니다. 5단계 자동화 시스템을 설계합니다...</span><span class="cursor"></span></div>
+</div>
+</div>
+<p style="margin-top:16px;font-size:18px;color:rgba(255,255,255,.5)">→ 이 한 단락으로 전체 시스템 설계가 시작되었습니다.</p>
+<div class="sn">05 / 10</div>
+</div>
+
+<!-- S6: SYSTEM FLOW -->
+<div class="slide" id="s6">
+<div class="tag">시스템 구조</div>
+<h2>자동화 흐름 한눈에 보기</h2>
+<div class="flow">
+<div class="fi"><span class="ic">📁</span>영수증<br>폴더 넣기</div>
+<div class="arr">▶</div>
+<div class="fi"><span class="ic">🖱️</span>BAT<br>더블클릭</div>
+<div class="arr">▶</div>
+<div class="fi"><span class="ic">🤖</span>AI OCR<br>자동 판독</div>
+<div class="arr">▶</div>
+<div class="fi"><span class="ic">📊</span>계정<br>자동 분류</div>
+<div class="arr">▶</div>
+<div class="fi"><span class="ic">🌐</span>웹앱<br>오류 검토</div>
+<div class="arr">▶</div>
+<div class="fi" style="border-color:rgba(74,222,128,.6);background:rgba(74,222,128,.15)"><span class="ic">✅</span>엑셀<br>완성!</div>
+</div>
+<div class="imgbox" style="margin-top:24px;height:38%;border-radius:16px">
+<img src="img_workflow.png" alt="워크플로우 다이어그램" style="width:100%;height:100%;object-fit:cover;object-position:center">
+</div>
+<div class="sn">06 / 10</div>
+</div>
+
+<!-- S7: AFTER -->
+<div class="slide" id="s7">
+<div class="tag">AFTER · 자동화 이후</div>
+<div class="grid2" style="height:75%">
+<div style="display:flex;flex-direction:column;justify-content:center">
+<h2 style="font-size:40px">달라진 업무 현장</h2>
+<div class="pill"><span class="n">2~3일 → 수 시간</span>처리 시간 극적 단축</div>
+<div class="pill"><span class="n">오류 자동 검출</span>빨간색 강조로 즉시 식별</div>
+<div class="pill"><span class="n">더블클릭 한 번</span>누구나 사용 가능</div>
+<div class="pill"><span class="n">매뉴얼 완비</span>담당자 부재도 문제 없음</div>
+</div>
+<div class="imgbox">
+<img src="img_stats.png" alt="성과 통계">
+</div>
+</div>
+<div class="sn">07 / 10</div>
+</div>
+
+<!-- S8: HOW WE MADE IT -->
+<div class="slide" id="s8">
+<div class="tag">제작 과정 — 실제 AI 대화</div>
+<div class="grid2" style="align-items:start;margin-top:-10px">
+<div>
+<h2 style="font-size:38px;margin-bottom:20px">이렇게 대화하며<br>만들었습니다</h2>
+<div class="card">
+<h3 style="font-size:19px;margin-bottom:8px">1단계</h3><p style="font-size:17px">업무 흐름 설명 → AI가 초안 생성</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3 style="font-size:19px;margin-bottom:8px">2단계</h3><p style="font-size:17px">실제 영수증으로 테스트 → 오류 발견 → AI 수정 요청</p>
+</div>
+<div class="card" style="margin-top:12px">
+<h3 style="font-size:19px;margin-bottom:8px">3단계</h3><p style="font-size:17px">이월잔액·환율·분할정산 등 엣지케이스 고도화</p>
+</div>
+</div>
+<div style="padding-top:8px">
+<div class="chat-line">
+<span class="chat-who me">나</span>
+<div class="chat-bubble">"이월 잔액이 1400억으로 나와. 버그야"</div>
+</div>
+<div class="chat-line">
+<span class="chat-who ai">AI</span>
+<div class="chat-bubble ai">코드 분석 완료. 수식 캐시 로직 오류 발견.<br>수정 후 재실행하세요. ✅</div>
+</div>
+<div class="chat-line">
+<span class="chat-who me">나</span>
+<div class="chat-bubble">"파표 회사코드 경고가 계속 남아"</div>
+</div>
+<div class="chat-line">
+<span class="chat-who ai">AI</span>
+<div class="chat-bubble ai">캐시 버그 발견 및 수정 완료.<br>이제 자동으로 초기화됩니다. ✅</div>
+</div>
+<div class="chat-line">
+<span class="chat-who me">나</span>
+<div class="chat-bubble">"환율 전월/당월 기준 자동 분리해줘"</div>
+</div>
+<div class="chat-line">
+<span class="chat-who ai">AI</span>
+<div class="chat-bubble ai">스마트 환율 로직 구현 완료. ✅</div>
+</div>
+</div>
+</div>
+<div class="sn">08 / 10</div>
+</div>
+
+<!-- S9: KEY MESSAGE -->
+<div class="slide" id="s9">
+<div class="glow" style="width:500px;height:500px;background:#4ade80;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+<div style="position:relative;z-index:1;text-align:center">
+<div class="tag">핵심 메시지</div>
+<h1 style="font-size:64px;margin-bottom:24px">우리 모두가<br>할 수 있습니다</h1>
+<div class="grid2" style="margin-top:0;text-align:left">
+<div class="card" style="border-color:rgba(74,222,128,.5);background:rgba(74,222,128,.08);padding:32px">
+<h3 style="font-size:24px;margin-bottom:20px">✅ 필요한 것</h3>
+<ul style="list-style:none;padding:0">
+<li style="margin-bottom:14px;font-size:22px">내 <span class="ac">업무를 잘 아는 것</span></li>
+<li style="margin-bottom:14px;font-size:22px">문제를 <span class="ac">말로 설명</span>하는 것</li>
+<li style="font-size:22px">피드백을 주고받는 <span class="ac">끈기</span></li>
+</ul>
+</div>
+<div class="card" style="padding:32px">
+<h3 style="font-size:24px;margin-bottom:20px;color:#f87171">❌ 필요 없는 것</h3>
+<ul style="list-style:none;padding:0">
+<li style="margin-bottom:14px;font-size:22px;color:rgba(255,255,255,.6)">코딩 지식</li>
+<li style="margin-bottom:14px;font-size:22px;color:rgba(255,255,255,.6)">개발 경력</li>
+<li style="font-size:22px;color:rgba(255,255,255,.6)">큰 예산</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sn">09 / 10</div>
+</div>
+
+<!-- S10: CLOSING -->
+<div class="slide" id="s10">
+<div class="glow" style="width:700px;height:700px;background:#4ade80;top:-100px;left:-200px"></div>
+<div class="glow" style="width:500px;height:500px;background:#3b82f6;bottom:-100px;right:-100px"></div>
+<div style="position:relative;z-index:1;text-align:center">
+<div class="tag">Thank You</div>
+<h1 style="font-size:60px;margin-bottom:22px">반복 업무에서 해방되는<br>첫 걸음을 함께</h1>
+<p class="sub" style="font-size:22px;margin-bottom:36px">바이브코딩 · 심천지사 전도금 정산 자동화 사례</p>
+<div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:32px">
+<div class="badge" style="font-size:18px;padding:10px 22px">💡 누구나 시작 가능</div>
+<div class="badge" style="font-size:18px;padding:10px 22px">⚡ 빠른 결과물</div>
+<div class="badge" style="font-size:18px;padding:10px 22px">🔄 반복 개선</div>
+<div class="badge" style="font-size:18px;padding:10px 22px">📈 지속적 고도화</div>
+</div>
+<p style="font-size:18px;color:rgba(255,255,255,.35)">질문이 있으신 분은 언제든지 말씀해 주세요.</p>
+</div>
+<div class="sn">10 / 10</div>
+</div>
+
+</div>
+<nav>
+<button onclick="go(-1)">◀ 이전</button>
+<span id="cnt"></span>
+<button onclick="go(1)">다음 ▶</button>
+</nav>
+<script>
+var cur=0,sl=document.querySelectorAll('.slide'),n=sl.length;
+var typeIntervals = [];
+function clearTyping() { typeIntervals.forEach(clearInterval); typeIntervals=[]; }
+function runTypewriter() {
+  clearTyping();
+  var lines = document.querySelectorAll('#typewriter-container .type-line');
+  lines.forEach(function(l){ l.innerHTML = ''; });
+  var currentLine = 0;
+  function typeLine() {
+    if(currentLine >= lines.length) return;
+    var lineElem = lines[currentLine];
+    var text = lineElem.getAttribute('data-text');
+    var i = 0;
+    var interval = setInterval(function() {
+      lineElem.innerHTML = text.substring(0, i+1);
+      i++;
+      if(i === text.length) {
+         clearInterval(interval);
+         if(lineElem.hasAttribute('data-html')) {
+             lineElem.innerHTML = lineElem.getAttribute('data-html');
+         }
+         currentLine++;
+         setTimeout(typeLine, (currentLine === lines.length - 1) ? 600 : 300);
+      }
+    }, 40);
+    typeIntervals.push(interval);
+  }
+  setTimeout(typeLine, 500);
+}
+function show(i){
+  sl[cur].classList.remove('active');
+  cur=Math.max(0,Math.min(i,n-1));
+  sl[cur].classList.add('active');
+  document.getElementById('prog').style.width=((cur+1)/n*100)+'%';
+  document.getElementById('cnt').textContent=(cur+1)+' / '+n;
+  if(sl[cur].id === 's5') runTypewriter();
+  else {
+    clearTyping();
+    var lines = document.querySelectorAll('#typewriter-container .type-line');
+    lines.forEach(function(l){
+      if(l.hasAttribute('data-html')) l.innerHTML = l.getAttribute('data-html');
+      else l.innerHTML = l.getAttribute('data-text');
+    });
+  }
+}
+function go(d){show(cur+d);}
+show(0);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);});
+</script>
+</body>
+</html>"""
+
+with open("presentation.html","w",encoding="utf-8") as f:
+    f.write(html)
+print("생성 완료: presentation.html")

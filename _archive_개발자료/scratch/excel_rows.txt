@@ -1,0 +1,220 @@
+Active Sheet name: 26.06
+Row 021 | B(Withdrawal): 2026-04-24 00:00:00 | C(Evidence): 2026-04-24 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 1 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 29500 | R(Warning): None
+Row 022 | B(Withdrawal): 2026-04-28 00:00:00 | C(Evidence): 2026-04-28 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 2 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 250 | R(Warning): None
+Row 023 | B(Withdrawal): 2026-05-01 00:00:00 | C(Evidence): 2026-05-01 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 3 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 310 | R(Warning): None
+Row 024 | B(Withdrawal): 2026-05-08 00:00:00 | C(Evidence): 2026-05-08 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 4 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 340 | R(Warning): None
+Row 025 | B(Withdrawal): 2026-05-14 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 5 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 370 | R(Warning): None
+Row 026 | B(Withdrawal): 2026-05-19 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 주유비 | F(Person): Chen Feng Ju | G(No): 6 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 380 | R(Warning): None
+Row 027 | B(Withdrawal): 2026-05-20 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 톨비 | F(Person): Chen Feng Ju | G(No): 7 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 42 | R(Warning): None
+Row 028 | B(Withdrawal): 2026-04-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 深埔市综团瑞会工淀装有限公司司 | F(Person): Chen Feng Ju | G(No): 8 | H(Major): None | I(Minor): None | M(CNY): 0 | R(Warning): None
+Row 029 | B(Withdrawal): 2026-05-16 00:00:00 | C(Evidence): 2026-05-16 00:00:00 | E(Desc): 汉圳中汉国鸿区公限有限公司司 | F(Person): Chen Feng Ju | G(No): 9 | H(Major): None | I(Minor): None | M(CNY): 9 | R(Warning): None
+Row 030 | B(Withdrawal): None | C(Evidence): None | E(Desc): 广州市人房的话万股份有限公司电话84356163 | F(Person): Chen Feng Ju | G(No): 10 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 031 | B(Withdrawal): None | C(Evidence): None | E(Desc): 限公司 | F(Person): Chen Feng Ju | G(No): 11 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 032 | B(Withdrawal): 2026-04-28 00:00:00 | C(Evidence): 2026-04-28 00:00:00 | E(Desc): 广州市人民商广设份有际公司电话84356163 | F(Person): Chen Feng Ju | G(No): 12 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 033 | B(Withdrawal): 2026-05-13 00:00:00 | C(Evidence): 2026-05-13 00:00:00 | E(Desc): 주차비 | F(Person): Chen Feng Ju | G(No): 13 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 10 | R(Warning): None
+Row 034 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Chen Feng Ju | G(No): 14 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): None
+Row 035 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 15 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 036 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-24 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 16 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 037 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-28 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 17 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 038 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-07 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 18 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 039 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-09 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 19 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 040 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-13 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 20 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 562 | R(Warning): None
+Row 041 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-16 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 21 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 042 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 주유비 | F(Person): Chen Guo Liang | G(No): 22 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 400 | R(Warning): None
+Row 043 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-16 00:00:00 | E(Desc): 주차비 | F(Person): Chen Guo Liang | G(No): 23 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 15 | R(Warning): None
+Row 044 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-09 00:00:00 | E(Desc): 주차비 | F(Person): Chen Guo Liang | G(No): 24 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 11 | R(Warning): None
+Row 045 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Chen Guo Liang | G(No): 25 | H(Major): None | I(Minor): None | M(CNY): 3 | R(Warning): None
+Row 046 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 1626-04-21 00:00:00 | E(Desc): 广州市人民印股份有限公司电话84356163 | F(Person): Chen Guo Liang | G(No): 26 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 047 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): None | E(Desc): 限公司 | F(Person): Chen Guo Liang | G(No): 27 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 048 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-01 00:00:00 | E(Desc): 股份商股公司电话84356183 | F(Person): Chen Guo Liang | G(No): 28 | H(Major): None | I(Minor): None | M(CNY): 10.56 | R(Warning): None
+Row 049 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-18 00:00:00 | E(Desc): 州市人民印段份有限公司电话84356163 | F(Person): Chen Guo Liang | G(No): 29 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 050 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-08 00:00:00 | E(Desc): 톨비 | F(Person): Chen Guo Liang | G(No): 30 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 56 | R(Warning): None
+Row 051 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Chen Guo Liang | G(No): 31 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): 불일치 (이체:4410.89 vs 영수증:3457.56)
+Row 052 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 시내 교통비 | F(Person): Lin Wei Jian | G(No): 32 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1224.6 | R(Warning): None
+Row 053 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 33 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 824 | R(Warning): None
+Row 054 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 34 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1365 | R(Warning): None
+Row 055 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 35 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 910 | R(Warning): None
+Row 056 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 36 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 2275 | R(Warning): None
+Row 057 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 37 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1019.6 | R(Warning): None
+Row 058 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 38 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 284.7 | R(Warning): None
+Row 059 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 39 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 340.5 | R(Warning): None
+Row 060 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 출장비 | F(Person): Lin Wei Jian | G(No): 40 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 339.6 | R(Warning): None
+Row 061 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 택배비 | F(Person): Lin Wei Jian | G(No): 41 | H(Major): 해외지사비 | I(Minor): 기타 | M(CNY): 490.7 | R(Warning): None
+Row 062 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 통신비 | F(Person): Lin Wei Jian | G(No): 42 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 300 | R(Warning): None
+Row 063 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Lin Wei Jian | G(No): 43 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2026 | R(Warning): 불일치 (이체:3.6 vs 영수증:9373.700000000003)
+Row 064 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): None | E(Desc): 广N市人居印剧贸份有限公司电话：84366163 | F(Person): Liu Ming Liang | G(No): 44 | H(Major): None | I(Minor): None | M(CNY): 25.01 | R(Warning): None
+Row 065 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 招州市入民扣厂股分有载公司电话84356163 | F(Person): Liu Ming Liang | G(No): 45 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 066 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): None | E(Desc): 深圳高速公司 | F(Person): Liu Ming Liang | G(No): 46 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 067 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): None | E(Desc): 广州南人民印别门段份询总公司电话84366163 | F(Person): Liu Ming Liang | G(No): 47 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 068 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 톨비 | F(Person): Liu Ming Liang | G(No): 48 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 50 | R(Warning): None
+Row 069 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-71 | E(Desc): 톨비 | F(Person): Liu Ming Liang | G(No): 49 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 56 | R(Warning): None
+Row 070 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 50 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 365 | R(Warning): None
+Row 071 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 51 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 256.64 | R(Warning): None
+Row 072 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 52 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 280 | R(Warning): None
+Row 073 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 53 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 162 | R(Warning): None
+Row 074 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 54 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 265 | R(Warning): None
+Row 075 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 55 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 349 | R(Warning): None
+Row 076 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-20 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 56 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 460 | R(Warning): None
+Row 077 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 57 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 410 | R(Warning): None
+Row 078 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 주유비 | F(Person): Liu Ming Liang | G(No): 58 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 256 | R(Warning): None
+Row 079 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 주차비 | F(Person): Liu Ming Liang | G(No): 59 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 25 | R(Warning): None
+Row 080 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Liu Ming Liang | G(No): 60 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): 불일치 (이체:3981.0 vs 영수증:2959.65)
+Row 081 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-08 00:00:00 | E(Desc): 업무추진비 | F(Person): Piao Mei Ling | G(No): 61 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 246 | R(Warning): None
+Row 082 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-08 00:00:00 | E(Desc): 업무추진비 | F(Person): Piao Mei Ling | G(No): 62 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 132 | R(Warning): None
+Row 083 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): Piao Mei Ling | G(No): 63 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 195.4 | R(Warning): None
+Row 084 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): Piao Mei Ling | G(No): 64 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 13 | R(Warning): None
+Row 085 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 통신비 | F(Person): Piao Mei Ling | G(No): 65 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 187.4 | R(Warning): None
+Row 086 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 통신비 | F(Person): Piao Mei Ling | G(No): 66 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 114.96 | R(Warning): None
+Row 087 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 사무실 운영비 | F(Person): Piao Mei Ling | G(No): 67 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 88 | R(Warning): None
+Row 088 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-01-23 00:00:00 | E(Desc): 사무실 운영비 | F(Person): Piao Mei Ling | G(No): 68 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 72.06 | R(Warning): None
+Row 089 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-04 00:00:00 | E(Desc): 사무실 서비스 비용 | F(Person): Piao Mei Ling | G(No): 69 | H(Major): 지급임차료 | I(Minor): 사무실임차료 | M(CNY): 300 | R(Warning): None
+Row 090 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-25 00:00:00 | E(Desc): 외주 운영비 | F(Person): Piao Mei Ling | G(No): 70 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 680 | R(Warning): None
+Row 091 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 외주 운영비 | F(Person): Piao Mei Ling | G(No): 71 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2156 | R(Warning): None
+Row 092 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-13 00:00:00 | E(Desc): 외주 운영비 | F(Person): Piao Mei Ling | G(No): 72 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 880 | R(Warning): None
+Row 093 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 외주 운영비 | F(Person): Piao Mei Ling | G(No): 73 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 880 | R(Warning): None
+Row 094 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Piao Mei Ling | G(No): 74 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2026 | R(Warning): 불일치 (이체:2605230000190001.0 vs 영수증:5944.82)
+Row 095 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 75 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 924 | R(Warning): None
+Row 096 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 76 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 66 | R(Warning): None
+Row 097 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 77 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1741.51 | R(Warning): None
+Row 098 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 78 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 66 | R(Warning): None
+Row 099 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-30 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 79 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 68 | R(Warning): None
+Row 100 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-28 00:00:00 | E(Desc): 출장비 | F(Person): Xiong Feng | G(No): 80 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 7026.04 | R(Warning): None
+Row 101 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-21 00:00:00 | E(Desc): 업무추진비 | F(Person): Xiong Feng | G(No): 81 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 127.36 | R(Warning): None
+Row 102 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 업무추진비 | F(Person): Xiong Feng | G(No): 82 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 68 | R(Warning): None
+Row 103 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-09 00:00:00 | E(Desc): 업무추진비 | F(Person): Xiong Feng | G(No): 83 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 370 | R(Warning): None
+Row 104 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-09 00:00:00 | E(Desc): 업무추진비 | F(Person): Xiong Feng | G(No): 84 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 2.31 | R(Warning): None
+Row 105 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-27 00:00:00 | E(Desc): 深圳市西湖股份有限公司 | F(Person): Xiong Feng | G(No): 85 | H(Major): None | I(Minor): None | M(CNY): 99 | R(Warning): None
+Row 106 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 86 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 114.5 | R(Warning): None
+Row 107 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 87 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 37.37 | R(Warning): None
+Row 108 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 88 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 19.12 | R(Warning): None
+Row 109 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-08 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 89 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 21.61 | R(Warning): None
+Row 110 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-28 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 90 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 57.29 | R(Warning): None
+Row 111 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 91 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 23.28 | R(Warning): None
+Row 112 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-13 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 92 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 33.65 | R(Warning): None
+Row 113 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 시내 교통비 | F(Person): Xiong Feng | G(No): 93 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 34.64 | R(Warning): None
+Row 114 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-07 00:00:00 | E(Desc): 통신비 | F(Person): Xiong Feng | G(No): 94 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 369 | R(Warning): None
+Row 115 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Xiong Feng | G(No): 95 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2026 | R(Warning): 불일치 (이체:3.6 vs 영수증:11268.680000000002)
+Row 116 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-20 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 96 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1377 | R(Warning): None
+Row 117 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-11 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 97 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1908 | R(Warning): None
+Row 118 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 98 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 890 | R(Warning): None
+Row 119 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 99 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 983 | R(Warning): None
+Row 120 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 100 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 30 | R(Warning): None
+Row 121 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 101 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 58 | R(Warning): None
+Row 122 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-18 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 102 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 24 | R(Warning): None
+Row 123 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-18 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 103 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 52 | R(Warning): None
+Row 124 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-12 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 104 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 8.5 | R(Warning): None
+Row 125 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-18 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 105 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1380.6 | R(Warning): None
+Row 126 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-11 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 106 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 266.81 | R(Warning): None
+Row 127 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 107 | H(Major): None | I(Minor): None | M(CNY): 11.7 | R(Warning): None
+Row 128 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-11 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 108 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1912 | R(Warning): None
+Row 129 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-20 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 109 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 2330 | R(Warning): None
+Row 130 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-20 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 110 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 2808 | R(Warning): None
+Row 131 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-11 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 111 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 2856 | R(Warning): None
+Row 132 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-04 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 112 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1368 | R(Warning): None
+Row 133 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 113 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 951 | R(Warning): None
+Row 134 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 114 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 30 | R(Warning): None
+Row 135 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비(4월분) | F(Person): Zhang Liang | G(No): 115 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 58 | R(Warning): None
+Row 136 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 은행수수료 | F(Person): Zhang Liang | G(No): 116 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2026 | R(Warning): 불일치 (이체:19434.91 vs 영수증:47354.31)
+Row 137 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2028-04-22 00:00:00 | E(Desc): None | F(Person): Zhang Liang | G(No): 117 | H(Major): None | I(Minor): None | M(CNY): 30.44 | R(Warning): None
+Row 138 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 은행 수수료 | F(Person): Zhang Liang | G(No): 118 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 25974.34 | R(Warning): None
+Row 139 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 출장비 | F(Person): Zhang Liang | G(No): 119 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 268.49 | R(Warning): None
+Row 140 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 출장비 | F(Person): Zhang Liang | G(No): 120 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 77.1 | R(Warning): None
+Row 141 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 121 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 142 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 122 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 143 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 123 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 144 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 124 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 145 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2021-03-30 00:00:00 | E(Desc): None | F(Person): Zhang Liang | G(No): 125 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 146 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 126 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 147 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 출장비 | F(Person): Zhang Liang | G(No): 127 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 198.43 | R(Warning): None
+Row 148 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 출장비 | F(Person): Zhang Liang | G(No): 128 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 28.8 | R(Warning): None
+Row 149 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): None | F(Person): Zhang Liang | G(No): 129 | H(Major): None | I(Minor): None | M(CNY): 68 | R(Warning): None
+Row 150 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-12 00:00:00 | E(Desc): 10.5公司 | F(Person): Zhang Liang | G(No): 130 | H(Major): None | I(Minor): None | M(CNY): 42.1 | R(Warning): None
+Row 151 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-15 00:00:00 | E(Desc): None | F(Person): Zhang Liang | G(No): 131 | H(Major): None | I(Minor): None | M(CNY): 238.5 | R(Warning): None
+Row 152 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): None | E(Desc): None | F(Person): Zhang Liang | G(No): 132 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 153 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2022-07-20 00:00:00 | E(Desc): None | F(Person): Zhang Liang | G(No): 133 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 154 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-04-15 00:00:00 | E(Desc): 深圳市运发出租小汽车有限公司 | F(Person): Zhang Liang | G(No): 134 | H(Major): None | I(Minor): None | M(CNY): 0 | R(Warning): None
+Row 155 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-22 00:00:00 | E(Desc): 톨비 | F(Person): Zhang Liang | G(No): 135 | H(Major): None | I(Minor): None | M(CNY): 54.1 | R(Warning): None
+Row 156 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-14 00:00:00 | E(Desc): 시내 교통비 | F(Person): Zhang Liang | G(No): 136 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 116.6 | R(Warning): None
+Row 157 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 통신비 | F(Person): Zhang Liang | G(No): 137 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 236.8 | R(Warning): None
+Row 158 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-07 00:00:00 | E(Desc): 인도네시아 비자 | F(Person): Zhang Liang | G(No): 138 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 700 | R(Warning): None
+Row 159 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 택배비 | F(Person): Zhang Liang | G(No): 139 | H(Major): 해외지사비 | I(Minor): 기타 | M(CNY): 18 | R(Warning): None
+Row 160 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): Zhang Liang | G(No): 140 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2605230000170001 | R(Warning): None
+Row 161 | B(Withdrawal): 2026-04-10 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 141 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 770 | R(Warning): None
+Row 162 | B(Withdrawal): 2026-04-10 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 142 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 163 | B(Withdrawal): 2026-04-10 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 143 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 627.5 | R(Warning): None
+Row 164 | B(Withdrawal): 2026-04-10 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 144 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 18 | R(Warning): None
+Row 165 | B(Withdrawal): 2026-04-08 00:00:00 | C(Evidence): 2026-04-08 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 145 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 558 | R(Warning): None
+Row 166 | B(Withdrawal): 2026-04-22 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 146 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1725.68 | R(Warning): None
+Row 167 | B(Withdrawal): 2026-04-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 147 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1260 | R(Warning): None
+Row 168 | B(Withdrawal): 2026-04-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 148 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 830 | R(Warning): None
+Row 169 | B(Withdrawal): 2026-04-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 149 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 170 | B(Withdrawal): 2026-04-23 00:00:00 | C(Evidence): 2026-04-23 00:00:00 | E(Desc): 출장비 | F(Person): 권유석 | G(No): 150 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 171 | B(Withdrawal): 2026-03-27 00:00:00 | C(Evidence): 2026-03-27 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 151 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 60 | R(Warning): None
+Row 172 | B(Withdrawal): 2026-03-27 00:00:00 | C(Evidence): 2026-03-27 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 152 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 281 | R(Warning): None
+Row 173 | B(Withdrawal): 2026-04-01 00:00:00 | C(Evidence): 2026-04-01 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 153 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 311.88 | R(Warning): None
+Row 174 | B(Withdrawal): 2026-04-02 00:00:00 | C(Evidence): 2026-04-02 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 154 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 100.7 | R(Warning): None
+Row 175 | B(Withdrawal): 2026-04-05 00:00:00 | C(Evidence): 2026-04-05 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 155 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 252.48 | R(Warning): None
+Row 176 | B(Withdrawal): 2026-04-19 00:00:00 | C(Evidence): 2026-04-19 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 156 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 304.75 | R(Warning): None
+Row 177 | B(Withdrawal): 2026-04-21 00:00:00 | C(Evidence): 2026-04-21 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 157 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 260 | R(Warning): None
+Row 178 | B(Withdrawal): 2026-04-21 00:00:00 | C(Evidence): 2026-04-21 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 158 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 674 | R(Warning): None
+Row 179 | B(Withdrawal): 2026-04-22 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 업무추진비 | F(Person): 권유석 | G(No): 159 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 103 | R(Warning): None
+Row 180 | B(Withdrawal): 2026-05-05 00:00:00 | C(Evidence): 2026-05-05 00:00:00 | E(Desc): 통신비 | F(Person): 권유석 | G(No): 160 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 124.49 | R(Warning): None
+Row 181 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-23 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 161 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 42 | R(Warning): None
+Row 182 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-23 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 162 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 569 | R(Warning): None
+Row 183 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-08 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 163 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 558 | R(Warning): None
+Row 184 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-10 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 164 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 627.5 | R(Warning): None
+Row 185 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-14 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 165 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 843 | R(Warning): None
+Row 186 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-14 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 166 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 350 | R(Warning): None
+Row 187 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-13 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 167 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 926 | R(Warning): None
+Row 188 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-13 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 168 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 42 | R(Warning): None
+Row 189 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-13 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 169 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 190 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-14 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 170 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 743 | R(Warning): None
+Row 191 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-23 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 171 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 192 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-25 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 172 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 42 | R(Warning): None
+Row 193 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-25 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 173 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 194 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-25 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 174 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 590 | R(Warning): None
+Row 195 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-03-25 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 175 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 1626.57 | R(Warning): None
+Row 196 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-07 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 176 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 44 | R(Warning): None
+Row 197 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-07 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 177 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 40 | R(Warning): None
+Row 198 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-04-07 00:00:00 | E(Desc): 출장비 | F(Person): 김명관 | G(No): 178 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 756 | R(Warning): None
+Row 199 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-15 00:00:00 | E(Desc): 통신비 | F(Person): 김명관 | G(No): 179 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 300 | R(Warning): None
+Row 200 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): 김명관 | G(No): 180 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): 불일치 (이체:3.6 vs 영수증:8219.07)
+Row 201 | B(Withdrawal): 2026-05-18 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 사무실 WIFI+통신비 | F(Person): 신순연 | G(No): 181 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 417 | R(Warning): None
+Row 202 | B(Withdrawal): 2026-05-18 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 사무실 WIFI+통신비 | F(Person): 신순연 | G(No): 182 | H(Major): 통신비 | I(Minor): 기타 | M(CNY): 499 | R(Warning): None
+Row 203 | B(Withdrawal): 2026-04-06 00:00:00 | C(Evidence): 2026-04-06 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 183 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 258 | R(Warning): None
+Row 204 | B(Withdrawal): 2026-04-07 00:00:00 | C(Evidence): 2026-04-07 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 184 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 873 | R(Warning): None
+Row 205 | B(Withdrawal): 2026-04-09 00:00:00 | C(Evidence): 2026-04-09 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 185 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 402 | R(Warning): None
+Row 206 | B(Withdrawal): 2026-04-08 00:00:00 | C(Evidence): 2026-04-08 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 186 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 792.08 | R(Warning): None
+Row 207 | B(Withdrawal): 2026-04-17 00:00:00 | C(Evidence): 2026-04-17 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 187 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 297 | R(Warning): None
+Row 208 | B(Withdrawal): 2026-05-18 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 업무추진비 | F(Person): 신순연 | G(No): 188 | H(Major): 업무추진비 | I(Minor): 일반 | M(CNY): 693 | R(Warning): None
+Row 209 | B(Withdrawal): 2026-04-22 00:00:00 | C(Evidence): 2026-04-22 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 189 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 51.1 | R(Warning): None
+Row 210 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 190 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 87.9 | R(Warning): None
+Row 211 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 191 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 37.9 | R(Warning): None
+Row 212 | B(Withdrawal): 2026-05-06 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 192 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 52.7 | R(Warning): None
+Row 213 | B(Withdrawal): 2026-05-18 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 193 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 16850 | R(Warning): None
+Row 214 | B(Withdrawal): 2026-05-17 00:00:00 | C(Evidence): 2026-05-17 00:00:00 | E(Desc): 시내 교통비 | F(Person): 신순연 | G(No): 194 | H(Major): 여비교통비 | I(Minor): 해외 | M(CNY): 13 | R(Warning): None
+Row 215 | B(Withdrawal): None | C(Evidence): None | E(Desc): 深频市发出租小汽车有限公司 | F(Person): 신순연 | G(No): 195 | H(Major): None | I(Minor): None | M(CNY): 0 | R(Warning): None
+Row 216 | B(Withdrawal): 2026-04-21 00:00:00 | C(Evidence): 2026-04-21 00:00:00 | E(Desc): 사무실 운영비 | F(Person): 신순연 | G(No): 196 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 676 | R(Warning): None
+Row 217 | B(Withdrawal): 2026-05-18 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): 택배비 | F(Person): 신순연 | G(No): 197 | H(Major): 해외지사비 | I(Minor): 기타 | M(CNY): 89.25 | R(Warning): None
+Row 218 | B(Withdrawal): 2026-05-23 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): 신순연 | G(No): 198 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 5432.35 | R(Warning): None
+Row 219 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): USD입금 and RMB 환전 | F(Person): 심천지사 | G(No): 199 | H(Major): None | I(Minor): None | M(CNY): 5226.93 | R(Warning): None
+Row 220 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): 3월 사무실 전기세 | F(Person): 심천지사 | G(No): 200 | H(Major): 지급임차료 | I(Minor): 사무실임차료 | M(CNY): 388.53 | R(Warning): None
+Row 221 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): 3월 사무실 전기세 | F(Person): 심천지사 | G(No): 201 | H(Major): 지급임차료 | I(Minor): 사무실임차료 | M(CNY): 79.23 | R(Warning): None
+Row 222 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-12 00:00:00 | E(Desc): 은행수수료 | F(Person): 심천지사 | G(No): 202 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): 불일치 (이체:467.76 vs 영수증:2605230000345615.0)
+Row 223 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-18 00:00:00 | E(Desc): USD입금 and RMB 환전 | F(Person): 심천지사 | G(No): 203 | H(Major): None | I(Minor): None | M(CNY): 59269.52 | R(Warning): None
+Row 224 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): None | F(Person): 심천지사 | G(No): 204 | H(Major): None | I(Minor): None | M(CNY): None | R(Warning): None
+Row 225 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-19 00:00:00 | E(Desc): 은행수수료 | F(Person): 심천지사 | G(No): 205 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2026 | R(Warning): None
+Row 226 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 세무 대행비 | F(Person): 심천지사 | G(No): 206 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 505 | R(Warning): None
+Row 227 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-06 00:00:00 | E(Desc): 세무 대행비 | F(Person): 심천지사 | G(No): 207 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 505 | R(Warning): None
+Row 228 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): 심천지사 | G(No): 208 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 3.6 | R(Warning): None
+Row 229 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 차량 Rent비 | F(Person): 심천지사 | G(No): 209 | H(Major): 지급임차료 | I(Minor): 차량임차료 | M(CNY): 7000 | R(Warning): None
+Row 230 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 차량 기사비 | F(Person): 심천지사 | G(No): 210 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 7000 | R(Warning): None
+Row 231 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 기사 야근비용 | F(Person): 심천지사 | G(No): 211 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 6000 | R(Warning): None
+Row 232 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 차량 Rent비 | F(Person): 심천지사 | G(No): 212 | H(Major): 지급임차료 | I(Minor): 차량임차료 | M(CNY): 6000 | R(Warning): None
+Row 233 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 차량 기사비 | F(Person): 심천지사 | G(No): 213 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 6000 | R(Warning): None
+Row 234 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-03 00:00:00 | E(Desc): 기사 야근비용 | F(Person): 심천지사 | G(No): 214 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 6000 | R(Warning): None
+Row 235 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): 차량 Rent비 | F(Person): 심천지사 | G(No): 215 | H(Major): 지급임차료 | I(Minor): 차량임차료 | M(CNY): 300 | R(Warning): None
+Row 236 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): 차량 기사비 | F(Person): 심천지사 | G(No): 216 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 760 | R(Warning): None
+Row 237 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-21 00:00:00 | E(Desc): 기사 야근비용 | F(Person): 심천지사 | G(No): 217 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 580 | R(Warning): None
+Row 238 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 은행수수료 | F(Person): 심천지사 | G(No): 218 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 39640 | R(Warning): None
+Row 239 | B(Withdrawal): 2026-05-12 00:00:00 | C(Evidence): 2026-05-23 00:00:00 | E(Desc): 급여 | F(Person): 심천지사 | G(No): 219 | H(Major): 해외지사비 | I(Minor): None | M(CNY): 2605230000240001 | R(Warning): None

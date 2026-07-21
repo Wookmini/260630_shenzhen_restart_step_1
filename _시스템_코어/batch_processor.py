@@ -12,8 +12,11 @@ from receipt_mapper import map_receipt_data
 sys.stdout.reconfigure(encoding='utf-8') 
 
 def clean_assignee_name(name: str) -> str:
-    """이름 뒤에 붙은 직급(책임, 수석, 팀장 등)을 제거하고 순수 이름만 추출"""
-    return re.sub(r'\s*(책임|수석|팀장|부장|과장|전문가|총감|총경리|사원|대리)\s*$', '', name).strip()
+    """이름 앞의 숫자 및 뒤에 붙은 직급, 괄호를 제거하고 순수 이름만 추출"""
+    name = re.sub(r'^\d+[\s\.]*', '', name)
+    name = re.sub(r'\s*(책임|수석|팀장|부장|과장|전문가|총감|총경리|사원|대리)\s*$', '', name)
+    name = re.sub(r'\s*\(.*?\)$', '', name)
+    return name.strip()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RECEIPT_STORAGE_DIR = os.path.join(BASE_DIR, "작업장소 (영수증 보관)")
@@ -52,38 +55,43 @@ def main(month_str):
     for item in os.listdir(target_dir):
         assignee_dir = os.path.join(target_dir, item)
         if os.path.isdir(assignee_dir):
-            for file in os.listdir(assignee_dir):
-                ext = os.path.splitext(file)[1].lower()
-                full_path = os.path.join(assignee_dir, file)
-                if ext in ['.jpg', '.jpeg', '.png', '.bmp']:
-                    images.append({
-                        "assignee": item,
-                        "file_name": file,
-                        "full_path": full_path,
-                        "ext": ext
-                    })
-                elif ext == '.pdf':
-                    print(f"Extracting pages from PDF: {file}")
-                    try:
-                        doc = fitz.open(full_path)
-                        for page_num in range(len(doc)):
-                            page = doc.load_page(page_num)
-                            pix = page.get_pixmap(dpi=200)
-                            png_name = f"{os.path.splitext(file)[0]}_p{page_num}.png"
-                            png_path = os.path.join(assignee_dir, png_name)
-                            pix.save(png_path)
-                            
-                            images.append({
-                                "assignee": item,
-                                "file_name": png_name,
-                                "full_path": png_path,
-                                "ext": ".png"
-                            })
-                        doc.close()
-                        # 중복 처리 방지를 위해 원본 PDF 확장자 변경
-                        os.rename(full_path, full_path + ".processed")
-                    except Exception as e:
-                        print(f"Failed to process PDF {file}: {e}")
+            for root, _, files in os.walk(assignee_dir):
+                for file in files:
+                    ext = os.path.splitext(file)[1].lower()
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(root, assignee_dir)
+                    subfolder = rel_path if rel_path != '.' else ''
+
+                    if ext in ['.jpg', '.jpeg', '.png', '.bmp']:
+                        images.append({
+                            "assignee": item,
+                            "subfolder": subfolder,
+                            "file_name": file,
+                            "full_path": full_path,
+                            "ext": ext
+                        })
+                    elif ext == '.pdf':
+                        print(f"Extracting pages from PDF: {file}")
+                        try:
+                            doc = fitz.open(full_path)
+                            for page_num in range(len(doc)):
+                                page = doc.load_page(page_num)
+                                pix = page.get_pixmap(dpi=200)
+                                png_name = f"{os.path.splitext(file)[0]}_p{page_num}.png"
+                                png_path = os.path.join(root, png_name)
+                                pix.save(png_path)
+                                
+                                images.append({
+                                    "assignee": item,
+                                    "subfolder": subfolder,
+                                    "file_name": png_name,
+                                    "full_path": png_path,
+                                    "ext": ".png"
+                                })
+                            doc.close()
+                            os.rename(full_path, full_path + ".processed")
+                        except Exception as e:
+                            print(f"Failed to process PDF {file}: {e}")
 
     if not images:
         print("No images found to process.")
@@ -96,7 +104,7 @@ def main(month_str):
     # Phase 1: temporary name to avoid filename conflict (e.g. 001.png already exists)
     for img in images:
         temp_name = f"temp_{uuid.uuid4().hex[:8]}{img['ext']}"
-        temp_path = os.path.join(target_dir, img['assignee'], temp_name)
+        temp_path = os.path.join(target_dir, img['assignee'], img['subfolder'], temp_name)
         os.rename(img['full_path'], temp_path)
         img['temp_path'] = temp_path
 
@@ -117,7 +125,7 @@ def main(month_str):
         else:
             final_name = f"{evidence_no:03d}-{original_base}{img['ext']}"
             
-        final_path = os.path.join(target_dir, img['assignee'], final_name)
+        final_path = os.path.join(target_dir, img['assignee'], img['subfolder'], final_name)
         os.rename(img['temp_path'], final_path)
         img['final_path'] = final_path
         img['evidence_no'] = evidence_no
@@ -359,6 +367,10 @@ def main(month_str):
         
         # === 3. 파일명 기반 교차검증 (파일명: 대계정-금액) ===
         original_base = img.get('original_base', '')
+        conflict_msgs = []
+        ocr_major = parsed.get('account_major')
+        ocr_amount = parsed.get('amount')
+        
         if '-' in original_base and parsed.get('type') != '입금영수증':
             parts = original_base.split('-')
             user_major = parts[0].strip()
@@ -369,29 +381,32 @@ def main(month_str):
             except ValueError:
                 pass
                 
-            conflict_msgs = []
-            ocr_major = parsed.get('account_major')
             if user_major and ocr_major and user_major != ocr_major:
                 conflict_msgs.append(f"대계정 불일치 (파일명: {user_major} / 판독: {ocr_major})")
                 
-            ocr_amount = parsed.get('amount')
             if user_amount is not None and ocr_amount is not None:
                 # 금액 비교 시 부동소수점 오차 감안
                 if abs(user_amount - ocr_amount) > 0.01:
                     conflict_msgs.append(f"금액 불일치 (파일명: {user_amount:g} / 판독: {ocr_amount:g})")
                     
-            if conflict_msgs:
-                # 사용자가 요청한 에러 텍스트 라인별 주입
-                # warning_lines = [f"⚠️ [파일명 교차검증 오류] {msg}" for msg in conflict_msgs]
-                # warning_msg = "\n".join(warning_lines)
-                warning_msg = ""
-                
-                old_warn = parsed.get('validation_warning', "")
-                if old_warn:
-                    if warning_msg not in old_warn:
-                        parsed['validation_warning'] = warning_msg + "\n" + old_warn
-                else:
-                    parsed['validation_warning'] = warning_msg
+        # 3-2. 폴더명 기반 계정 교차검증
+        subfolder = img.get('subfolder', '')
+        if subfolder and parsed.get('type') != '입금영수증':
+            # e.g., "업무추진비(招待费)" -> "업무추진비"
+            match = re.match(r'^([^\(]+)', subfolder)
+            if match:
+                folder_major = match.group(1).strip()
+                if folder_major and ocr_major and folder_major != ocr_major:
+                    conflict_msgs.append(f"계정폴더 불일치 (폴더: {folder_major} / 판독: {ocr_major})")
+
+        if conflict_msgs:
+            warning_msg = "\n".join(conflict_msgs)
+            old_warn = parsed.get('validation_warning', "")
+            if old_warn:
+                if warning_msg not in old_warn:
+                    parsed['validation_warning'] = warning_msg + "\n" + old_warn
+            else:
+                parsed['validation_warning'] = warning_msg
                     
         # 수수료(fee_amount)가 있는 경우
         if fee_amount is not None:
