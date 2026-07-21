@@ -217,7 +217,16 @@
                     <li>폴더명 예시: <span class="highlight">2026-06</span> (반드시 YYYY-MM 형식이어야 합니다.)</li>
                 </ul>
             </li>
-            <li>생성한 폴더 안에 각 담당자별(예: Lin Wei Jian, 권유석 등) 이름으로 하위 폴더를 만들거나, 해당 경로에 스캔본 파일(PDF, JPG, PNG 등)들을 모아 넣습니다.</li>
+            <li>생성한 폴더 안에 <strong>담당자별 폴더</strong>를 만듭니다. (예: <code>01 권유석</code>, <code>12 Min HaiLing</code>)
+                <ul>
+                    <li>이름 앞의 숫자 기호(<code>01</code>, <code>02</code> 등)나 괄호는 시스템이 자동으로 무시하고 순수 이름만 인식하므로, 편하게 넘버링을 하셔도 됩니다.</li>
+                </ul>
+            </li>
+            <li>담당자 폴더 안에 <strong>계정과목명으로 하위 폴더</strong>(예: <code>업무추진비</code>, <code>여비교통비</code>)를 만들어 영수증 이미지나 PDF를 분류해 넣습니다.
+                <ul>
+                    <li><strong>[강력한 크로스체크]</strong> AI가 영수증 내역(OCR)을 최우선으로 판독하지만, 만약 사용자가 분류해 둔 <strong>계정 폴더명과 AI 판독 결과가 다를 경우 웹앱에 경고 메시지</strong>를 띄워줍니다! (예: <code>업무추진비(招待费)</code>처럼 괄호가 붙어 있어도 앞글자만 인식하여 똑똑하게 비교합니다.)</li>
+                </ul>
+            </li>
         </ol>
         <div class="alert tip">
             <div class="alert-icon">💡</div>
